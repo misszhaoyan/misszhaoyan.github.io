@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
+    <meta name="keyword"  content="石玉军,个人博客,Java">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          石玉军的个人博客
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/archives/2/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-2-dark.png') 
+            /*config*/
+        
+    }
+
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="site-heading">
+                        <h1>石玉军的个人博客</h1>
+                        <!--<hr class="small">-->
+                        <span class="subheading">石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。</span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">石玉军的个人博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">关于我</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+
+                <!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/命令模式/">
+        <h2 class="post-title">
+            命令模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            命令模式：把命令包装成对象，将命令发送者和命令接受者的耦合降低
+举个例子，皇帝发圣旨招一个大臣入宫。
+这里的皇帝就是客户端，而圣旨就是命令，大臣就是命令接受者。那么命令发送者通常都是某个公公对吧。这里就是一个命令模式的实践，为什么这样说呢？平常我们写代码都是一个方法直接调用另一个方法，这样耦合性太高了，你总不能让皇帝跑到大臣家告诉他找他有点事吧，要是都这样皇帝不就累死了。皇帝要做的就是指定命......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/责任链模式/">
+        <h2 class="post-title">
+            责任链模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            责任链模式：很多对象由每一个对象对其下家的引用而连接起来行成的一条链。
+其实责任链模式一直在我们的身边。某一天，董事长有个想法，他吩咐给了经理，经理吩咐给了组长，组长分配给了你我。这时候我们发现，我们没有下级了呀，咋办，那就干呗。
+上方这个任务分配的过程就是责任链模式，一个事件会一直向下层传递，董事长并不关心是谁解决的这个问题，对他来说只要问题解决了就行。
+
+Handle：抽象处理者，可理解......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/观察者模式/">
+        <h2 class="post-title">
+            观察者模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            观察者模式：多个观察者对象同时观察一个主题对象，当这个主题对象发生变化时，会通知所有的观察者
+来看一下下方类图
+
+Subject：主题类，所有主题的父类，负责对观察者的管理，有添加观察者，删除观察者，通知所有的方法
+SubjectImpl：主题子类，拥有状态属性，当状态改变时会调用父类的notifyObserver方法通知所有观察者
+Observe：观察者，定义了接受主题变化通知的方法
+Ob......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/模板模式/">
+        <h2 class="post-title">
+            模板模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            模板方法：在一个抽象类中定义一部分的实现，其余的定义抽象方法迫使子类实现
+相信看了上方的定义以后大家已经理解了模板模式，我们来看一下类图
+
+抽象类定义了4个方法，其中operation是私有的，在这个方法里调用了其他三个方法，而方法3是自己实现的。方法1和2是强迫子类实现的。
+ClassImpl1，ClassImpl2都继承了抽象类，并分别对方法1和2进行了不同的实现
+我们来看代码
+`
+pu......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/策略模式/">
+        <h2 class="post-title">
+            策略模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            策略模式：使算法在不影响客户端的情况下发生变化。
+例如某宝上的一件商品，有时候8折并返现3元、有时候7折返现1元、有时候9折不返现、有时候不打折返现2元等等，我们可以看到这个商品不同时刻要计算利润或者什么的时候是不一样的，现在就可以用到策略模式了。
+
+代码：
+`
+public abstract class Algorithm {
+public abstract void method();
+......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/桥梁模式/">
+        <h2 class="post-title">
+            桥梁模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            桥梁模式：将抽象化与实现化脱藕，使二者可以独立的变化
+大家应该对日志记录比较熟悉，不知道有没有自己写过一个日志处理的程序，你又是如何实现的呢？
+今天的桥梁模式就根据一下需求来分析一下：
+支持2个以上平台
+支持2个以上格式
+大家可以看一下这个需求哈，2个以上，那我就实现2个呗，一般人可能都会这样想。然后开始写，比如Windows存Txt格式、Windows存Xml格式、Linux存Txt格式的......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/外观模式/">
+        <h2 class="post-title">
+            外观模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            外观模式：外部系统与子系统的通信必须通过一个统一的对象进行
+举个例子，现在结婚是不是都找婚庆公司啊，为什么呢？因为如果不找婚庆公司自己筹备的话，我们可能得自己跑去订酒店，自己去找主持人，自己去找摄像，自己去找车队。是不是太麻烦了点，而有了婚庆公司就不一样了，我可以吩咐他去找酒店，找主持人等等。。。
+来看一下类图：
+
+在这里Facade就相当于婚庆公司的角色，我们作为client直接调用Fac......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/元/">
+        <h2 class="post-title">
+            享元模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            享元模式：以共享的方式高效的支持大量的细粒度对象
+我们以咖啡为例，一家咖啡店一天卖出几千杯咖啡其实这几千杯也不过是几十种口味。在Java中你觉得是new几千次咖啡好还是new几十次口味好呢？享元模式就是利用的这个原理来共享的变量了。
+来看一下类图：
+
+FlavorFactory：口味工厂，根据客户所需口味生产咖啡
+Client：售货员，负责通知工厂生产咖啡，以及出售咖啡和统计销售情况
+Cof......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/代理模式/">
+        <h2 class="post-title">
+            代理模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            代理模式;给某个对象提供一个代理对象，由代理对象持有对原对象的引用。
+代理模式就比较符合中国人含蓄的性格，假如有个姑娘想要找个对象，但是直接满大街去喊我要找对象的不是很多吧。大部分的女孩还是倾向于先去找一个媒人，让媒人来给自己介绍对象。这里的媒人其实就是女孩的代理对象了。
+先来看一下类图：
+
+我们可以看到女孩跟媒人都实现了一个相亲的接口，然后呢媒人持有女孩的引用来调用女孩展示自己的方法，代码......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/模式/">
+        <h2 class="post-title">
+            合成模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            合成模式的职责是将对象组织到树结构中
+
+观察上方类图：
+interface，一个接口定义了一个获得当前对象名字的方法
+leaf：树中的叶子节点，实现了interface
+Branch：树枝节点，不仅实现了getName方法，同样它本身具有添加节点删除节点的方法且本身可以包含多个树枝节点以及叶子节点
+通过上述结论我们可以发现其实合成模式就是树的结构的实现
+来看一下代码：
+`
+public in......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+        <li class="previous">
+            <a href="/">&larr; 上一页</a>
+        </li>
+    
+    
+        <li class="next">
+            <a href="/archives/3/">下一页 &rarr;</a>
+        </li>
+    
+</ul>
+
+
+
+
+            </div>
+
+          <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        
+
+
+
+    <h5>标签</h5>
+
+    <div class="tags">
+        
+
+            <a href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+
+        
+
+            <a href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+
+        
+
+            <a href="/tags/#git" title="git" rel="1">git</a>
+
+        
+
+            <a href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+
+        
+
+            <a href="/tags/#Vue" title="Vue" rel="1">Vue</a>
+
+        
+
+            <a href="/tags/#JS" title="JS" rel="2">JS</a>
+
+        
+
+            <a href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
+
+        
+
+            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+
+        
+
+            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+
+        
+
+            <a href="/tags/#Https" title="Https" rel="1">Https</a>
+
+        
+
+            <a href="/tags/#UML" title="UML" rel="1">UML</a>
+
+        
+
+            <a href="/tags/#Java工具类" title="Java工具类" rel="2">Java工具类</a>
+
+        
+
+            <a href="/tags/#Java工具栏" title="Java工具栏" rel="1">Java工具栏</a>
+
+        
+
+            <a href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a href="/tags/#SpringCloud" title="SpringCloud" rel="7">SpringCloud</a>
+
+        
+    </div>
+
+
+        <hr>
+    
+        
+<section class="visible-md visible-lg">
+  <h5>最近更新</h5>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/每天学点SpringCloud（七）：路由器和过滤器-Zuul/">每天学点SpringCloud（七）：路由器和过滤器-Zuul</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/学点SpringCloud（六）：Hystrix使用/">每天学点SpringCloud（六）：Hystrix使用</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/每天学点SpringCloud（五）：如何使用高可用的Eureka/">每天学点SpringCloud（五）：如何使用高可用的Eureka</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/天学点SpringCloud（四）：Feign的使用及自定义配置/">每天学点SpringCloud（四）：Feign的使用及自定义配置</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/天学点SpringCloud（三）：自定义Eureka集群负载均衡策略/">每天学点SpringCloud（三）：自定义Eureka集群负载均衡策略</a>
+        </li>
+      
+    </ul>
+  </div>
+  </section>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+<section class="visible-md visible-lg">
+
+<h5>重要通知</h5>
+    <div class="widget">
+
+<ul >
+
+        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
+		        <li><a>石玉军的个人博客今天上线了</a></li>
+
+</ul>
+</div>
+</section>
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5>关注我</h5>
+    <div class="short-about">
+        <!-- 图片以及自我介绍被删除-->
+
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li class="qq tp"></li>
+                <li class="gitee tp"></li>
+                <li class="qq tp"></li>
+        </ul>
+
+    </div>
+	
+
+
+</section>
+        <hr>
+    
+</div>
+
+        
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer style="padding:0px;">
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+   
+    
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 石玉军 2018  
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_pv">本网站已被访问<span id="busuanzi_value_site_pv"></span>次</span>
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_uv">您是第<span id="busuanzi_value_site_uv"></span>位访客</span>
+    
+                    <br>
+                    
+                <a target="_black" href="http://www.miitbeian.gov.cn/">鲁ICP备18002448号-1</a>    
+                </p>
+				
+				
+				
+				
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
+    <meta name="keyword"  content="石玉军,个人博客,Java">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          每天学点SpringCloud（六）：Hystrix使用 - 石玉军的个人博客
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2018/07/26/学点SpringCloud（六）：Hystrix使用/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-o.png')
+            /*post*/
+        
+    }
+
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#SpringCloud" title="SpringCloud">SpringCloud</a>
+                            
+                        </div>
+                        <h1>每天学点SpringCloud（六）：Hystrix使用</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 石玉军 on
+                            2018-07-26
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">石玉军的个人博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">关于我</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12 col-xs-12
+                post-container">
+
+                <p>Hystrix是一个实现断路器模式的库。什么是断路器模式呢？就像我们家庭中的电闸一样，如果有那一处出现意外，那么电闸就会立刻跳闸来防止因为这一处意外而引起更大的事故，直到我们确认处理完那一处意外后才可以再打开电闸。而Hystrix的存在就是为了预防程序中出现这种问题而导致程序不可用的情况。</p>
+<p>比如说我们有三个微服务 A、B、C，其中A依赖于B，B依赖于C，如果这时候C出现了问题，那么就导致B不可用，紧接着A也不可用，更有可能导致整个系统不可用。我们接下来就来看看如何利用Hystrix预防这种情况</p>
+<p>创建项目<br>
+首先我们复制一份cloud-demo-consumer项目，改名为cloud-demo-consumer-hystrix</p>
+<p>引入Hystrix的依赖<br>
+<code>&lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt; &lt;/dependency&gt;</code></p>
+<p>application.xml不用变<br>
+<code>spring: application: name: consumer-demo-hystrix server: port: 8090 eureka: client: healthcheck: enabled: true serviceUrl: defaultZone: http://root:root@localhost:8761/eureka instance: prefer-ip-address: true</code></p>
+<p>CloudDemoConsumerApplication改名为CloudDemoConsumerHystrixApplication，并且它的注解应该是</p>
+<p><code>@SpringBootApplication @EnableEurekaClient @EnableCircuitBreake</code><br>
+上方我们不认识的这个@EnableCircuitBreake注解就是表示开启断路器模式的注解</p>
+<p>然后我们看一下controller<br>
+`<br>
+@RestController<br>
+@RequestMapping(&quot;/user&quot;)<br>
+public class UserController {</p>
+<pre><code>@Autowired
+private RestTemplate restTemplate;
+
+@GetMapping(&quot;/getUser/{id}&quot;)
+@HystrixCommand(fallbackMethod = &quot;getUserFallback&quot;)
+public User getUser(@PathVariable Long id){
+     return restTemplate.getForObject(&quot;http://provider-demo/user/getUser/&quot;+id,User.class);
+}
+public User getUserFallback(Long id) {
+    User user = new User();
+    user.setName(&quot;王五&quot;);
+    return user;
+}
+</code></pre>
+<p>}`<br>
+它相比较于原先的controller仅仅是多了一个@HystrixCommand(fallbackMethod = “getUserFallback”)注解和一个方法，这个注解呢就是指定Hystrix在此方法超时时调用的方法。</p>
+<p>测试<br>
+首先启动我们代表Eureka服务的项目，然后启动cloud-demo-provider项目，紧接着启动我们现在的项目。</p>
+<p>项目启动以后我们打开浏览器访问localhost:8088/user/getUser/2的时候发现一切正常，网页上返回了张三这个用户。如果我们没有引入Hystrix的时候如果这时候把服务提供者停掉的话在访问会出现什么情况呢，是不是会报错，或者超时呀。</p>
+<p>但是现在不一样了，我们引入了Hystrix，所以我们现在停掉提供者访问的时候会发现程序走了注解指定的fallbackMethod，也就是方法getUserFallBack，这个时候我们浏览器得到的结果是王五。</p>
+<p>Hystrix默认的超时时间是1秒，也就是说它在等待服务提供者1秒后如果得不到结果的话就会认为提供者挂了，紧接着调用fallbackMethod。</p>
+<p>这个时间其实我们可以控制，只需要在yml文件中配置一个属性就可以自定义这个时间</p>
+<p><code>hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 1000 #1000毫秒</code></p>
+<p>Feign的支持<br>
+接下来我们看一下Feign是怎么使用Hystrix,</p>
+<p>这次我们改造cloud-demo-consumer-feign项目，项目名称改为cloud-demo-consumer-feign-hystrix，同样向上述 方式一样引入Hystrix的依赖，</p>
+<p>接着 CloudDemoConsumerFeignApplication类名改为 CloudDemoConsumerFeignHystrixApplication，同样的加入@EnableCircuitBreaker注解</p>
+<p>有一点不一样的地方是我们需要在yml文件中配置一下来开启Hystrix</p>
+<p><code>feign.hystrix.enabled: true</code></p>
+<p>这里controller中需要改造的不再是指定单个方法，而是指定接口的实现类</p>
+<p><code>@FeignClient(name = &quot;provider-demo&quot;, fallback = HystrixClientFallback.class)</code><br>
+来看一下这个实现类<br>
+<code>@Component public class HystrixClientFallback implements UserFeignClient { @Override public User getUser(Long id) { User user = new User(); user.setName(&quot;王五&quot;); return user; } }</code></p>
+<p>这样的话如果接口中有多个方法的话我们就不必为每一个方法取指定了。</p>
+<p>现在我们已经解决了服务提供者挂掉的事情了，但是有点不好的是，我们现在还不能知道服务提供者到底是咋挂的，要是能捕获到服务提供者</p>
+<p>抛的异常就好了，其实Hystrix对这个是支持的，我们接下来看一下</p>
+<p>fallbackFactory</p>
+<p>UserFeignClient上方的注解需要变一下</p>
+<p><code>@FeignClient(name = &quot;provider-demo&quot;, fallbackFactory = HystrixClientFactory.class)</code><br>
+这次使用的是fallbackFactory这个属性，我们看一下它指定的这个类又是怎么实现的呢</p>
+<p>`</p>
+<p>@Component<br>
+public class HystrixClientFactory implements FallbackFactory<userfeignclient> {</userfeignclient></p>
+<pre><code>private static final Logger LOGGER = LoggerFactory.getLogger(HystrixClientFactory.class);
+
+@Override
+public UserFeignClient create(Throwable cause) {
+    HystrixClientFactory.LOGGER.info(&quot;the provider error is: {}&quot;, cause.getMessage());
+    return new UserFeignClient() {
+        @Override
+        public User getUser(Long id) {
+            User user = new User();
+            user.setName(&quot;王五&quot;);
+            return user;
+        }
+    };
+}
+</code></pre>
+<p>}<br>
+`</p>
+<p>我们可以看到，在这个create的工厂方法中，它的入参就是服务提供者的异常，得到了这个异常以后才会去做实现。这样是不是更加灵活了呢？</p>
+<p>GitHub：<a href="https://github.com/2388386839/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/2388386839/spring-cloud-demo</a></p>
+<p>码云：<a href="https://gitee.com/zhixiang_blog/spring-cloud-demo" target="_blank" rel="noopener">https://gitee.com/zhixiang_blog/spring-cloud-demo</a></p>
+<p>如果对您有所帮助，请记得帮忙点一个star哦</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/07/26/每天学点SpringCloud（七）：路由器和过滤器-Zuul/" data-toggle="tooltip" data-placement="top" title="每天学点SpringCloud（七）：路由器和过滤器-Zuul">&larr; 上一篇</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/07/26/每天学点SpringCloud（五）：如何使用高可用的Eureka/" data-toggle="tooltip" data-placement="top" title="每天学点SpringCloud（五）：如何使用高可用的Eureka">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/07/26/学点SpringCloud（六）：Hystrix使用/"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytJA6t4E',
+conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
+});
+</script>
+
+
+
+            </div>
+             <div>
+                        <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        
+
+
+
+    <h5>标签</h5>
+
+    <div class="tags">
+        
+
+            <a href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+
+        
+
+            <a href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+
+        
+
+            <a href="/tags/#git" title="git" rel="1">git</a>
+
+        
+
+            <a href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+
+        
+
+            <a href="/tags/#Vue" title="Vue" rel="1">Vue</a>
+
+        
+
+            <a href="/tags/#JS" title="JS" rel="2">JS</a>
+
+        
+
+            <a href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
+
+        
+
+            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+
+        
+
+            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+
+        
+
+            <a href="/tags/#Https" title="Https" rel="1">Https</a>
+
+        
+
+            <a href="/tags/#UML" title="UML" rel="1">UML</a>
+
+        
+
+            <a href="/tags/#Java工具类" title="Java工具类" rel="2">Java工具类</a>
+
+        
+
+            <a href="/tags/#Java工具栏" title="Java工具栏" rel="1">Java工具栏</a>
+
+        
+
+            <a href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a href="/tags/#SpringCloud" title="SpringCloud" rel="7">SpringCloud</a>
+
+        
+    </div>
+
+
+        <hr>
+    
+        
+<section class="visible-md visible-lg">
+  <h5>最近更新</h5>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/每天学点SpringCloud（七）：路由器和过滤器-Zuul/">每天学点SpringCloud（七）：路由器和过滤器-Zuul</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/学点SpringCloud（六）：Hystrix使用/">每天学点SpringCloud（六）：Hystrix使用</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/每天学点SpringCloud（五）：如何使用高可用的Eureka/">每天学点SpringCloud（五）：如何使用高可用的Eureka</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/天学点SpringCloud（四）：Feign的使用及自定义配置/">每天学点SpringCloud（四）：Feign的使用及自定义配置</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/天学点SpringCloud（三）：自定义Eureka集群负载均衡策略/">每天学点SpringCloud（三）：自定义Eureka集群负载均衡策略</a>
+        </li>
+      
+    </ul>
+  </div>
+  </section>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+<section class="visible-md visible-lg">
+
+<h5>重要通知</h5>
+    <div class="widget">
+
+<ul >
+
+        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
+		        <li><a>石玉军的个人博客今天上线了</a></li>
+
+</ul>
+</div>
+</section>
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5>关注我</h5>
+    <div class="short-about">
+        <!-- 图片以及自我介绍被删除-->
+
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li class="qq tp"></li>
+                <li class="gitee tp"></li>
+                <li class="qq tp"></li>
+        </ul>
+
+    </div>
+	
+
+
+</section>
+        <hr>
+    
+</div>
+                        </div>
+            <!-- Tabe of Content -->
+            <!-- Table of Contents 读博客右边栏
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录1</strong>
+        
+          <ol class="nav">none</ol>
+        
+        </div>
+      </aside>
+    
+-->
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+               
+            </div>
+
+
+        </div>
+    </div>
+
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer style="padding:0px;">
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+   
+    
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 石玉军 2018  
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_pv">本网站已被访问<span id="busuanzi_value_site_pv"></span>次</span>
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_uv">您是第<span id="busuanzi_value_site_uv"></span>位访客</span>
+    
+                    <br>
+                    
+                <a target="_black" href="http://www.miitbeian.gov.cn/">鲁ICP备18002448号-1</a>    
+                </p>
+				
+				
+				
+				
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

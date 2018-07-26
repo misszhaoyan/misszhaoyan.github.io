@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
+    <meta name="keyword"  content="石玉军,个人博客,Java">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          时间日期处理 - 石玉军的个人博客
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2018/07/26/间日期处理/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-o.png')
+            /*post*/
+        
+    }
+
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Java工具栏" title="Java工具栏">Java工具栏</a>
+                            
+                        </div>
+                        <h1>时间日期处理</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 石玉军 on
+                            2018-07-26
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">石玉军的个人博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">关于我</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12 col-xs-12
+                post-container">
+
+                <p>`public class DateUtil {</p>
+<pre><code>private static Logger logger = Logger.getLogger(DateUtil.class);
+private static String defaultDatePattern = null;
+private static String timePattern = &quot;HH:mm&quot;;
+private static Calendar cale = Calendar.getInstance();
+public static final String TS_FORMAT = DateUtil.getDatePattern() + &quot; HH:mm:ss.S&quot;;
+/**
+ * 日期格式yyyy-MM字符串常量
+ */
+private static final String MONTH_FORMAT = &quot;yyyy-MM&quot;;
+/**
+ * 日期格式yyyy-MM-dd字符串常量
+ */
+private static final String DATE_FORMAT = &quot;yyyy-MM-dd&quot;;
+/**
+ * 日期格式HH:mm:ss字符串常量
+ */
+private static final String HOUR_FORMAT = &quot;HH:mm:ss&quot;;
+/**
+ * 日期格式yyyy-MM-dd HH:mm:ss字符串常量
+ */
+private static final String DATETIME_FORMAT = &quot;yyyy-MM-dd HH:mm:ss&quot;;
+/**
+ * 某天开始时分秒字符串常量  00:00:00
+ */
+private static final String DAY_BEGIN_STRING_HHMMSS = &quot; 00:00:00&quot;;
+/**
+ * 某天结束时分秒字符串常量  23:59:59
+ */
+public static final String DAY_END_STRING_HHMMSS = &quot; 23:59:59&quot;;
+private static SimpleDateFormat sdf_date_format = new SimpleDateFormat(DATE_FORMAT);
+private static SimpleDateFormat sdf_hour_format = new SimpleDateFormat(HOUR_FORMAT);
+public static SimpleDateFormat sdf_datetime_format = new SimpleDateFormat(DATETIME_FORMAT);
+
+
+
+public DateUtil() {
+}
+
+/**
+ * 获得服务器当前日期及时间，以格式为：yyyy-MM-dd HH:mm:ss的日期字符串形式返回
+ */
+public static String getDateTime() {
+    try {
+        return sdf_datetime_format.format(cale.getTime());
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.getDateTime():&quot; + e.getMessage());
+        return &quot;&quot;;
+    }
+}
+
+/**
+ * 获得服务器当前日期，以格式为：yyyy-MM-dd的日期字符串形式返回
+ */
+public static String getDate() {
+    try {
+        return sdf_date_format.format(cale.getTime());
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.getDate():&quot; + e.getMessage());
+        return &quot;&quot;;
+    }
+}
+
+/**
+ * 获得服务器当前时间，以格式为：HH:mm:ss的日期字符串形式返回
+ */
+public static String getTime() {
+    String temp = &quot; &quot;;
+    try {
+        temp += sdf_hour_format.format(cale.getTime());
+        return temp;
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.getTime():&quot; + e.getMessage());
+        return &quot;&quot;;
+    }
+}
+
+/**
+ * 获得服务器当前日期的年份
+ */
+public static String getYear() {
+    try {
+        return String.valueOf(cale.get(Calendar.YEAR));
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.getYear():&quot; + e.getMessage());
+        return &quot;&quot;;
+    }
+}
+
+/**
+ * 获得服务器当前日期的月份
+ */
+public static String getMonth() {
+    try {
+        java.text.DecimalFormat df = new java.text.DecimalFormat();
+        df.applyPattern(&quot;00;00&quot;);
+        return df.format((cale.get(Calendar.MONTH) + 1));
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.getMonth():&quot; + e.getMessage());
+        return &quot;&quot;;
+    }
+}
+
+/**
+ * 获得服务器在当前月中天数
+ */
+public static String getDay() {
+    try {
+        return String.valueOf(cale.get(Calendar.DAY_OF_MONTH));
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.getDay():&quot; + e.getMessage());
+        return &quot;&quot;;
+    }
+}
+
+
+/**
+ * 比较两个日期相差的天数
+ */
+public static double getDoubleMargin(String date1, String date2) {
+    double margin;
+    try {
+        ParsePosition pos = new ParsePosition(0);
+        ParsePosition pos1 = new ParsePosition(0);
+        Date dt1 = sdf_datetime_format.parse(date1, pos);
+        Date dt2 = sdf_datetime_format.parse(date2, pos1);
+        long l = dt1.getTime() - dt2.getTime();
+        margin = (l / (24 * 60 * 60 * 1000.00));
+        return margin;
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.getMargin():&quot; + e.toString());
+        return 0;
+    }
+}
+
+/**
+ * 比较两个日期相差的月数
+ */
+public static int getMonthMargin(String date1, String date2) {
+    int margin;
+    try {
+        margin = (Integer.parseInt(date2.substring(0, 4)) - Integer.parseInt(date1.substring(0, 4))) * 12;
+        margin += (Integer.parseInt(date2.substring(4, 7).replaceAll(&quot;-0&quot;,
+                &quot;-&quot;)) - Integer.parseInt(date1.substring(4, 7).replaceAll(&quot;-0&quot;, &quot;-&quot;)));
+        return margin;
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.getMargin():&quot; + e.toString());
+        return 0;
+    }
+}
+
+/**
+ * 返回日期加X天后的日期
+ */
+public static String addDay(String date, int i) {
+    try {
+        GregorianCalendar gCal = new GregorianCalendar(
+                Integer.parseInt(date.substring(0, 4)),
+                Integer.parseInt(date.substring(5, 7)) - 1,
+                Integer.parseInt(date.substring(8, 10)));
+        gCal.add(GregorianCalendar.DATE, i);
+        return sdf_date_format.format(gCal.getTime());
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.addDay():&quot; + e.toString());
+        return getDate();
+    }
+}
+
+/**
+ * 返回日期加X月后的日期
+ */
+public static String addMonth(String date, int i) {
+    try {
+        GregorianCalendar gCal = new GregorianCalendar(
+                Integer.parseInt(date.substring(0, 4)),
+                Integer.parseInt(date.substring(5, 7)) - 1,
+                Integer.parseInt(date.substring(8, 10)));
+        gCal.add(GregorianCalendar.MONTH, i);
+        return sdf_date_format.format(gCal.getTime());
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.addMonth():&quot; + e.toString());
+        return getDate();
+    }
+}
+
+/**
+ * 返回日期加X年后的日期
+ */
+public static String addYear(String date, int i) {
+    try {
+        GregorianCalendar gCal = new GregorianCalendar(
+                Integer.parseInt(date.substring(0, 4)),
+                Integer.parseInt(date.substring(5, 7)) - 1,
+                Integer.parseInt(date.substring(8, 10)));
+        gCal.add(GregorianCalendar.YEAR, i);
+        return sdf_date_format.format(gCal.getTime());
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.addYear():&quot; + e.toString());
+        return &quot;&quot;;
+    }
+}
+
+/**
+ * 返回某年某月中的最大天
+ */
+public static int getMaxDay(int iyear, int imonth) {
+    int day = 0;
+    try {
+        if (imonth == 1 || imonth == 3 || imonth == 5 || imonth == 7
+                || imonth == 8 || imonth == 10 || imonth == 12) {
+            day = 31;
+        } else if (imonth == 4 || imonth == 6 || imonth == 9 || imonth == 11) {
+            day = 30;
+        } else if ((0 == (iyear % 4)) &amp;&amp; (0 != (iyear % 100)) || (0 == (iyear % 400))) {
+            day = 29;
+        } else {
+            day = 28;
+        }
+        return day;
+    } catch (Exception e) {
+        logger.debug(&quot;DateUtil.getMonthDay():&quot; + e.toString());
+        return 1;
+    }
+}
+
+
+
+/**
+ * 取得当前时间的Calendar日历对象
+ */
+public Calendar getToday() throws ParseException {
+    Date today = new Date();
+    SimpleDateFormat df = new SimpleDateFormat(getDatePattern());
+    String todayAsString = df.format(today);
+    Calendar cal = new GregorianCalendar();
+    cal.setTime(convertStringToDate(todayAsString));
+    return cal;
+}
+
+/**
+ * 将日期类转换成指定格式的字符串形式
+ */
+public static final String getDateTime(String aMask, Date aDate) {
+    SimpleDateFormat df = null;
+    String returnValue = &quot;&quot;;
+
+    if (aDate == null) {
+        logger.error(&quot;aDate is null!&quot;);
+    } else {
+        df = new SimpleDateFormat(aMask);
+        returnValue = df.format(aDate);
+    }
+    return (returnValue);
+}
+
+/**
+ * 将指定的日期转换成默认格式的字符串形式
+ */
+public static final String convertDateToString(Date aDate) {
+    return getDateTime(getDatePattern(), aDate);
+}
+
+/**
+ * 将日期字符串按指定格式转换成日期类型
+ */
+public static final Date convertStringToDate(String aMask, String strDate)
+        throws ParseException {
+    SimpleDateFormat df = null;
+    Date date = null;
+    df = new SimpleDateFormat(aMask);
+
+    if (logger.isDebugEnabled()) {
+        logger.debug(&quot;converting '&quot; + strDate + &quot;' to date with mask '&quot; + aMask + &quot;'&quot;);
+    }
+    try {
+        date = df.parse(strDate);
+    } catch (ParseException pe) {
+        logger.error(&quot;ParseException: &quot; + pe);
+        throw pe;
+    }
+    return (date);
+}
+
+
+/**
+ * 返回一个JAVA简单类型的日期字符串
+ */
+public static String getSimpleDateFormat() {
+    SimpleDateFormat formatter = new SimpleDateFormat();
+    String NDateTime = formatter.format(new Date());
+    return NDateTime;
+}
+
+/**
+ * 将指定字符串格式的日期与当前时间比较
+ */
+public static int compareToCurTime(String strDate) {
+    if (StringUtils.isBlank(strDate)) {
+        return -1;
+    }
+    Date curTime = cale.getTime();
+    String strCurTime = null;
+    try {
+        strCurTime = sdf_datetime_format.format(curTime);
+    } catch (Exception e) {
+        if (logger.isDebugEnabled()) {
+            logger.debug(&quot;[Could not format '&quot; + strDate + &quot;' to a date, throwing exception:&quot; + e.getLocalizedMessage() + &quot;]&quot;);
+        }
+    }
+    if (StringUtils.isNotBlank(strCurTime)) {
+        return strCurTime.compareTo(strDate);
+    }
+    return -1;
+}
+
+/**
+ * 返回指定年份中指定月份的天数
+ */
+public static String getMonthLastDay(int year, int month) {
+    int[][] day = {{0, 30, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
+                {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}};
+    if (year % 4 == 0 &amp;&amp; year % 100 != 0 || year % 400 == 0) {
+        return day[1][month] + &quot;&quot;;
+    } else {
+        return day[0][month] + &quot;&quot;;
+    }
+}
+
+/**
+ * 判断是平年还是闰年
+ */
+public static boolean isLeapyear(int year) {
+    if ((year % 4 == 0 &amp;&amp; year % 100 != 0) || (year % 400) == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * 取得当前时间的日戳
+ */
+@SuppressWarnings(&quot;deprecation&quot;)
+public static String getTimestamp() {
+    Date date = cale.getTime();
+    String timestamp = &quot;&quot; + (date.getYear() + 1900) + date.getMonth()
+            + date.getDate() + date.getMinutes() + date.getSeconds()
+            + date.getTime();
+    return timestamp;
+}
+
+/**
+ * 取得指定时间的日戳
+ */
+@SuppressWarnings(&quot;deprecation&quot;)
+public static String getTimestamp(Date date) {
+    String timestamp = &quot;&quot; + (date.getYear() + 1900) + date.getMonth()
+            + date.getDate() + date.getMinutes() + date.getSeconds()
+            + date.getTime();
+    return timestamp;
+}
+/**
+ * 将日期字符串按默认格式转换成日期类型
+ */
+public static Date convertStringToDate(String strDate)
+        throws ParseException {
+    Date aDate = null;
+
+    try {
+        if (logger.isDebugEnabled()) {
+            logger.debug(&quot;converting date with pattern: &quot; + getDatePattern());
+        }
+        aDate = convertStringToDate(getDatePattern(), strDate);
+    } catch (ParseException pe) {
+        logger.error(&quot;Could not convert '&quot; + strDate + &quot;' to a date, throwing exception&quot;);
+        throw new ParseException(pe.getMessage(), pe.getErrorOffset());
+    }
+    return aDate;
+}
+/**
+ * 返回默认的日期格式
+ */
+public static synchronized String getDatePattern() {
+    defaultDatePattern = &quot;yyyy-MM-dd&quot;;
+    return defaultDatePattern;
+}
+</code></pre>
+<p>}`</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/07/26/用阿里云邮件推送发送邮件/" data-toggle="tooltip" data-placement="top" title="使用阿里云邮件推送发送邮件">&larr; 上一篇</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/07/26/Java简单操作Excel文件/" data-toggle="tooltip" data-placement="top" title="Java简单操作Excel文件">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/07/26/间日期处理/"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytJA6t4E',
+conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
+});
+</script>
+
+
+
+            </div>
+             <div>
+                        <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        
+
+
+
+    <h5>标签</h5>
+
+    <div class="tags">
+        
+
+            <a href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+
+        
+
+            <a href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+
+        
+
+            <a href="/tags/#git" title="git" rel="1">git</a>
+
+        
+
+            <a href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+
+        
+
+            <a href="/tags/#Vue" title="Vue" rel="1">Vue</a>
+
+        
+
+            <a href="/tags/#JS" title="JS" rel="2">JS</a>
+
+        
+
+            <a href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
+
+        
+
+            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+
+        
+
+            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+
+        
+
+            <a href="/tags/#Https" title="Https" rel="1">Https</a>
+
+        
+
+            <a href="/tags/#UML" title="UML" rel="1">UML</a>
+
+        
+
+            <a href="/tags/#Java工具类" title="Java工具类" rel="2">Java工具类</a>
+
+        
+
+            <a href="/tags/#Java工具栏" title="Java工具栏" rel="1">Java工具栏</a>
+
+        
+
+            <a href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a href="/tags/#SpringCloud" title="SpringCloud" rel="7">SpringCloud</a>
+
+        
+    </div>
+
+
+        <hr>
+    
+        
+<section class="visible-md visible-lg">
+  <h5>最近更新</h5>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/每天学点SpringCloud（七）：路由器和过滤器-Zuul/">每天学点SpringCloud（七）：路由器和过滤器-Zuul</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/学点SpringCloud（六）：Hystrix使用/">每天学点SpringCloud（六）：Hystrix使用</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/每天学点SpringCloud（五）：如何使用高可用的Eureka/">每天学点SpringCloud（五）：如何使用高可用的Eureka</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/天学点SpringCloud（四）：Feign的使用及自定义配置/">每天学点SpringCloud（四）：Feign的使用及自定义配置</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/天学点SpringCloud（三）：自定义Eureka集群负载均衡策略/">每天学点SpringCloud（三）：自定义Eureka集群负载均衡策略</a>
+        </li>
+      
+    </ul>
+  </div>
+  </section>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+<section class="visible-md visible-lg">
+
+<h5>重要通知</h5>
+    <div class="widget">
+
+<ul >
+
+        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
+		        <li><a>石玉军的个人博客今天上线了</a></li>
+
+</ul>
+</div>
+</section>
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5>关注我</h5>
+    <div class="short-about">
+        <!-- 图片以及自我介绍被删除-->
+
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li class="qq tp"></li>
+                <li class="gitee tp"></li>
+                <li class="qq tp"></li>
+        </ul>
+
+    </div>
+	
+
+
+</section>
+        <hr>
+    
+</div>
+                        </div>
+            <!-- Tabe of Content -->
+            <!-- Table of Contents 读博客右边栏
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录1</strong>
+        
+          <ol class="nav">none</ol>
+        
+        </div>
+      </aside>
+    
+-->
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+               
+            </div>
+
+
+        </div>
+    </div>
+
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer style="padding:0px;">
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+   
+    
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 石玉军 2018  
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_pv">本网站已被访问<span id="busuanzi_value_site_pv"></span>次</span>
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_uv">您是第<span id="busuanzi_value_site_uv"></span>位访客</span>
+    
+                    <br>
+                    
+                <a target="_black" href="http://www.miitbeian.gov.cn/">鲁ICP备18002448号-1</a>    
+                </p>
+				
+				
+				
+				
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
