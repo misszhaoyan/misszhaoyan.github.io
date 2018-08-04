@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -228,36 +232,9 @@
 索引为3的父节点比较完了接着比较索引为2的父节点。。然后是为1的。<br>
 现在整个树上最大的元素已经在跟节点了，那么我们就把跟节点与最后一个节点交换一下位置。<br>
 再次回到1开始比较，不过需要注意的这次我们要把数组最后一个忽略。<br>
-接下来上代码<br>
-`<br>
-public static void sort(int []arr,int length){<br>
-if(length==1){<br>
-return;<br>
-}<br>
-for (int i=(length-1)/2;i&gt;=1;i–){<br>
-int max=i*2;//先假设最大的子节点为左儿子<br>
-if(max+1&lt;length&amp;&amp;arr[max+1]&gt;arr[max]){//如果右儿子不超出数组下标且比左儿子大<br>
-max++;//最大的子节点为右儿子<br>
-}<br>
-if(arr[i]&lt;arr[max]){ //如果子节点大于父节点<br>
-swap(arr,i,max);//交换方法<br>
-}<br>
-}<br>
-swap(arr,1,length-1);//将跟节点与数组最后一个节点交换<br>
-sort(arr,length-1);//递归调用此方法，不过排序好的就不需要再次比较了，所以忽略它<br>
-}</p>
-<p>public static void swap(int []arr,int a ,int b){<br>
-int temp=arr[a];<br>
-arr[a] = arr[b];<br>
-arr[b] = temp;<br>
-}<br>
-public static void main(String []args){<br>
-int []arr = {0,3,1,0,2,8,4,2};<br>
-sort(arr,arr.length);<br>
-System.out.println(Arrays.toString(arr));<br>
-}<br>
-`<br>
-堆排序讲完了。在这里温馨提示大家，学习算法时，我们没必要拘泥于代码的实现，那没有意义。我的建议就是深入理解步骤，当你理解步骤以后代码是随你怎么玩都可以的。</p>
+接下来上代码</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="built_in">sort</span>(<span class="built_in">int</span> []arr,<span class="built_in">int</span> length)&#123;</span><br><span class="line">    <span class="keyword">if</span>(length==<span class="number">1</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">for</span> (<span class="built_in">int</span> i=(length<span class="number">-1</span>)/<span class="number">2</span>;i&gt;=<span class="number">1</span>;i--)&#123;</span><br><span class="line">       <span class="built_in">int</span> <span class="built_in">max</span>=i*<span class="number">2</span>;<span class="comment">//先假设最大的子节点为左儿子</span></span><br><span class="line">       <span class="keyword">if</span>(<span class="built_in">max</span>+<span class="number">1</span>&lt;length&amp;&amp;arr[<span class="built_in">max</span>+<span class="number">1</span>]&gt;arr[<span class="built_in">max</span>])&#123;<span class="comment">//如果右儿子不超出数组下标且比左儿子大</span></span><br><span class="line">           <span class="built_in">max</span>++;<span class="comment">//最大的子节点为右儿子</span></span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">if</span>(arr[i]&lt;arr[<span class="built_in">max</span>])&#123; <span class="comment">//如果子节点大于父节点</span></span><br><span class="line">           swap(arr,i,<span class="built_in">max</span>);<span class="comment">//交换方法</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">    swap(arr,<span class="number">1</span>,length<span class="number">-1</span>);<span class="comment">//将跟节点与数组最后一个节点交换</span></span><br><span class="line">    <span class="built_in">sort</span>(arr,length<span class="number">-1</span>);<span class="comment">//递归调用此方法，不过排序好的就不需要再次比较了，所以忽略它</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> swap(<span class="built_in">int</span> []arr,<span class="built_in">int</span> a ,<span class="built_in">int</span> b)&#123;</span><br><span class="line">    <span class="built_in">int</span> temp=arr[a];</span><br><span class="line">    arr[a] = arr[b];</span><br><span class="line">    arr[b] = temp;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(<span class="keyword">String</span> []args)&#123;</span><br><span class="line">    <span class="built_in">int</span> []arr = &#123;<span class="number">0</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">2</span>&#125;;</span><br><span class="line">    <span class="built_in">sort</span>(arr,arr.length);</span><br><span class="line">    System.out.<span class="built_in">println</span>(Arrays.toString(arr));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>堆排序讲完了。在这里温馨提示大家，学习算法时，我们没必要拘泥于代码的实现，那没有意义。我的建议就是深入理解步骤，当你理解步骤以后代码是随你怎么玩都可以的。</p>
 
                 
 
@@ -339,7 +316,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -411,8 +388,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -428,11 +404,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -216,46 +220,23 @@
 <p>1.首先呢，我们把原先的cloud-demo-eureka项目负责一份命名为cloud-demo-eureka-hign(高可用的服务，哈哈)</p>
 <p>注意没有看过前几篇文章的童鞋可以在文章底部找到GitHub地址先看一下代码。</p>
 <p>为了省事起见，我们先把security的依赖去掉。</p>
-<p>`</p>
-<?xml version="1.0" encoding="UTF-8"?>
-<p><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"><br>
-<parent><br>
-<artifactid>spring-cloud-demo</artifactid><br>
-<groupid>cn.org.zhixiang</groupid><br>
-<version>0.0.1-SNAPSHOT</version><br>
-</parent><br>
-<modelversion>4.0.0</modelversion></project></p>
-<p><artifactid>cloud-demo-eureka-high</artifactid></p>
-  <properties>
-    <project.build.sourceencoding>UTF-8</project.build.sourceencoding>
-    <project.reporting.outputencoding>UTF-8</project.reporting.outputencoding>
-    <java.version>1.8</java.version>
-  </properties>
-  <dependencies>
-    <dependency>
-      <groupid>org.springframework.cloud</groupid>
-      <!--注意此处的依赖是SpringBoot2.0以后专用的，如果您使用的SpringBoot版本低于2.0请使用spring-cloud-starter-eureka-server-->
-      <artifactid>spring-cloud-starter-netflix-eureka-server</artifactid>
-    </dependency>
-  </dependencies>
-
-`
-<p>2.启动类只需要改一下名字其他的不变<br>
-<code>@SpringBootApplication @EnableEurekaServer public class CloudDemoEureHighApplication { public static void main(String[] args) { SpringApplication.run(CloudDemoEureHighApplication.class, args); } }</code></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">     <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-demo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.org.zhixiang<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>cloud-demo-eureka-high<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!--注意此处的依赖是SpringBoot2.0以后专用的，如果您使用的SpringBoot版本低于2.0请使用spring-cloud-starter-eureka-server--&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.启动类只需要改一下名字其他的不变</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@SpringBootApplication</span></span><br><span class="line"><span class="variable">@EnableEurekaServer</span></span><br><span class="line">public class CloudDemoEureHighApplication &#123;</span><br><span class="line">  <span class="selector-tag">public</span> <span class="selector-tag">static</span> <span class="selector-tag">void</span> <span class="selector-tag">main</span>(String[] args) &#123;</span><br><span class="line">    <span class="selector-tag">SpringApplication</span><span class="selector-class">.run</span>(CloudDemoEureHighApplication.class, args);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>3.我们现在要玩点不一样的了，此次项目我们使用了4个配置文件。它们分别是application.yml、application-dev1.yml、application-dev2.yml、application-dev3.yml。这里解释一下为什么会使用4个配置文件，如果我们在生产环境上这里其实应该是有三个程序的，但是我们为了测试方便，就使用这一个程序当成三个使用。</p>
-<p>先看我们的application.yml文件变成什么样子了。<br>
-<code>spring: profiles: active: dev1 application: name: eureka-server-high dev: host: localhost dev1Port: 8761 dev2Port: 8762 dev3Port: 8763</code></p>
+<p>先看我们的application.yml文件变成什么样子了。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">spring:</span></span><br><span class="line"><span class="symbol">  profiles:</span></span><br><span class="line"><span class="symbol">    active:</span> dev1</span><br><span class="line"><span class="symbol">  application:</span></span><br><span class="line"><span class="symbol">    name:</span> eureka-server-high</span><br><span class="line"><span class="symbol">dev:</span></span><br><span class="line"><span class="symbol">  host:</span> localhost</span><br><span class="line"><span class="symbol">  dev1Port:</span> <span class="number">8761</span></span><br><span class="line"><span class="symbol">  dev2Port:</span> <span class="number">8762</span></span><br><span class="line"><span class="symbol">  dev3Port:</span> <span class="number">8763</span></span><br></pre></td></tr></table></figure>
 <p>我们可以看到位于最上方的就是一个spring.profiles.active属性，这个属性呢，通常适用于我们不同环境下配置的切换。举个例子，我们可能有开发、测试、生产等等不同的环境，这几个环境使用的肯定不是一个数据库，如果我们每次在各个环境都要修改一下配置文件那样岂不是累死了。而spring.profiles.active属性呢，就是指定的我们的项目启动加载的配置文件，例如我们配的值为dev1，那么一会当我们启动项目的时候就会去加载application-dev1.yml文件.</p>
 <p>紧接着就是spring.application.name了，相信大家都知道了，我们此次的应用名称就是eureka-server-high了。</p>
 <p>下面呢其实是我自定义的一个配置，因为此次我们要使用三个Eureka服务来组成一个集群，所以我先在这里指定一下这三个服务的端口号，至于为什么在这指定相信看了下面三个配置文件你就明白了。</p>
-<p>4.先来看一下application-dev1.yml<br>
-<code>server: port: ${dev.dev1Port} eureka: client: service-url: defaultZone: http://${dev.host}:${dev.dev2Port}/eureka,http://${dev.host}:${dev.dev3Port}/eureka</code></p>
+<p>4.先来看一下application-dev1.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="string">$&#123;dev.dev1Port&#125;</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://$&#123;dev.host&#125;:$&#123;dev.dev2Port&#125;/eureka,http://$&#123;dev.host&#125;:$&#123;dev.dev3Port&#125;/eureka</span></span><br></pre></td></tr></table></figure>
 <p>可以看到首先定义了端口号是上方我们在application.yml文件中定义的一个端口号8761，然后它注册的地址变成两个了，就是端口端口号为8762和8763的程序。</p>
-<p>接着看application-dev2.yml<br>
-<code>server: port: ${dev.dev2Port} eureka: client: service-url: defaultZone: http://${dev.host}:${dev.dev1Port}/eureka,http://${dev.host}:${dev.dev3Port}/eureka</code><br>
-它注册了8761和8763的程序</p>
-<p>那么现在我想你应该已经猜出来了application-dev3.yml是怎么写的了吧<br>
-<code>server: port: ${dev.dev3Port} eureka: client: service-url: defaultZone: http://${dev.host}:${dev.dev1Port}/eureka,http://${dev.host}:${dev.dev2Port}/eureka</code></p>
+<p>接着看application-dev2.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="string">$&#123;dev.dev2Port&#125;</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://$&#123;dev.host&#125;:$&#123;dev.dev1Port&#125;/eureka,http://$&#123;dev.host&#125;:$&#123;dev.dev3Port&#125;/eureka</span></span><br></pre></td></tr></table></figure>
+<p>它注册了8761和8763的程序</p>
+<p>那么现在我想你应该已经猜出来了application-dev3.yml是怎么写的了吧</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="string">$&#123;dev.dev3Port&#125;</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://$&#123;dev.host&#125;:$&#123;dev.dev1Port&#125;/eureka,http://$&#123;dev.host&#125;:$&#123;dev.dev2Port&#125;/eureka</span></span><br></pre></td></tr></table></figure>
 <p>5.配置文件搞定以后我们可以启动了。</p>
 <p>首先我们到CloudDemoEureHighApplication类中右键run启动程序，这里你会发现两个疑点：</p>
 <p>项目启动报错哎。哈哈，其实不用怕，报错其实是正常的，不报错才奇怪呢。你想到报错的原因了么？我们启动使用的配置文件是dev1，他启动会向端口号为8762和端口号为8763的项目注册，这两个项目都没有，所以肯定会报错。不过没关系，Eureka其实是启动成功了的，现在你打开浏览器访问以下localhost:8671其实是可以看到Eureka已经注册成功了。</p>
@@ -275,10 +256,10 @@
 <p>如果你看到的是这样的一个效果，那么就恭喜你Eureka集群已经搭建成功了。</p>
 <p>6.使用：</p>
 <p>既然集群搭建成功了，那么就可以使用了，还记得我们如何把客户端注册的服务器上么，不记得话请抓紧时间复习一下：每天学点SpringCloud（二）：服务注册与发现Eureka</p>
-<p>当时我们注册的时候，因为没有集群所以应该是这样写的<br>
-<code>eureka: client: register-with-eureka: true service-url: defaultZone: http://localhost:8761/eureka</code></p>
-<p>你要是问我现在还这样写能行么，我告诉你可以，这样没问题，但是我不推荐。为什么呢，虽然我们现在使用的是集群，当我们的服务提供者注册上以后应该是三个节点都会有这个服务提供者，就算8761这个节点挂了也无所谓。但是，如果我们服务提供者在注册的时候8761就已经挂了，那么它是注册不上的，人家8762和8763现在是不认识它的。所以我推荐给你的写法就是：<br>
-<code>defaultZone: http://localhost:8761/eureka,http://localhost:8762/eureka,http://localhost:8763/eureka</code></p>
+<p>当时我们注册的时候，因为没有集群所以应该是这样写的</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://localhost:8761/eureka</span></span><br></pre></td></tr></table></figure>
+<p>你要是问我现在还这样写能行么，我告诉你可以，这样没问题，但是我不推荐。为什么呢，虽然我们现在使用的是集群，当我们的服务提供者注册上以后应该是三个节点都会有这个服务提供者，就算8761这个节点挂了也无所谓。但是，如果我们服务提供者在注册的时候8761就已经挂了，那么它是注册不上的，人家8762和8763现在是不认识它的。所以我推荐给你的写法就是：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defaultZone: http:<span class="regexp">//</span>localhost:<span class="number">8761</span><span class="regexp">/eureka,http:/</span><span class="regexp">/localhost:8762/</span>eureka,http:<span class="regexp">//</span>localhost:<span class="number">8763</span><span class="regexp">/eureka</span></span><br></pre></td></tr></table></figure>
 <p>GitHub：<a href="https://github.com/2388386839/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/2388386839/spring-cloud-demo</a></p>
 <p>码云：<a href="https://gitee.com/zhixiang_blog/spring-cloud-demo" target="_blank" rel="noopener">https://gitee.com/zhixiang_blog/spring-cloud-demo</a></p>
 <p>如果对您有所帮助，请记得帮忙点一个star哦</p>
@@ -363,7 +344,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -435,8 +416,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -452,11 +432,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

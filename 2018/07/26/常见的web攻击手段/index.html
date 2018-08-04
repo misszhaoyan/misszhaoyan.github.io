@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -211,50 +215,50 @@
                 col-sm-12 col-xs-12
                 post-container">
 
-                <p>XSS：跨站脚本攻击<br>
--典型实例为：<br>
-当用户在表达输入一段数据后，提交给服务端进行持久化。如果此用户输入的是一段脚本语言，而服务端</p>
+                <h2><span id="xss跨站脚本攻击">XSS：跨站脚本攻击</span></h2>
+<h3><span id="-典型实例为">-典型实例为：</span></h3>
+<p>当用户在表达输入一段数据后，提交给服务端进行持久化。如果此用户输入的是一段脚本语言，而服务端</p>
 <p>用户输入的数据没有经过转码、校验等就存入了数据库，在其他页面需要展示此数据时，就会执行此用户输入的语言。简单来说，JS的强大不用我来解释吧</p>
-<p>-推荐防御措施：<br>
-对用户输入的信息进行转义，例如&lt;&gt;'等等特殊字符。当然，其实很多前端框架也支持这么做，快查一查你使用的框架支持么。</p>
-<p>CRSF：跨站请求伪造<br>
--典型实例为：<br>
-如果A银行存在CRSF漏洞，有用户在登陆完A银行后没有退出，A银行的cookie信息保存在浏览器。然后呢，用户不小心进入了恶意网站，</p>
+<h3><span id="-推荐防御措施">-推荐防御措施：</span></h3>
+<p>对用户输入的信息进行转义，例如&lt;&gt;'等等特殊字符。当然，其实很多前端框架也支持这么做，快查一查你使用的框架支持么。</p>
+<h2><span id="crsf跨站请求伪造">CRSF：跨站请求伪造</span></h2>
+<h3><span id="-典型实例为">-典型实例为：</span></h3>
+<p>如果A银行存在CRSF漏洞，有用户在登陆完A银行后没有退出，A银行的cookie信息保存在浏览器。然后呢，用户不小心进入了恶意网站，</p>
 <p>此网站识别出了用户客户端存在A银行的信息，那么恶意网站就可以根据此cookie去请求A银行的转账接口，那么A银行会误认为是用户进行操作从而使恶意网站得逞。</p>
-<p>-推荐防御措施：<br>
-假如我们的网站是A银行，为了防止用户信息泄露，我们应该做这三件事：</p>
+<h3><span id="-推荐防御措施">-推荐防御措施：</span></h3>
+<p>假如我们的网站是A银行，为了防止用户信息泄露，我们应该做这三件事：</p>
 <p>将cookie设置为HttpOnly，让恶意网站无法通过脚本获取到cookie<br>
 所有增删改以及需要验证权限的请求都应该携带token<br>
 Http头中有一个Referer属性，此属性表示请求Url地址，验证每一个请求的Referer是不是由自己系统发起的</p>
-<p>SQL注入<br>
--典型实例为：<br>
-用户输入的信息带有 delete 、drop等危害性十足的sql，就像用户登录时输入了用户名 “aaa;drop table user”,那么在我们没有任何防御措施的情况下就会变为“select * from user where username=‘aaa’;drop table user”。然后呢，表就没了，你说尴不尴尬？</p>
-<p>-推荐防御措施：</p>
+<h2><span id="sql注入">SQL注入</span></h2>
+<h3><span id="-典型实例为">-典型实例为：</span></h3>
+<p>用户输入的信息带有 delete 、drop等危害性十足的sql，就像用户登录时输入了用户名 “aaa;drop table user”,那么在我们没有任何防御措施的情况下就会变为“select * from user where username=‘aaa’;drop table user”。然后呢，表就没了，你说尴不尴尬？</p>
+<h3><span id="-推荐防御措施">-推荐防御措施：</span></h3>
 <p>使用原生jdbc时要使用PreparedStatement 而不要使用Statement，<br>
 使用orm框架，像MyBatis、Hibernate等框架都对sql注入进行了很好的预防<br>
 密码任何时候都不要使用明文存放，避免攻击者直接获取用户信息<br>
 后台发生错误时不要直接返回异常信息，避免对服务器信息的泄露。建议对异常进行封装，返回可控的异常信息。</p>
-<p>文件上传漏洞<br>
--典型实例为：<br>
-没有对用户上传的文件做校验，恶意用户长时间上传超大文件占用系统资源，上传可执行脚本获取获取服务器信息</p>
-<p>-推荐防御措施：</p>
+<h2><span id="文件上传漏洞">文件上传漏洞</span></h2>
+<h3><span id="-典型实例为">-典型实例为：</span></h3>
+<p>没有对用户上传的文件做校验，恶意用户长时间上传超大文件占用系统资源，上传可执行脚本获取获取服务器信息</p>
+<h3><span id="-推荐防御措施">-推荐防御措施：</span></h3>
 <p>对用户上传做限流，每个用户每天最多上传多少内容。<br>
 对文件类型进行判断，不能通过后缀名判断，而要通过判断魔数（文件起始的几个字节）来判断，很多文件类型的魔数是不变的。</p>
-<p>DDOS：分布式拒绝服务攻击<br>
--典型实例为：<br>
-1.攻击者提前控制大量计算机，并在某一时刻指挥大量计算机同时对某一服务器进行访问来达到瘫痪主机的目的。</p>
+<h2><span id="ddos分布式拒绝服务攻击">DDOS：分布式拒绝服务攻击</span></h2>
+<h3><span id="-典型实例为">-典型实例为：</span></h3>
+<p>1.攻击者提前控制大量计算机，并在某一时刻指挥大量计算机同时对某一服务器进行访问来达到瘫痪主机的目的。</p>
 <p>2.相信大家都知道TCP三次握手的机制，（如不了解请参考文章底部补充）攻击者利用此机制对服务器返回的ACK确认包不回应，这样服务器就会存在大量的等待列表，不断重试，等待队列满了以后不再接受TCP连接，从而阻挡了正常用户的使用</p>
 <p>3.攻击者向DNS服务器发送海量的域名解析请求，DNS首先查缓存，如果缓存不存在的话会去递归调用上级服务器查询，直到查询到全球13台根服务器为止，当解析请求过多时正常用户访问就会出现DNS解析超时问题</p>
-<p>-推荐防御措施：<br>
-使用缓存，当缓存中存在时就直接取出，不要频繁的连接数据库。</p>
+<h3><span id="-推荐防御措施">-推荐防御措施：</span></h3>
+<p>使用缓存，当缓存中存在时就直接取出，不要频繁的连接数据库。</p>
 <p>缩短	SYN Timeout时间，即缩短从接受到SYN报文到确定这个报文无效并丢弃该连接的时间。</p>
 <p>限制源ip每秒发起的DNS请求等</p>
-<p>补充：TCP三次握手机制<br>
-首先，请求端（客户端）发送一个包含SYN标志的TCP报文，SYN即同步（Synchronize），同步报文会指明客户端使用的端口以及TCP连接的初始序号；</p>
+<h2><span id="补充tcp三次握手机制">补充：TCP三次握手机制</span></h2>
+<p>首先，请求端（客户端）发送一个包含SYN标志的TCP报文，SYN即同步（Synchronize），同步报文会指明客户端使用的端口以及TCP连接的初始序号；</p>
 <p>第二步，服务器在收到客户端的SYN报文，将返回一个SYN+ACK的报文，表示客户端的请求被接受，同时TCP序号被加一，ACK即确认（Acknowledgment）。</p>
 <p>第三步，客户端也返回一个确认报文ACK给服务器端，同样TCP序列号被加一，到此一个TCP连接完成。</p>
-<p>结语<br>
-写这篇文章的目的呢，其实不是说让大家通过这篇文章成为一个安全高手或者怎么的，只是想让大家了解一下这些常见的攻击手段。当你知道了这些攻击手段后看一下你手中的项目是否需要预防一下，毕竟未雨绸缪总是比临阵磨枪好的多，不是吗？</p>
+<h2><span id="结语">结语</span></h2>
+<p>写这篇文章的目的呢，其实不是说让大家通过这篇文章成为一个安全高手或者怎么的，只是想让大家了解一下这些常见的攻击手段。当你知道了这些攻击手段后看一下你手中的项目是否需要预防一下，毕竟未雨绸缪总是比临阵磨枪好的多，不是吗？</p>
 
                 
 
@@ -336,7 +340,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -408,8 +412,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -425,11 +428,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>
@@ -449,7 +453,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录1</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">XSS：跨站脚本攻击</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">-典型实例为：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">-推荐防御措施：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">CRSF：跨站请求伪造</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">-典型实例为：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">-推荐防御措施：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">SQL注入</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">-典型实例为：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">-推荐防御措施：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">文件上传漏洞</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">-典型实例为：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">-推荐防御措施：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">DDOS：分布式拒绝服务攻击</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">-典型实例为：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">-推荐防御措施：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">补充：TCP三次握手机制</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">结语</span></a></li></ol>
         
         </div>
       </aside>

@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -225,11 +229,11 @@
 建议对二分查找不太熟悉的同学可以先在草稿纸上、电脑上或者脑海里定义一个0-16的有序数组跟着上边的步骤来查找一下数据5。</p>
 <p>下面这个图是我画的图，来看一下跟你画的步骤或者想象的步骤一样么<br>
 <img src="1.png" alt="图片"></p>
-<p>如果上图你已经看明白了的话那么接下来我们就上代码吧，<br>
-<code>public static void select(int[]num,int a){ int left=0; int right=num.length-1; int m=(left+right)/2; while(left&lt;=right){ if(num[m]==a){ System.out.println(&quot;在&quot;+m+&quot;位置找到&quot;); return; } if (num[m]&gt;a){ right=m-1; }else{ left=m+1; } m=(left+right)/2; } System.out.println(&quot;没找到&quot;); }</code><br>
-上面的方法使用了一个普通的循环的方式，二分还存在一种递归的写法，这里也分享出来<br>
-<code>public static void select(int[]num,int a,int left,int right){ if(left&gt;right){ System.out.println(&quot;没找到&quot;); return; } int m=(left+right)/2; if(num[m]==a){ System.out.println(&quot;在&quot;+m+&quot;位置找到&quot;); return; } if (num[m]&gt;a){ right=m-1; select(num, a,left,right); }else{ left=m+1; select(num, a,left,right); } }</code><br>
-二分查找法讲到这里已经讲完了。在这里温馨提示大家，学习算法时，我们没必要拘泥于代码的实现，那没有意义。我的建议就是深入理解步骤，当你理解步骤以后代码是随你怎么玩都可以的。</p>
+<p>如果上图你已经看明白了的话那么接下来我们就上代码吧，</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> static void <span class="keyword">select</span>(<span class="built_in">int</span>[]num,<span class="built_in">int</span> a)&#123;</span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">left</span>=<span class="number">0</span>;</span><br><span class="line">    <span class="built_in">int</span> <span class="built_in">right</span>=num.length<span class="number">-1</span>;</span><br><span class="line">    <span class="built_in">int</span> m=(<span class="built_in">left</span>+<span class="built_in">right</span>)/<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">left</span>&lt;=<span class="built_in">right</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(num[m]==a)&#123;</span><br><span class="line">            System.out.println(<span class="string">"在"</span>+m+<span class="string">"位置找到"</span>);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (num[m]&gt;a)&#123;</span><br><span class="line">            <span class="built_in">right</span>=m<span class="number">-1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">left</span>=m+<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        m=(<span class="built_in">left</span>+<span class="built_in">right</span>)/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(<span class="string">"没找到"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的方法使用了一个普通的循环的方式，二分还存在一种递归的写法，这里也分享出来</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> static void <span class="keyword">select</span>(<span class="built_in">int</span>[]num,<span class="built_in">int</span> a,<span class="built_in">int</span> <span class="built_in">left</span>,<span class="built_in">int</span> <span class="built_in">right</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">left</span>&gt;<span class="built_in">right</span>)&#123;</span><br><span class="line">        System.out.println(<span class="string">"没找到"</span>);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">int</span> m=(<span class="built_in">left</span>+<span class="built_in">right</span>)/<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span>(num[m]==a)&#123;</span><br><span class="line">            System.out.println(<span class="string">"在"</span>+m+<span class="string">"位置找到"</span>);</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (num[m]&gt;a)&#123;</span><br><span class="line">            <span class="built_in">right</span>=m<span class="number">-1</span>;</span><br><span class="line">            <span class="keyword">select</span>(num, a,<span class="built_in">left</span>,<span class="built_in">right</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">left</span>=m+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">select</span>(num, a,<span class="built_in">left</span>,<span class="built_in">right</span>);</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二分查找法讲到这里已经讲完了。在这里温馨提示大家，学习算法时，我们没必要拘泥于代码的实现，那没有意义。我的建议就是深入理解步骤，当你理解步骤以后代码是随你怎么玩都可以的。</p>
 
                 
 
@@ -311,7 +315,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -383,8 +387,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -400,11 +403,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

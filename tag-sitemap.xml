@@ -9,41 +9,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Elasticsearch/</loc>
-        <lastmod>2018-07-26T12:36:16.265Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite-url/tags/Mybatis/</loc>
-        <lastmod>2018-07-26T12:36:16.312Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite-url/tags/git/</loc>
-        <lastmod>2018-07-26T12:36:16.312Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite-url/tags/%E7%AC%AC%E4%B8%89%E6%96%B9%E7%99%BB%E5%BD%95/</loc>
-        <lastmod>2018-07-26T12:36:16.312Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite-url/tags/Vue/</loc>
-        <lastmod>2018-07-26T12:36:16.328Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite-url/tags/UML/</loc>
         <lastmod>2018-07-26T12:36:16.359Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -51,57 +16,92 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Https/</loc>
-        <lastmod>2018-07-26T12:36:16.468Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite-url/tags/web%E5%AE%89%E5%85%A8/</loc>
-        <lastmod>2018-07-26T12:36:16.500Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite-url/tags/SpringCloud/</loc>
-        <lastmod>2018-07-26T12:36:16.578Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite-url/tags/JS/</loc>
-        <lastmod>2018-07-26T12:36:16.609Z</lastmod>
+        <loc>http://yoursite-url/tags/Java%E5%B7%A5%E5%85%B7%E6%A0%8F/</loc>
+        <lastmod>2018-08-04T13:21:35.109Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/Java%E5%B7%A5%E5%85%B7%E7%B1%BB/</loc>
-        <lastmod>2018-07-26T12:36:16.609Z</lastmod>
+        <lastmod>2018-08-04T13:22:30.733Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Mybatis/</loc>
+        <lastmod>2018-08-04T13:23:05.172Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/git/</loc>
+        <lastmod>2018-08-04T13:23:37.499Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Vue/</loc>
+        <lastmod>2018-08-04T13:24:23.102Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Elasticsearch/</loc>
+        <lastmod>2018-08-04T13:25:35.583Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Https/</loc>
+        <lastmod>2018-08-04T13:29:28.521Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/%E7%AC%AC%E4%B8%89%E6%96%B9%E7%99%BB%E5%BD%95/</loc>
+        <lastmod>2018-08-04T13:37:03.375Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/JS/</loc>
+        <lastmod>2018-08-04T13:38:08.490Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</loc>
-        <lastmod>2018-07-26T12:36:16.640Z</lastmod>
+        <lastmod>2018-08-04T13:39:03.774Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/web%E5%AE%89%E5%85%A8/</loc>
+        <lastmod>2018-08-04T14:07:48.195Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
-        <lastmod>2018-07-26T12:36:16.640Z</lastmod>
+        <lastmod>2018-08-04T14:08:18.468Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Java%E5%B7%A5%E5%85%B7%E6%A0%8F/</loc>
-        <lastmod>2018-07-26T12:36:16.656Z</lastmod>
+        <loc>http://yoursite-url/tags/SpringCloud/</loc>
+        <lastmod>2018-08-04T14:11:08.317Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

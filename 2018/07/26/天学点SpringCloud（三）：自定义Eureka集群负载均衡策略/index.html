@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -217,71 +221,27 @@
 <p>通过代码自定义<br>
 通过代码的方式自定义负责均衡策略时需要注意的是，注意避免SpringBoot的包扫描，因为自定义的规则必须在Eureka的规则实例化以后再实例化才会生效，那么这样就有两种方式，</p>
 <p>第一种<br>
-1.在CloudDemoConsumerApplication类上级新建包config，然后新建LoanBalanced类。使用此类注册一个IRule以达到替换Eureka的目的<br>
-`<br>
-package cn.org.config;</p>
-<p>import com.netflix.loadbalancer.*;<br>
-import org.springframework.context.annotation.Bean;<br>
-import org.springframework.context.annotation.Configuration;</p>
-<p>@Configuration<br>
-public class LoadBalanced {<br>
-@Bean<br>
-public IRule ribbonRule() {<br>
-return new RoundRobinRule();                //轮训<br>
-// return new WeightedResponseTimeRule();    //加权权重<br>
-//return new RetryRule();                    //带有重试机制的轮训<br>
-//return new RandomRule();                   //随机<br>
-//return new TestRule();                     //自定义规则<br>
-}<br>
-}`<br>
-2.注意包名，CloudDemoConsumerApplication的包名是cn.org.zhixiang。</p>
+1.在CloudDemoConsumerApplication类上级新建包config，然后新建LoanBalanced类。使用此类注册一个IRule以达到替换Eureka的目的</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package cn.org.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.netflix.loadbalancer.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">LoadBalanced</span> &#123;</span></span><br><span class="line">    @Bean</span><br><span class="line">    public IRule ribbonRule() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RoundRobinRule();                <span class="regexp">//轮训</span></span><br><span class="line"><span class="regexp">       //</span> <span class="keyword">return</span> <span class="keyword">new</span> WeightedResponseTimeRule();    <span class="regexp">//加权权重</span></span><br><span class="line"><span class="regexp">       //</span><span class="keyword">return</span> <span class="keyword">new</span> RetryRule();                    <span class="regexp">//带有重试机制的轮训</span></span><br><span class="line"><span class="regexp">       //</span><span class="keyword">return</span> <span class="keyword">new</span> RandomRule();                   <span class="regexp">//随机</span></span><br><span class="line"><span class="regexp">       //</span><span class="keyword">return</span> <span class="keyword">new</span> TestRule();                     <span class="regexp">//自定义规则</span></span><br><span class="line"><span class="regexp">    &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>2.注意包名，CloudDemoConsumerApplication的包名是cn.org.zhixiang。</p>
 <p>3.想使用哪种负载均衡策略就new哪一种就ok</p>
-<p>4.TestRule为自定义的规则：<br>
-`<br>
-package cn.org.config.domain;</p>
-<p>import com.netflix.loadbalancer.ILoadBalancer;<br>
-import com.netflix.loadbalancer.IRule;<br>
-import com.netflix.loadbalancer.Server;</p>
-<p>import java.util.List;</p>
-<p>public class TestRule implements IRule {</p>
-<pre><code>private ILoadBalancer loadBalancer;
-@Override
-public Server choose(Object o) {
- List&lt;Server&gt; servers= loadBalancer.getAllServers();
-    return servers.get(0);
-}
-
-@Override
-public void setLoadBalancer(ILoadBalancer iLoadBalancer) {
-    this.loadBalancer=iLoadBalancer;
-}
-
-@Override
-public ILoadBalancer getLoadBalancer() {
-    return this.loadBalancer;
-}
-</code></pre>
-<p>}`<br>
-如果有自定义的需求的话可以参照这个写法，我这只是测试使用，取的服务列表的第一个。</p>
+<p>4.TestRule为自定义的规则：</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.org.config.domain;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.netflix.loadbalancer.ILoadBalancer;</span><br><span class="line"><span class="keyword">import</span> com.netflix.loadbalancer.IRule;</span><br><span class="line"><span class="keyword">import</span> com.netflix.loadbalancer.Server;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestRule</span> <span class="keyword">implements</span> <span class="title">IRule</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> ILoadBalancer loadBalancer;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function">Server <span class="title">choose</span><span class="params">(Object o)</span> </span>&#123;</span><br><span class="line">     List&lt;Server&gt; servers= loadBalancer.getAllServers();</span><br><span class="line">        <span class="function"><span class="keyword">return</span> servers.<span class="title">get</span><span class="params">(<span class="number">0</span>)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setLoadBalancer</span><span class="params">(ILoadBalancer iLoadBalancer)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.loadBalancer=iLoadBalancer;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function">ILoadBalancer <span class="title">getLoadBalancer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.loadBalancer;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果有自定义的需求的话可以参照这个写法，我这只是测试使用，取的服务列表的第一个。</p>
 <p>5.在CloudDemoConsumerApplication类上添加注解<br>
-`@RibbonClient(name = “provider-demo”, configuration = cn.org.config.LoadBalanced</p>
-<p>.class)`<br>
+<code>@RibbonClient(name = &quot;provider-demo&quot;, configuration = cn.org.config.LoadBalanced.class)</code><br>
 指定provider-demo服务使用的是LoadBalanced类提供的规则</p>
 <p>第二种：<br>
 依旧把LoadBalanced放到cn.org.zhixiang包下，不过呢通过自定义注解来解决包扫描的问题</p>
 <p>1.自定义一个注解<br>
 <code>public @interface ExcludeFromComponentScan { }</code><br>
-2.类使用刚才自定义的注解标示<br>
-<code>@Configuration @ExcludeFromComponentScan public class AvoidLoanbalanced { @Bean public IRule ribbonRule() { return new RoundRobinRule(); //轮训 // return new WeightedResponseTimeRule(); //加权权重 //return new RetryRule(); //带有重试机制的轮训 //return new RandomRule(); //随机 //return new TestRule(); //自定义规则 } }</code><br>
-3.Application中指定包扫描忽略使用上方注解的类，然后注册规则</p>
-<p><code>@RibbonClient(name = &quot;provider-demo&quot;, configuration = AvoidLoanbalanced.class) @ComponentScan(excludeFilters = { @ComponentScan.Filter(type = FilterType.ANNOTATION, value = ExcludeFromComponentScan.class) })</code><br>
-注意：上方两种方式使用一种就够了。</p>
-<p>使用配置文件自定义<br>
-`#为服务Id名称为provider-demo的项目配置负载均衡规则为com.netflix.loadbalancer.WeightedResponseTimeRule</p>
-<p>provider-demo:<br>
-ribbon:<br>
-NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule<br>
-`</p>
+2.类使用刚才自定义的注解标示</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">@ExcludeFromComponentScan</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">AvoidLoanbalanced</span> &#123;</span></span><br><span class="line">  @Bean</span><br><span class="line">  public IRule ribbonRule() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> RoundRobinRule();        <span class="regexp">//轮训</span></span><br><span class="line"><span class="regexp">    //</span> <span class="keyword">return</span> <span class="keyword">new</span> WeightedResponseTimeRule();  <span class="regexp">//加权权重</span></span><br><span class="line"><span class="regexp">    //</span><span class="keyword">return</span> <span class="keyword">new</span> RetryRule();          <span class="regexp">//带有重试机制的轮训</span></span><br><span class="line"><span class="regexp">    //</span><span class="keyword">return</span> <span class="keyword">new</span> RandomRule();          <span class="regexp">//随机</span></span><br><span class="line"><span class="regexp">    //</span><span class="keyword">return</span> <span class="keyword">new</span> TestRule();           <span class="regexp">//自定义规则</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>3.Application中指定包扫描忽略使用上方注解的类，然后注册规则</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@RibbonClient</span>(name = <span class="string">"provider-demo"</span>, configuration = AvoidLoanbalanced.class)</span><br><span class="line"><span class="variable">@ComponentScan</span>(excludeFilters = &#123; <span class="variable">@ComponentScan</span>.Filter(type = FilterType.ANNOTATION, value = ExcludeFromComponentScan.class) &#125;)</span><br></pre></td></tr></table></figure>
+<p>注意：上方两种方式使用一种就够了。</p>
+<p>使用配置文件自定义</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">`#为服务Id名称为provider-demo的项目配置负载均衡规则为com<span class="selector-class">.netflix</span><span class="selector-class">.loadbalancer</span><span class="selector-class">.WeightedResponseTimeRule</span></span><br><span class="line"></span><br><span class="line">provider-demo:</span><br><span class="line">  ribbon:</span><br><span class="line">      NFLoadBalancerRuleClassName: com<span class="selector-class">.netflix</span><span class="selector-class">.loadbalancer</span><span class="selector-class">.WeightedResponseTimeRule</span></span><br></pre></td></tr></table></figure>
 <p>当然，自定义负载均衡策略只需要选择代码或配置文件自定义其中的一种就可以了。毕竟美酒虽好，可不要贪杯哦。</p>
 <p>GitHub：<a href="https://github.com/2388386839/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/2388386839/spring-cloud-demo</a></p>
 <p>码云：<a href="https://gitee.com/zhixiang_blog/spring-cloud-demo" target="_blank" rel="noopener">https://gitee.com/zhixiang_blog/spring-cloud-demo</a></p>
@@ -367,7 +327,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -439,8 +399,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -456,11 +415,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

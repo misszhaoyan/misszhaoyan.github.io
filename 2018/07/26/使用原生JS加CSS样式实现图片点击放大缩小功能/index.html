@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -215,19 +219,17 @@
 <p>对比我度娘的结果，此功能实现没有基于任何框架，原生js、css和html就可以实现,相信聪明的你看了就明白了。</p>
 <p>因为我的网站不是博客么，当我的一篇博客从后台查询出来的时候，有一个字段会记录博客的正文。我们需要放大的图片就在这个正文里了。</p>
 <p>首先我先调用了一个方法为我的正文做了一下转换：</p>
-<p><code>imgHander(context) { var subStr=new RegExp('&lt;img','ig'); return context.replace(subStr, &quot;&lt;img onclick='picBig(this)' &quot;); }</code><br>
-我给正文中所有的img标签都添加了一个picBig函数,这个参数传递的是这个图片本身，那么这个函数又是怎么实现的呢？</p>
-<p><code>function picBig(img) { var i=img.currentSrc; var v = document.getElementById('divCenter'); var bigImg = document.getElementById('bigImg'); bigImg.src=i; v.style.display = &quot;block&quot;; }</code><br>
-大致上呢，这个函数获取了调用者的图片地址，然后给了一个id为bigImg的img标签，然后呢又把一个di为divCenter的东西给设置了display</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">imgHander(context) &#123;</span><br><span class="line">    <span class="keyword">var</span> subStr=<span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'&lt;img'</span>,<span class="string">'ig'</span>);</span><br><span class="line">    <span class="keyword">return</span> context.replace(subStr, <span class="string">"&lt;img onclick='picBig(this)' "</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我给正文中所有的img标签都添加了一个picBig函数,这个参数传递的是这个图片本身，那么这个函数又是怎么实现的呢？</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">picBig</span>(<span class="params">img</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> i=img.currentSrc;</span><br><span class="line">    <span class="keyword">var</span> v = <span class="built_in">document</span>.getElementById(<span class="string">'divCenter'</span>);</span><br><span class="line">    <span class="keyword">var</span> bigImg = <span class="built_in">document</span>.getElementById(<span class="string">'bigImg'</span>);</span><br><span class="line">    bigImg.src=i;</span><br><span class="line">    v.style.display = <span class="string">"block"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大致上呢，这个函数获取了调用者的图片地址，然后给了一个id为bigImg的img标签，然后呢又把一个di为divCenter的东西给设置了display</p>
 <p>为显示。那么这两个东西又是什么呢，接着忘下看：</p>
-<p>`<div id="divCenter" align="center" style="position: absolute; display: none;  width: 100%; height: 100%; overflow:auto;  position:fixed;z-index:9999;margin-top: 30px;"><br>
-<img id="bigImg" class="bigImg" onclick="picClose();" src="" style="width:90%;"></div></p>
- `
-看到这里相信你已经明白了，这个div会显示出来，并且我们刚才点击的图片大小会变成宽度为90%，其实我们的图片放大功能已经实现了不是么。接着图片缩小，是不是very easy，隐藏这个div就是了，点击图片时调用picClose函数。
-<p><code>function picClose() { var v = document.getElementById('divCenter'); v.style.display = &quot;none&quot;; }</code><br>
-功能已经完全实现了，如果你不着急走的话就在附送你两个小样式。</p>
-<p><code>.blog img { cursor:url(img/big.png),auto; } .bigImg { cursor:url(img/small.png),auto; }</code><br>
-上方两个样式呢，第一个是当我们鼠标放在需要放大的图片上时会显示一个放大镜，第二个就是图片放大以后鼠标放上就会显示一个缩小的样式，在这里顺便把这两个icon附上。<img src="1.png" alt="图片"><img src="2.png" alt="图片"></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">div</span> <span class="built_in">id</span>=<span class="string">"divCenter"</span> align=<span class="string">"center"</span></span><br><span class="line">     style=<span class="string">"position: absolute; display: none;  width: 100%; height: 100%; overflow:auto;  position:fixed;z-index:9999;margin-top: 30px;"</span>&gt;</span><br><span class="line">    &lt;img <span class="built_in">id</span>=<span class="string">"bigImg"</span> <span class="built_in">class</span>=<span class="string">"bigImg"</span> onclick=<span class="string">"picClose();"</span></span><br><span class="line">            src=<span class="string">""</span> style=<span class="string">"width:90%;"</span>/&gt;</span><br><span class="line">&lt;/<span class="keyword">div</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>看到这里相信你已经明白了，这个div会显示出来，并且我们刚才点击的图片大小会变成宽度为90%，其实我们的图片放大功能已经实现了不是么。接着图片缩小，是不是very easy，隐藏这个div就是了，点击图片时调用picClose函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">picClose</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> v = <span class="built_in">document</span>.getElementById(<span class="string">'divCenter'</span>);</span><br><span class="line">    v.style.display = <span class="string">"none"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>功能已经完全实现了，如果你不着急走的话就在附送你两个小样式。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">`<span class="selector-class">.blog</span> <span class="selector-tag">img</span> &#123;</span><br><span class="line">    <span class="attribute">cursor</span>:<span class="built_in">url</span>(img/big.png),auto;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.bigImg</span>  &#123;</span><br><span class="line">    <span class="attribute">cursor</span>:<span class="built_in">url</span>(img/small.png),auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上方两个样式呢，第一个是当我们鼠标放在需要放大的图片上时会显示一个放大镜，第二个就是图片放大以后鼠标放上就会显示一个缩小的样式，在这里顺便把这两个icon附上。<img src="1.png" alt="图片"><img src="2.png" alt="图片"></p>
 
                 
 
@@ -309,7 +311,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -381,8 +383,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -398,11 +399,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -216,159 +220,45 @@
 <p>创建父Maven工程<br>
 首先我们创建一个Maven项目</p>
 <p><img src="1.png" alt="1"></p>
-<p>我们把此项目当做我们项目的父项目，以后我们所有的子项目都应该继承这个项目，来看一下此项目的pom.xml文件都是依赖了什么<br>
-`</p>
-<?xml version="1.0" encoding="UTF-8"?>
-<p><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"><br>
-<modelversion>4.0.0</modelversion></project></p>
-<pre><code>&lt;groupId&gt;cn.org.zhixiang&lt;/groupId&gt;
-&lt;artifactId&gt;spring-cloud-demo&lt;/artifactId&gt;
-&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
-&lt;packaging&gt;pom&lt;/packaging&gt;
-
-&lt;parent&gt;
-    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
-    &lt;version&gt;2.0.3.RELEASE&lt;/version&gt;
-&lt;/parent&gt;
-
-&lt;dependencyManagement&gt;
-        &lt;dependencies&gt;
-            &lt;dependency&gt;
-                &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-                &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;
-                &lt;version&gt;Finchley.RELEASE&lt;/version&gt;
-                &lt;type&gt;pom&lt;/type&gt;
-                &lt;scope&gt;import&lt;/scope&gt;
-            &lt;/dependency&gt;
-        &lt;/dependencies&gt;
-&lt;/dependencyManagement&gt;
-
-&lt;properties&gt;
-    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
-    &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
-    &lt;java.version&gt;1.8&lt;/java.version&gt;
-&lt;/properties&gt;
-
-&lt;build&gt;
-    &lt;plugins&gt;
-        &lt;plugin&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
-        &lt;/plugin&gt;
-    &lt;/plugins&gt;
-&lt;/build&gt;
-</code></pre>
-
-<p>`</p>
+<p>我们把此项目当做我们项目的父项目，以后我们所有的子项目都应该继承这个项目，来看一下此项目的pom.xml文件都是依赖了什么</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.org.zhixiang<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-demo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.3.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-dependencies<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">version</span>&gt;</span>Finchley.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">type</span>&gt;</span>pom<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>import<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencyManagement</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>创建服务提供者</p>
-<p>右键项目名称：spring-cloud-demo，选择New–&gt;Module,选择Maven，然后点击next，然后呢artifactId给项目取名为cloud-demo-provider，现在服务提供者项目就创建好了。因为接下来我们测试需要访问程序，所以接着我们引入所需的web依赖。<br>
-<code>&lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt; &lt;/dependency&gt; &lt;/dependencies&gt;</code></p>
+<p>右键项目名称：spring-cloud-demo，选择New–&gt;Module,选择Maven，然后点击next，然后呢artifactId给项目取名为cloud-demo-provider，现在服务提供者项目就创建好了。因为接下来我们测试需要访问程序，所以接着我们引入所需的web依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>2.在resources文件夹下新建application.properties或者application.yml（二者任选其一），添加如下配置:</p>
-<p>properties文件这样写<br>
-<code>spring.application.name=provider-demo server.port=8078</code><br>
-yml这样写<br>
-<code>spring: application: name: provider-demo server: port: 8078</code><br>
-spring.application.name呢，意思是给给项目起个名字叫做provider-demo</p>
+<p>properties文件这样写</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spring.application.<span class="attribute">name</span>=provider-demo</span><br><span class="line">server.<span class="attribute">port</span>=8078</span><br></pre></td></tr></table></figure>
+<p>yml这样写</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">spring:</span></span><br><span class="line"><span class="symbol">  application:</span></span><br><span class="line"><span class="symbol">    name:</span> provider-demo</span><br><span class="line"><span class="symbol">server:</span></span><br><span class="line"><span class="symbol">  port:</span> <span class="number">8078</span></span><br></pre></td></tr></table></figure>
+<p>spring.application.name呢，意思是给给项目起个名字叫做provider-demo</p>
 <p>server.port呢，指定项目启动时的端口为8078</p>
-<p>3.在Java文件夹下创建包cn.org.zhixiang（这个包名是我的网站域名的反转，大家可以自行定义）,在此包下新建CloudDemoProviderApplication类<br>
-`<br>
-package cn.org.zhixiang;</p>
-<p>import org.springframework.boot.SpringApplication;<br>
-import org.springframework.boot.autoconfigure.SpringBootApplication;</p>
-<p>@SpringBootApplication<br>
-public class CloudDemoProviderApplication {</p>
-<p>public static void main(String[] args) {<br>
-SpringApplication.run(CloudDemoProviderApplication.class, args);<br>
-}<br>
-}<br>
-`<br>
-@SpringBootApplication注解呢是SpringBoot的一个组合注解，主要注解为@Configuration、@EnableAutoConfiguration、@ComponentScan</p>
+<p>3.在Java文件夹下创建包cn.org.zhixiang（这个包名是我的网站域名的反转，大家可以自行定义）,在此包下新建CloudDemoProviderApplication类</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.org.zhixiang;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CloudDemoProviderApplication</span> &#123;</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</span><br><span class="line">      SpringApplication.run(CloudDemoProviderApplication.<span class="keyword">class</span>, args);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@SpringBootApplication注解呢是SpringBoot的一个组合注解，主要注解为@Configuration、@EnableAutoConfiguration、@ComponentScan</p>
 <p>我们使用SpringBoot启动项目时一般都会使用此注解，一会启动项目的时候我们在这个类中右键选择run CloudDemoProviderApplication 就可以启动了</p>
 <p><img src="2.png" alt="1"></p>
-<p>4.在cn.org.zhxiang包下新建包domain,在domain包中创建一个User实体类<br>
-`<br>
-public class User{</p>
-<pre><code>private long id;
-private String name;
-private int age;
-public long getId() {
-    return id;
-}
-
-public void setId(long id) {
-    this.id = id;
-}
-
-public String getName() {
-    return name;
-}
-
-public void setName(String name) {
-    this.name = name;
-}
-
-public int getAge() {
-    return age;
-}
-
-public void setAge(int age) {
-    this.age = age;
-}
-</code></pre>
-<p>}<br>
-`</p>
+<p>4.在cn.org.zhxiang包下新建包domain,在domain包中创建一个User实体类</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span>&#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>5.在cn.org.zhxiang包下新建包controller,在controller包中创建一个类UserController</p>
 <p>`</p>
-<p>@RestController<br>
-@RequestMapping(&quot;/user&quot;)<br>
-public class UserController {</p>
-<pre><code>@GetMapping(value = &quot;/getUser/{id}&quot;)
-public User getUser(@PathVariable Long id){
-    User user=new User();
-    user.setId(id);
-    user.setName(&quot;张三&quot;);
-    user.setAge(18);
-    return user;
-}
-@GetMapping(value = &quot;/getName&quot;)
-public String getName(){
-    return &quot;张三&quot;;
-}
-</code></pre>
-<p>}<br>
-`</p>
-<p>@RestController注解呢，其实就是@ResponseBody ＋ @Controller的组合注解，@GetMapping呢，相当于@RequestMapping(value=&quot;&quot;, method = RequestMethod.GET)</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(<span class="meta-string">"/user"</span>)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(value = <span class="meta-string">"/getUser/&#123;id&#125;"</span>)</span></span><br><span class="line">    <span class="keyword">public</span> User getUser(<span class="meta">@PathVariable</span> <span class="built_in">Long</span> id)&#123;</span><br><span class="line">        User user=new User();</span><br><span class="line">        user.setId(id);</span><br><span class="line">        user.setName(<span class="string">"张三"</span>);</span><br><span class="line">        user.setAge(<span class="number">18</span>);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@GetMapping(value = <span class="meta-string">"/getName"</span>)</span></span><br><span class="line">    <span class="keyword">public</span> String getName()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"张三"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@RestController注解呢，其实就是@ResponseBody ＋ @Controller的组合注解，@GetMapping呢，相当于<br>
+<code>@RequestMapping(value=&quot;&quot;, method = RequestMethod.GET)</code></p>
 <p>现在我们这个Provider的项目的目录结构应该是这样的：</p>
 <p><img src="3.png" alt="1"></p>
 <p>6.安装刚才所说的启动项目，打开浏览器访问http://localhost:8078/user/getUser/3 。如果浏览器返回一个json {“id”:3,“name”:“张三”,“age”:18}，那么就代表我们的服务提供者写好了。</p>
 <p>创建服务消费者<br>
 1.同服务提供者的套路，我们创建一个名为cloud-demo-consumer的工程，他也只需要依赖web模块，在application.properties或者application.yml配置端口为8088，应用名称为consumer-demo。</p>
-<p>2.创建cn.org.zhixiang包，创建CloudDemoConsumerApplication类。不同于提供者的是，这次启动类中需要增加一段代码<br>
-<code>@SpringBootApplication public class CloudDemoConsumerApplication { @Bean public RestTemplate restTemplate(){ return new RestTemplate(); } public static void main(String[] args) { SpringApplication.run(CloudDemoConsumerApplication.class, args); } }</code></p>
+<p>2.创建cn.org.zhixiang包，创建CloudDemoConsumerApplication类。不同于提供者的是，这次启动类中需要增加一段代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CloudDemoConsumerApplication</span> </span>&#123;</span><br><span class="line">   <span class="meta">@Bean</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> RestTemplate <span class="title">restTemplate</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      SpringApplication.run(CloudDemoConsumerApplication.class, args);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>RestTemplate类呢，是一个对于HTTP请求封装的一个类，相信大家都知道我们使用原生API访问一个URL需要的代码是很多的，这个呢，就是一个封装简化的版本。</p>
 <p>@Bean注解呢，其实就等同于以前在xml中配置的如下代码</p>
 <p>`</p>
-<beans>
-<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-</bean></beans>
-`
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"restTemplate"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.client.RestTemplate"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>同样的，在此项目中增加一个User类，与提供者一样。</p>
-<p>而UserController就不一样了<br>
-`<br>
-@RestController<br>
-@RequestMapping(&quot;/user&quot;)<br>
-public class UserController {</p>
-<pre><code>@Autowired
-private RestTemplate restTemplate;
-
-@GetMapping(&quot;/getUser/{id}&quot;)
-public User getUser(@PathVariable Long id){
-    return restTemplate.getForObject(&quot;http://localhost:8078/user/getUser/&quot;+id,User.class);
-}
-</code></pre>
-<p>}`<br>
-它的getUser方法没有自己实现，而是调用的服务提供者的getUser方法。</p>
+<p>而UserController就不一样了</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@RestController</span></span><br><span class="line"><span class="variable">@RequestMapping</span>(<span class="string">"/user"</span>)</span><br><span class="line">public class UserController &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable">@Autowired</span></span><br><span class="line">    private RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="variable">@GetMapping</span>(<span class="string">"/getUser/&#123;id&#125;"</span>)</span><br><span class="line">    public User getUser(<span class="variable">@PathVariable</span> Long id)&#123;</span><br><span class="line">        <span class="selector-tag">return</span> <span class="selector-tag">restTemplate</span><span class="selector-class">.getForObject</span>(<span class="string">"http://localhost:8078/user/getUser/"</span>+id,User.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它的getUser方法没有自己实现，而是调用的服务提供者的getUser方法。</p>
 <p>接着呢，我们首先启动服务提供者，然后再启动消费者，当我们访问http://localhost:8088/user/getUser/3 时同样也能取得结果，这样一个简单的SpringCloud项目的服务提供者和消费者就已经完成了。</p>
 <p>GitHub：<a href="https://github.com/2388386839/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/2388386839/spring-cloud-demo</a></p>
 <p>码云：<a href="https://gitee.com/zhixiang_blog/spring-cloud-demo" target="_blank" rel="noopener">https://gitee.com/zhixiang_blog/spring-cloud-demo</a></p>
@@ -454,7 +344,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -526,8 +416,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -543,11 +432,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

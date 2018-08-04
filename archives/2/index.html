@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -319,8 +323,7 @@ Ob......
 抽象类定义了4个方法，其中operation是私有的，在这个方法里调用了其他三个方法，而方法3是自己实现的。方法1和2是强迫子类实现的。
 ClassImpl1，ClassImpl2都继承了抽象类，并分别对方法1和2进行了不同的实现
 我们来看代码
-`
-pu......
+1234......
         </div>
     </a>
     
@@ -352,10 +355,7 @@ pu......
 例如某宝上的一件商品，有时候8折并返现3元、有时候7折返现1元、有时候9折不返现、有时候不打折返现2元等等，我们可以看到这个商品不同时刻要计算利润或者什么的时候是不一样的，现在就可以用到策略模式了。
 
 代码：
-`
-public abstract class Algorithm {
-public abstract void method();
-......
+123456789101112131415161718192021222324public abstract class Algori......
         </div>
     </a>
     
@@ -440,6 +440,40 @@ public abstract void method();
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/享元模式/">
+        <h2 class="post-title">
+            享元模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            享元模式：以共享的方式高效的支持大量的细粒度对象
+我们以咖啡为例，一家咖啡店一天卖出几千杯咖啡其实这几千杯也不过是几十种口味。在Java中你觉得是new几千次咖啡好还是new几十次口味好呢？享元模式就是利用的这个原理来共享的变量了。
+来看一下类图：
+
+FlavorFactory：口味工厂，根据客户所需口味生产咖啡
+Client：售货员，负责通知工厂生产咖啡，以及出售咖啡和统计销售情况
+Cof......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/元/">
         <h2 class="post-title">
             享元模式
@@ -487,43 +521,6 @@ Cof......
 先来看一下类图：
 
 我们可以看到女孩跟媒人都实现了一个相亲的接口，然后呢媒人持有女孩的引用来调用女孩展示自己的方法，代码......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/26/模式/">
-        <h2 class="post-title">
-            合成模式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            合成模式的职责是将对象组织到树结构中
-
-观察上方类图：
-interface，一个接口定义了一个获得当前对象名字的方法
-leaf：树中的叶子节点，实现了interface
-Branch：树枝节点，不仅实现了getName方法，同样它本身具有添加节点删除节点的方法且本身可以包含多个树枝节点以及叶子节点
-通过上述结论我们可以发现其实合成模式就是树的结构的实现
-来看一下代码：
-`
-public in......
         </div>
     </a>
     
@@ -613,7 +610,7 @@ public in......
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -685,8 +682,7 @@ public in......
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -702,11 +698,12 @@ public in......
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -221,32 +225,19 @@
 <p>审核结束就可以开始进行配置了，回到证书控制台点击下载按钮进入页面选择Tomcat标签点击下载</p>
 <p><img src="3.png" alt="图片"></p>
 <p>下载完毕以后解压文件重点关注*.pfx和pfx-password.txt这两个文件，在我们的服务器上新建名为cert的文件夹，把这两个文件copy进来。紧接着，打开tomcat的server.xml文件</p>
-<p>修改几处配置：<br>
-<code>&lt;Connector port=&quot;443&quot; protocol=&quot;org.apache.coyote.http11.Http11NioProtocol&quot; SSLEnabled=&quot;true&quot; scheme=&quot;https&quot; secure=&quot;true&quot; keystoreFile=&quot;/usr/local/apache-tomcat-8.5.24/conf/cert/214750658330953.pfx&quot; keystoreType=&quot;PKCS12&quot; keystorePass=&quot;密码&quot; clientAuth=&quot;false&quot; SSLProtocol=&quot;TLSv1+TLSv1.1+TLSv1.2&quot; ciphers=&quot;TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA256&quot;/&gt;</code><br>
-注意上方keystorePass属性改为你pfx-password.txt文件中的密码，keystoreFile属性改为存放*.pfx文件的绝对路径。</p>
+<p>修改几处配置：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector <span class="attribute">port</span>=<span class="string">"443"</span></span><br><span class="line"> <span class="attribute">protocol</span>=<span class="string">"org.apache.coyote.http11.Http11NioProtocol"</span></span><br><span class="line"> <span class="attribute">SSLEnabled</span>=<span class="string">"true"</span></span><br><span class="line"> <span class="attribute">scheme</span>=<span class="string">"https"</span></span><br><span class="line"> <span class="attribute">secure</span>=<span class="string">"true"</span></span><br><span class="line"> <span class="attribute">keystoreFile</span>=<span class="string">"/usr/local/apache-tomcat-8.5.24/conf/cert/214750658330953.pfx"</span></span><br><span class="line"> <span class="attribute">keystoreType</span>=<span class="string">"PKCS12"</span></span><br><span class="line"> <span class="attribute">keystorePass</span>=<span class="string">"密码"</span></span><br><span class="line"> <span class="attribute">clientAuth</span>=<span class="string">"false"</span></span><br><span class="line"> <span class="attribute">SSLProtocol</span>=<span class="string">"TLSv1+TLSv1.1+TLSv1.2"</span></span><br><span class="line"> <span class="attribute">ciphers</span>=<span class="string">"TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA256"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>注意上方keystorePass属性改为你pfx-password.txt文件中的密码，keystoreFile属性改为存放*.pfx文件的绝对路径。</p>
 <p>注意如果使用的是阿里云服务器 port属性的端口号记得要在安全组配置。</p>
-<p>如果你需要http和https双协议都支持的话，那么 完成以上操作就可以了，如果你想默认浏览器使用http也会重定向到htpps的话请继续忘下看。<br>
-`<br>
-<connector port="80" protocol="org.apache.coyote.http11.Http11NioProtocol" connectiontimeout="20000" redirectport="443" compression="on" compressionminsize="2048" nocompressionuseragents="gozilla, traviata" compressablemimetype="text/html,text/xml,text/plain,text/css,application/javascript" usesendfile="false"></connector></p>
-  <connector port="8009" protocol="AJP/1.3" redirectport="443">
-  `
-此处需要修改的属性为redirectPort，将所有的重定向端口改为443，当然，这些操作还不够，:wq保存退出，打开web.xml 在文件最下方加入下方配置
-`
-<security-constraint>
-  <web-resource-collection>
-       <web-resource-name>SSL</web-resource-name>
-       <url-pattern>/*</url-pattern>
-  </web-resource-collection>
-    <user-data-constraint>
-        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-    </user-data-constraint>
-</security-constraint>
-`
-至此，大公告成，:wq保存退出重启tomcat服务器访问一下试试看吧
+<p>如果你需要http和https双协议都支持的话，那么 完成以上操作就可以了，如果你想默认浏览器使用http也会重定向到htpps的话请继续忘下看。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector <span class="attribute">port</span>=<span class="string">"80"</span> <span class="attribute">protocol</span>=<span class="string">"org.apache.coyote.http11.Http11NioProtocol"</span></span><br><span class="line">             <span class="attribute">connectionTimeout</span>=<span class="string">"20000"</span></span><br><span class="line">             <span class="attribute">redirectPort</span>=<span class="string">"443"</span></span><br><span class="line">  <span class="attribute">compression</span>=<span class="string">"on"</span>  </span><br><span class="line">  <span class="attribute">compressionMinSize</span>=<span class="string">"2048"</span></span><br><span class="line">  <span class="attribute">noCompressionUserAgents</span>=<span class="string">"gozilla, traviata"</span>  </span><br><span class="line">  <span class="attribute">compressableMimeType</span>=<span class="string">"text/html,text/xml,text/plain,text/css,application/javascript"</span> </span><br><span class="line">  <span class="attribute">useSendfile</span>=<span class="string">"false"</span> /&gt;</span><br><span class="line"></span><br><span class="line">&lt;Connector <span class="attribute">port</span>=<span class="string">"8009"</span> <span class="attribute">protocol</span>=<span class="string">"AJP/1.3"</span> <span class="attribute">redirectPort</span>=<span class="string">"443"</span> /&gt;</span><br></pre></td></tr></table></figure>
+<p>此处需要修改的属性为redirectPort，将所有的重定向端口改为443，当然，这些操作还不够，:wq保存退出，打开web.xml 在文件最下方加入下方配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">security-constraint</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">web-resource-collection</span> &gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">web-resource-name</span> &gt;</span>SSL<span class="tag">&lt;/<span class="name">web-resource-name</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/*<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">web-resource-collection</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">user-data-constraint</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">transport-guarantee</span>&gt;</span>CONFIDENTIAL<span class="tag">&lt;/<span class="name">transport-guarantee</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">user-data-constraint</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">security-constraint</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>至此，大公告成，:wq保存退出重启tomcat服务器访问一下试试看吧</p>
 <p>完成以后部分人可能会出现一下情况<img src="4.png" alt="图片"> 为啥没有安全锁🔒的标志呢，这个其实是因为你的程序发送的请求中包含了http情况，去检查一下程序的请求吧,如果你懒得去看的话那么就在你的程序起点head标签中增加一个标签</p>
 <p><code>&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;upgrade-insecure-requests&quot;&gt;</code><br>
 强制转换所有的http请求为https请求。(但是这样程序中请求的http的资源就不可用了，自己取舍一下吧)。</p>
-</connector>
+
                 
 
                 <hr>
@@ -327,7 +318,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -399,8 +390,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -416,11 +406,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

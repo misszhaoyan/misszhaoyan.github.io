@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -211,132 +215,27 @@
                 col-sm-12 col-xs-12
                 post-container">
 
-                <p>1.添加maven依赖<br>
-<dependency><br>
-<groupid>org.elasticsearch.client</groupid><br>
-<artifactid>transport</artifactid><br>
-<version>5.5.2</version><br>
-</dependency><br>
-<dependency><br>
-<groupid>org.elasticsearch</groupid><br>
-<artifactid>elasticsearch-transport-wares</artifactid><br>
-<version>2.7.0</version><br>
-</dependency><br>
-<dependency><br>
-<groupid>org.elasticsearch</groupid><br>
-<artifactid>elasticsearch</artifactid><br>
-<version>5.5.2</version><br>
-<scope>compile</scope><br>
-</dependency><br>
-2.创建连接<br>
-@Configuration<br>
-public class ElasticsearchConfig {</p>
-<pre><code>@Bean
-public TransportClient client() throws UnknownHostException {
-    Settings esSetting = Settings.builder()
-            .put(&quot;thread_pool.search.size&quot;, 3)
-            .build();
-    InetSocketTransportAddress node1 = new InetSocketTransportAddress(InetAddress.getByName(&quot;服务器地址&quot;),
-            9300
-    );
-
-    TransportClient client = new PreBuiltTransportClient(esSetting);
-    client.addTransportAddress(node1);
-    return client;
-}
-</code></pre>
-<p>}<br>
-因为我是使用的SpringBoot所以使用此种方式创建bean，使用别的框架的同学请自行切换</p>
+                <p>1.添加maven依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.elasticsearch.client<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>transport<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.elasticsearch<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>elasticsearch-transport-wares<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.7.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.elasticsearch<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>elasticsearch<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.5.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.创建连接</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ElasticsearchConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    <span class="keyword">public</span> TransportClient <span class="keyword">client</span>() throws UnknownHostException &#123;</span><br><span class="line">        Settings esSetting = Settings.builder()</span><br><span class="line">                .put(<span class="string">"thread_pool.search.size"</span>, <span class="number">3</span>)</span><br><span class="line">                .build();</span><br><span class="line">        InetSocketTransportAddress node1 = <span class="keyword">new</span> InetSocketTransportAddress(InetAddress.getByName(<span class="string">"服务器地址"</span>),</span><br><span class="line">                <span class="number">9300</span></span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        TransportClient <span class="keyword">client</span> = <span class="keyword">new</span> PreBuiltTransportClient(esSetting);</span><br><span class="line">        <span class="keyword">client</span>.addTransportAddress(node1);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">client</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为我是使用的SpringBoot所以使用此种方式创建bean，使用别的框架的同学请自行切换</p>
 <p>3.使用<br>
 在进行使用之前，先说一下Elasticsearch中的几个简单的概念。</p>
 <p>索引：在Elasticsearch中可以简单把索引理解为数据库名称。<br>
 type:在Elasticsearch中可以简单把type理解为表名称。<br>
-1.添加数据<br>
-@Autowired<br>
-TransportClient transportClient;<br>
-public void insertBlog(Blog blog) throws Exception {<br>
-JsonObject jsonObject = JsonObjectTool.object2JsonObject(blog);<br>
-transportClient.prepareIndex(“blog”, “Test”, blog.getId())<br>
-.setSource(jsonObject.toString(), XContentType.JSON).get();<br>
-}<br>
-此方法就是保存博客的方法了，我将博客对象转为一个Json对象，然后保存在了索引为blog、type为Test中的一个文档中，我指定了他的id为blogs对象的id。</p>
-<p>2.更新数据<br>
-public void updateBlog(Blog blog) throws Exception {<br>
-JsonObject jsonObject = JsonObjectTool.object2JsonObject(blog);<br>
-transportClient.prepareUpdate(“blog”, “Test”, blog.getId())<br>
-.setDoc(jsonObject.toString(), XContentType.JSON).get();</p>
-<p>}<br>
-3.删除数据<br>
-public void deleteBlog(String id) throws Exception {<br>
-transportClient.prepareDelete(“blog”, “Test”, id).get();<br>
-}<br>
-4.根据id获取信息<br>
-public Blog selectOneBlog(String id) throws Exception {<br>
-GetResponse getResponse = transportClient.prepareGet(“blog”, “Test”, id).get();<br>
-return JsonObjectTool.jsonObject2Object(JsonObjectTool.string2JsonObject(getResponse.getSourceAsString()), Blog.class);<br>
-}<br>
-5.复杂多条件查询<br>
+1.添加数据</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">TransportClient transportClient<span class="comment">;</span></span><br><span class="line">public void <span class="keyword">insertBlog(Blog </span><span class="keyword">blog) </span>throws Exception &#123;</span><br><span class="line">    <span class="keyword">JsonObject </span><span class="keyword">jsonObject </span>= <span class="keyword">JsonObjectTool.object2JsonObject(blog);</span></span><br><span class="line"><span class="keyword"> </span>   transportClient.prepareIndex(<span class="string">"blog"</span>, <span class="string">"Test"</span>, <span class="keyword">blog.getId())</span></span><br><span class="line"><span class="keyword"> </span>           .setSource(<span class="keyword">jsonObject.toString(), </span>XContentType.<span class="keyword">JSON).get();</span></span><br><span class="line"><span class="keyword">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>此方法就是保存博客的方法了，我将博客对象转为一个Json对象，然后保存在了索引为blog、type为Test中的一个文档中，我指定了他的id为blogs对象的id。</p>
+<p>2.更新数据</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public void updateBlog(<span class="keyword">Blog </span><span class="keyword">blog) </span>throws Exception &#123;</span><br><span class="line">    <span class="keyword">JsonObject </span><span class="keyword">jsonObject </span>= <span class="keyword">JsonObjectTool.object2JsonObject(blog);</span></span><br><span class="line"><span class="keyword"> </span>   transportClient.prepareUpdate(<span class="string">"blog"</span>, <span class="string">"Test"</span>,, <span class="keyword">blog.getId())</span></span><br><span class="line"><span class="keyword"> </span>           .setDoc(<span class="keyword">jsonObject.toString(), </span>XContentType.<span class="keyword">JSON).get();</span></span><br><span class="line"><span class="keyword"></span></span><br><span class="line"><span class="keyword">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>3.删除数据</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> deleteBlog(<span class="keyword">String</span> id) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    transportClient.prepareDelete(<span class="string">"blog"</span>, <span class="string">"Test"</span>, id).<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.根据id获取信息</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public Blog selectOneBlog(String <span class="built_in">id</span>) throws Exception &#123;</span><br><span class="line">    GetResponse getResponse = transportClient.prepareGet(<span class="string">"blog"</span>, <span class="string">"Test"</span>, <span class="built_in">id</span>).<span class="keyword">get</span>();</span><br><span class="line"><span class="built_in">    return</span> JsonObjectTool.jsonObject2Object(JsonObjectTool.string2JsonObject(getResponse.getSourceAsString()), Blog.<span class="built_in">class</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>5.复杂多条件查询<br>
 敲黑板了，咳咳，最重要的部分来了。</p>
-<p>public PageInfo<blog> selectBlogsList(int from, int size, String serch, Map map) throws Exception {<br>
-from = (from - 1) * size;//因为el的搜索分页功能是算的从第几条开始而不是从第几页开始，所以我们把开始页数通过计算转为开始条数<br>
-SearchResponse response;//查询返回结果集<br>
-SearchRequestBuilder srb = transportClient.prepareSearch(“blog”).setTypes(“Test”);<br>
-BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();<br>
-if (!map.isEmpty()) {//这个map呢，封装的是必须的查询条件，比如说我要查审核通过的博客或者说是草稿状态的博客。<br>
-Set<string> set = map.keySet();<br>
-for (String key : set) {<br>
-QueryBuilder query = QueryBuilders.matchPhraseQuery(key, map.get(key));<br>
-boolQueryBuilder.must(query);//mast就代表这个条件必须符合<br>
-}<br>
-}<br>
-if (serch != null &amp;&amp; serch != “”) {//这个serch呢，存放的是查询的关键字。<br>
-QueryBuilder queryBlogsName = QueryBuilders.matchPhraseQuery(“blogsName”, serch);<br>
-QueryBuilder queryBlogsClassifyName = QueryBuilders.matchPhraseQuery(“blogsClassifyName”, serch);<br>
-QueryBuilder queryBlogsPart = QueryBuilders.matchPhraseQuery(“blogsPart”, serch);<br>
-QueryBuilder queryUserName = QueryBuilders.matchPhraseQuery(“userName”, serch);<br>
-response = srb.setQuery(QueryBuilders.boolQuery()<br>
-.should(queryUserName)//should表示不是必须符合，但是如果符合的话会加分，分值越高查询出来位置越前<br>
-.should(queryBlogsName)<br>
-.should(queryBlogsClassifyName)<br>
-.should(queryBlogsPart))<br>
-.setFetchSource(null, “blogsUrl”)//查询时过滤掉此字段，不会查询出来<br>
-.setFrom(from)//从第几条开始<br>
-.setSize(size)//查询几条<br>
-.addSort(“createdTime”, SortOrder.DESC)//根据createdTime降序<br>
-.setTimeout(new TimeValue(5, TimeUnit.SECONDS))//等待5秒后不管查询是否完成强制返回结果<br>
-.execute()<br>
-.actionGet();<br>
-} else {<br>
-response = srb.setQuery(boolQueryBuilder)<br>
-.setFrom(from)<br>
-.setSize(size)<br>
-.addSort(“createdTime”, SortOrder.DESC)<br>
-.setFetchSource(null, “blogsUrl”)<br>
-.setTimeout(new TimeValue(5, TimeUnit.SECONDS))<br>
-.execute()<br>
-.actionGet();<br>
-}<br>
-SearchHits hits = response.getHits();//hits存放的就是返回的查询结果list<br>
-List<blogs> list = new ArrayList&lt;&gt;();</blogs></string></blog></p>
-<pre><code>Blog blog;
-StringBuffer sb = new StringBuffer();
-for (SearchHit hit : hits) {
-    sb.append(hit.getSourceAsString());//每条记录都是以字符串存放的
-    if (serch != null &amp;&amp; serch != &quot;&quot;) {
-        blog = JsonObjectTool.jsonObject2Object(JsonObjectTool.string2JsonObject(sb.toString().replaceAll(serch, &quot;&lt;strong style='color:red;'&gt;&quot; + serch + &quot;&lt;/strong&gt;&quot;)), Blog.class);//对查询关键字进行标红
-    } else {
-        blog = JsonObjectTool.jsonObject2Object(JsonObjectTool.string2JsonObject(sb.toString()), Blog.class);
-    }
-    blog.setId(hit.getId());
-    list.add(blog);
-    sb.delete(0, sb.length());
-}
-PageInfo&lt;Blog&gt; pageInfo = new PageInfo&lt;&gt;(list);
-pageInfo.setTotal(response.getHits().getTotalHits());//数据总条数
-return pageInfo;
-</code></pre>
-<p>}</p>
-
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> PageInfo&lt;Blog&gt; selectBlogsList(<span class="built_in">int</span> from, <span class="built_in">int</span> <span class="built_in">size</span>, <span class="keyword">String</span> serch, Map <span class="built_in">map</span>) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    from = (from - <span class="number">1</span>) * <span class="built_in">size</span>;<span class="comment">//因为el的搜索分页功能是算的从第几条开始而不是从第几页开始，所以我们把开始页数通过计算转为开始条数</span></span><br><span class="line">    SearchResponse response;<span class="comment">//查询返回结果集</span></span><br><span class="line">    SearchRequestBuilder srb = transportClient.prepareSearch(<span class="string">"blog"</span>).setTypes(<span class="string">"Test"</span>);</span><br><span class="line">    BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();</span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">map</span>.isEmpty()) &#123;<span class="comment">//这个map呢，封装的是必须的查询条件，比如说我要查审核通过的博客或者说是草稿状态的博客。</span></span><br><span class="line">        Set&lt;<span class="keyword">String</span>&gt; <span class="built_in">set</span> = <span class="built_in">map</span>.keySet();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">String</span> <span class="built_in">key</span> : <span class="built_in">set</span>) &#123;</span><br><span class="line">            QueryBuilder query = QueryBuilders.matchPhraseQuery(<span class="built_in">key</span>, <span class="built_in">map</span>.<span class="built_in">get</span>(<span class="built_in">key</span>));</span><br><span class="line">            boolQueryBuilder.must(query);<span class="comment">//mast就代表这个条件必须符合</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (serch != <span class="keyword">null</span> &amp;&amp; serch != <span class="string">""</span>) &#123;<span class="comment">//这个serch呢，存放的是查询的关键字。</span></span><br><span class="line">        QueryBuilder queryBlogsName = QueryBuilders.matchPhraseQuery(<span class="string">"blogsName"</span>, serch);</span><br><span class="line">        QueryBuilder queryBlogsClassifyName = QueryBuilders.matchPhraseQuery(<span class="string">"blogsClassifyName"</span>, serch);</span><br><span class="line">        QueryBuilder queryBlogsPart = QueryBuilders.matchPhraseQuery(<span class="string">"blogsPart"</span>, serch);</span><br><span class="line">        QueryBuilder queryUserName = QueryBuilders.matchPhraseQuery(<span class="string">"userName"</span>, serch);</span><br><span class="line">        response = srb.setQuery(QueryBuilders.boolQuery()</span><br><span class="line">                .should(queryUserName)<span class="comment">//should表示不是必须符合，但是如果符合的话会加分，分值越高查询出来位置越前</span></span><br><span class="line">                .should(queryBlogsName)</span><br><span class="line">                .should(queryBlogsClassifyName)</span><br><span class="line">                .should(queryBlogsPart))</span><br><span class="line">                .setFetchSource(<span class="keyword">null</span>, <span class="string">"blogsUrl"</span>)<span class="comment">//查询时过滤掉此字段，不会查询出来</span></span><br><span class="line">                .setFrom(from)<span class="comment">//从第几条开始</span></span><br><span class="line">                .setSize(<span class="built_in">size</span>)<span class="comment">//查询几条</span></span><br><span class="line">                .addSort(<span class="string">"createdTime"</span>, SortOrder.DESC)<span class="comment">//根据createdTime降序</span></span><br><span class="line">                .setTimeout(<span class="keyword">new</span> TimeValue(<span class="number">5</span>, TimeUnit.SECONDS))<span class="comment">//等待5秒后不管查询是否完成强制返回结果</span></span><br><span class="line">                .execute()</span><br><span class="line">                .actionGet();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        response = srb.setQuery(boolQueryBuilder)</span><br><span class="line">                .setFrom(from)</span><br><span class="line">                .setSize(<span class="built_in">size</span>)</span><br><span class="line">                .addSort(<span class="string">"createdTime"</span>, SortOrder.DESC)</span><br><span class="line">                .setFetchSource(<span class="keyword">null</span>, <span class="string">"blogsUrl"</span>)</span><br><span class="line">                .setTimeout(<span class="keyword">new</span> TimeValue(<span class="number">5</span>, TimeUnit.SECONDS))</span><br><span class="line">                .execute()</span><br><span class="line">                .actionGet();</span><br><span class="line">    &#125;</span><br><span class="line">    SearchHits hits = response.getHits();<span class="comment">//hits存放的就是返回的查询结果list</span></span><br><span class="line">    List&lt;Blogs&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Blog blog;</span><br><span class="line">    StringBuffer sb = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">    <span class="keyword">for</span> (SearchHit hit : hits) &#123;</span><br><span class="line">        sb.<span class="built_in">append</span>(hit.getSourceAsString());<span class="comment">//每条记录都是以字符串存放的</span></span><br><span class="line">        <span class="keyword">if</span> (serch != <span class="keyword">null</span> &amp;&amp; serch != <span class="string">""</span>) &#123;</span><br><span class="line">            blog = JsonObjectTool.jsonObject2Object(JsonObjectTool.string2JsonObject(sb.toString().replaceAll(serch, <span class="string">"&lt;strong style='color:red;'&gt;"</span> + serch + <span class="string">"&lt;/strong&gt;"</span>)), Blog.class);<span class="comment">//对查询关键字进行标红</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            blog = JsonObjectTool.jsonObject2Object(JsonObjectTool.string2JsonObject(sb.toString()), Blog.class);</span><br><span class="line">        &#125;</span><br><span class="line">        blog.setId(hit.getId());</span><br><span class="line">        list.<span class="built_in">add</span>(blog);</span><br><span class="line">        sb.delete(<span class="number">0</span>, sb.length());</span><br><span class="line">    &#125;</span><br><span class="line">    PageInfo&lt;Blog&gt; pageInfo = <span class="keyword">new</span> PageInfo&lt;&gt;(list);</span><br><span class="line">    pageInfo.setTotal(response.getHits().getTotalHits());<span class="comment">//数据总条数</span></span><br><span class="line">    <span class="keyword">return</span> pageInfo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
                 
 
                 <hr>
@@ -417,7 +316,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -489,8 +388,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -506,11 +404,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

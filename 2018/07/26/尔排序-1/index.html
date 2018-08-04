@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -211,7 +215,7 @@
                 col-sm-12 col-xs-12
                 post-container">
 
-                <p>今天讲一下希尔排序，希尔排序呢，其实可以理解为插入算法排序的一个升级版了，不了解插入排序的小伙伴可以先看一下这篇文章：<a href="zhixiang.org.cn">死磕算法之插入排序</a></p>
+                <p>今天讲一下希尔排序，希尔排序呢，其实可以理解为插入算法排序的一个升级版了，不了解插入排序的小伙伴可以先看一下这篇文章：<a href="zhixiang.org.cn/2018/07/26/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F">死磕算法之插入排序</a></p>
 <p>我们知道，插入排序在进行排序时如果当数据量很大的时候，有一个很小的数据出现在了数组的最后，那么我们就要移动了这个数据前面所有的元素给它放置到合适的元素。例如：</p>
 <p>我们要排序的数组为[1,2,3,4,5,6,7，。。。此处省略一百万。。.,0]。详细大家肯定不喜欢这个0往前移动一百万此吧。</p>
 <p>希尔排序的出现其实就是为了解决这个问题的，希尔排序呢，使用了分治算法，先把整个大的数组根据某个增量分为若干个组，先对这若干个组进行一个调整，保证大部分小的数据会被调整到前面来。到最后再次进行插入排序，这样就大大加快了效率了。</p>
@@ -222,7 +226,7 @@
 接下来增量减半，我们的数组分为3组，分别进行排序。<br>
 现在增量值经过再次减半后已经变为1了，我们可以通过观察数组发现，在数组的后面基本不可能出现最小的数据了，现在对数组进行插入排序的效率已经非常高了。<br>
 不知道现在的你明白希尔排序了么？来看一看代码吧。</p>
-<p><code>void shellSort(int list[], int length){ int gap,i,j,temp; for (gap = length/2; gap &gt; 0; gap /= 2) { for(i = gap; i &lt; length; i++){ for(j = i-gap; j&gt;=0 &amp;&amp; list[j]&gt;list[j+gap]; j -= gap) { temp = list[j]; list[j] = list[j+gap]; list[j+gap] = temp; } } } }</code></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shellSort</span><span class="params">(<span class="keyword">int</span> <span class="built_in">list</span>[], <span class="keyword">int</span> length)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> gap,i,j,temp;</span><br><span class="line">   	<span class="keyword">for</span> (gap = length/<span class="number">2</span>; gap &gt; <span class="number">0</span>; gap /= <span class="number">2</span>)&#123;</span><br><span class="line">    		<span class="keyword">for</span>(i = gap; i &lt; length; i++)&#123;</span><br><span class="line">        		<span class="keyword">for</span>(j = i-gap; j&gt;=<span class="number">0</span> &amp;&amp; <span class="built_in">list</span>[j]&gt;<span class="built_in">list</span>[j+gap]; j -= gap)&#123;</span><br><span class="line">        			temp = <span class="built_in">list</span>[j];</span><br><span class="line">          		  <span class="built_in">list</span>[j] = <span class="built_in">list</span>[j+gap];</span><br><span class="line">          		  <span class="built_in">list</span>[j+gap] = temp;</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>希尔排序讲完了。在这里温馨提示大家，学习算法时，我们没必要拘泥于代码的实现，那没有意义。我的建议就是深入理解步骤，当你理解步骤以后代码是随你怎么玩都可以的。</p>
 
                 
@@ -232,9 +236,13 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2018/07/26/希尔排序/" data-toggle="tooltip" data-placement="top" title="单例模式">&larr; 上一篇</a>
+                            <a href="/2018/07/26/Java简单操作Excel文件/" data-toggle="tooltip" data-placement="top" title="Java简单操作Excel文件">&larr; 上一篇</a>
                         </li>
                     
+                    
+                        <li class="next">
+                            <a href="/2018/07/26/希尔排序/" data-toggle="tooltip" data-placement="top" title="单例模式">下一篇 &rarr;</a>
+                        </li>
                     
                 </ul>
 
@@ -301,7 +309,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -373,8 +381,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -390,11 +397,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

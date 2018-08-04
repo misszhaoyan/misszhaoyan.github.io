@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -212,62 +216,11 @@
                 post-container">
 
                 <p>智享网站的博客在数据库中的存储其实使用的就是longblob类型，这个类型在查询出来的时候如果不进行处理的话就会出现乱码问题。一个简单的处理方式就是在Mybatis查询数据库的时候增加一个拦截器，给这个类型的字段改变一下编码方式。</p>
-<p>`public class BlobTypeHandler extends BaseTypeHandler<string> {<br>
-private static final String DEFAULT_CHARSET = “utf-8”;</string></p>
-<pre><code>@Override
-public void setNonNullParameter(PreparedStatement ps, int i,
-                                String parameter, JdbcType jdbcType) throws SQLException {
-    ByteArrayInputStream bis;
-    try {
-        bis = new ByteArrayInputStream(parameter.getBytes(DEFAULT_CHARSET));
-    } catch (UnsupportedEncodingException e) {
-        throw new RuntimeException(&quot;Blob Encoding Error!&quot;);
-    }
-    ps.setBinaryStream(i, bis, parameter.length());
-}
-
-@Override
-public String getNullableResult(ResultSet rs, String columnName)
-        throws SQLException {
-    Blob blob = rs.getBlob(columnName);
-    byte[] returnValue = null;
-    if (null != blob) {
-        returnValue = blob.getBytes(1, (int) blob.length());
-    }
-    try {
-        return new String(returnValue, DEFAULT_CHARSET);
-    } catch (UnsupportedEncodingException e) {
-        throw new RuntimeException(&quot;Blob Encoding Error!&quot;);
-    }
-}
-
-@Override
-public String getNullableResult(CallableStatement cs, int columnIndex)
-        throws SQLException {
-    Blob blob = cs.getBlob(columnIndex);
-    byte[] returnValue = null;
-    if (null != blob) {
-        returnValue = blob.getBytes(1, (int) blob.length());
-    }
-    try {
-        return new String(returnValue, DEFAULT_CHARSET);
-    } catch (UnsupportedEncodingException e) {
-        throw new RuntimeException(&quot;Blob Encoding Error!&quot;);
-    }
-}
-
-@Override
-public String getNullableResult(ResultSet arg0, int arg1)
-        throws SQLException {
-    // TODO Auto-generated method stub
-    return null;
-}
-</code></pre>
-<p>}`<br>
-这个就是我们使用的拦截器了，以getNullableResult方法为例简单说一下。这个方法的两个参数见名思意，rs为返回结果集，columnName就是我们需要处理的字段名。当我们根据字段名在返回结果集中找出的这个字段就是longblob类型的数据了。在这里我们给他改一下编码就ok了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BlobTypeHandler</span> <span class="keyword">extends</span> <span class="title">BaseTypeHandler</span>&lt;<span class="title">String</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String DEFAULT_CHARSET = <span class="string">"utf-8"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNonNullParameter</span><span class="params">(PreparedStatement ps, <span class="keyword">int</span> i,</span></span></span><br><span class="line"><span class="function"><span class="params">                                    String parameter, JdbcType jdbcType)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        ByteArrayInputStream bis;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            bis = <span class="keyword">new</span> ByteArrayInputStream(parameter.getBytes(DEFAULT_CHARSET));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Blob Encoding Error!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        ps.setBinaryStream(i, bis, parameter.length());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getNullableResult</span><span class="params">(ResultSet rs, String columnName)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        Blob blob = rs.getBlob(columnName);</span><br><span class="line">        <span class="keyword">byte</span>[] returnValue = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> != blob) &#123;</span><br><span class="line">            returnValue = blob.getBytes(<span class="number">1</span>, (<span class="keyword">int</span>) blob.length());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> String(returnValue, DEFAULT_CHARSET);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Blob Encoding Error!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getNullableResult</span><span class="params">(CallableStatement cs, <span class="keyword">int</span> columnIndex)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        Blob blob = cs.getBlob(columnIndex);</span><br><span class="line">        <span class="keyword">byte</span>[] returnValue = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> != blob) &#123;</span><br><span class="line">            returnValue = blob.getBytes(<span class="number">1</span>, (<span class="keyword">int</span>) blob.length());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> String(returnValue, DEFAULT_CHARSET);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Blob Encoding Error!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getNullableResult</span><span class="params">(ResultSet arg0, <span class="keyword">int</span> arg1)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个就是我们使用的拦截器了，以getNullableResult方法为例简单说一下。这个方法的两个参数见名思意，rs为返回结果集，columnName就是我们需要处理的字段名。当我们根据字段名在返回结果集中找出的这个字段就是longblob类型的数据了。在这里我们给他改一下编码就ok了。</p>
 <p>这个类的使用方式也简单，在我们的mapper文件中需要拦截的resultMap中的字段中增加一个typeHandler类型拦截器，这个typeHandler的值就是我们BlobTypeHandler类的地址。</p>
-<p><code>&lt;result property=&quot;blogsUrl&quot; column=&quot;blogsUrl&quot; typeHandler=&quot;com.syj.utils.blogUtils.BlobTypeHandler&quot;/&gt;</code><br>
-举一反三，如果我们数据库存储了long类型的时间戳我们是不是也可以加一个类型拦截器把他改成Date、String等类型呢？</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`&lt;result <span class="attribute">property</span>=<span class="string">"blogsUrl"</span> <span class="attribute">column</span>=<span class="string">"blogsUrl"</span> <span class="attribute">typeHandler</span>=<span class="string">"com.syj.utils.blogUtils.BlobTypeHandler"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>举一反三，如果我们数据库存储了long类型的时间戳我们是不是也可以加一个类型拦截器把他改成Date、String等类型呢？</p>
 
                 
 
@@ -349,7 +302,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -421,8 +374,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -438,11 +390,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

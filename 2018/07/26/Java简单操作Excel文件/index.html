@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -212,8 +216,8 @@
                 <p>有很多朋友可能在项目中都可能会碰到需要读取Excel来做导入或者其它功能。但是可能对POI又不是太熟悉，在这里分享一个简单的小技巧可以不使用POI来读取Excel文件。</p>
 <p>这里我们假设操作的是下图所示的一个表格：</p>
 <p>在操作之前我们先把此Excel另存为.csv逗号分隔符文件，然后使用普通的文件上传方式把此文件上传到服务器</p>
-<p><code>public Result uploadFile(MultipartFile file) throws IOException { BufferedReader bReader = new BufferedReader(new InputStreamReader(file.getInputStream())); String line = &quot;&quot;; while (null != (line = bReader.readLine())) { String[] contents = line.split(&quot;,&quot;); System.out.print(contents[0]+&quot;|&quot;); System.out.print(contents[1]+&quot;|&quot;); System.out.print(contents[2]+&quot;|&quot;); System.out.print(contents[3]+&quot;|&quot;); System.out.println(&quot;&quot;); } } bReader.close(); return new Result(); }</code><br>
-其实就这样简单的几行代码我们就可以把Excel文件里面的数据读取出来了。</p>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public Result uploadFile(MultipartFile file) throws IOException &#123;</span><br><span class="line">    BufferedReader bReader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(file.getInputStream()));</span><br><span class="line">    <span class="keyword">String</span> <span class="keyword">line</span> = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">null</span> != (<span class="keyword">line</span> = bReader.readLine())) &#123;</span><br><span class="line">        <span class="keyword">String</span>[] contents = <span class="keyword">line</span>.split(<span class="string">","</span>);</span><br><span class="line">        <span class="keyword">System</span>.out.<span class="keyword">print</span>(contents[<span class="number">0</span>]+<span class="string">"|"</span>);</span><br><span class="line">        <span class="keyword">System</span>.out.<span class="keyword">print</span>(contents[<span class="number">1</span>]+<span class="string">"|"</span>);</span><br><span class="line">        <span class="keyword">System</span>.out.<span class="keyword">print</span>(contents[<span class="number">2</span>]+<span class="string">"|"</span>);</span><br><span class="line">        <span class="keyword">System</span>.out.<span class="keyword">print</span>(contents[<span class="number">3</span>]+<span class="string">"|"</span>);</span><br><span class="line">        <span class="keyword">System</span>.out.println(<span class="string">""</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    bReader.<span class="built_in">close</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Result();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其实就这样简单的几行代码我们就可以把Excel文件里面的数据读取出来了。</p>
 <p>郑重提示，千万要先把文件转为.csv文件后再操作哦。</p>
 
                 
@@ -228,7 +232,7 @@
                     
                     
                         <li class="next">
-                            <a href="/2018/07/26/希尔排序/" data-toggle="tooltip" data-placement="top" title="单例模式">下一篇 &rarr;</a>
+                            <a href="/2018/07/26/尔排序-1/" data-toggle="tooltip" data-placement="top" title="希尔排序">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
@@ -296,7 +300,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -368,8 +372,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -385,11 +388,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

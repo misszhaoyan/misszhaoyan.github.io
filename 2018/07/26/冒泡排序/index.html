@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -227,31 +231,8 @@
 比较3和4，发现3没有4大，那么不操作，数组还是[0,1,2,3,4,2,8]<br>
 比较4和2，发现4比2大，那么我们就交换4和2，数组变成了[0,1,2,3,2,4,8]<br>
 现在第二轮排序完成了，数组最后的4和8是不是已经有序了呢。</p>
-<p>聪明的你是不是已经发现了冒泡排序的规律了呢，那么你能用代码去手写一下实现么？<br>
-`<br>
-int []a=new int[]{3,1,0,2,8,4,2};<br>
-int i,j;<br>
-int flag;                 // 标记<br>
-for (i=a.length-1; i&gt;0; i–) {<br>
-flag = 0;            // 初始化标记为0<br>
-// 将a[0…i]中最大的数据放在末尾<br>
-for (j=0; j&lt;i; j++) {<br>
-if (a[j] &gt; a[j+1]) {<br>
-// 交换a[j]和a[j+1]<br>
-int tmp = a[j];<br>
-a[j] = a[j+1];<br>
-a[j+1] = tmp;<br>
-flag = 1;    // 若发生交换，则设标记为1<br>
-}<br>
-}</p>
-<pre><code>if (flag==0)
-    break;            // 若没发生交换，则说明数列已有序。
-</code></pre>
-<p>}<br>
-for (int ii:a){<br>
-System.out.print(ii+&quot;,&quot;);<br>
-}<br>
-`</p>
+<p>聪明的你是不是已经发现了冒泡排序的规律了呢，那么你能用代码去手写一下实现么？</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> []a=<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> i,j;</span><br><span class="line"><span class="keyword">int</span> flag;                 <span class="comment">// 标记</span></span><br><span class="line"><span class="built_in">for</span> (i=a.length<span class="number">-1</span>; i&gt;<span class="number">0</span>; i--) &#123;</span><br><span class="line">    flag = <span class="number">0</span>;            <span class="comment">// 初始化标记为0</span></span><br><span class="line">    <span class="comment">// 将a[0...i]中最大的数据放在末尾</span></span><br><span class="line">    <span class="built_in">for</span> (j=<span class="number">0</span>; j&lt;i; j++) &#123;</span><br><span class="line">        <span class="built_in">if</span> (a[j] &gt; a[j+<span class="number">1</span>]) &#123;</span><br><span class="line">            <span class="comment">// 交换a[j]和a[j+1]</span></span><br><span class="line">            <span class="keyword">int</span> tmp = a[j];</span><br><span class="line">            a[j] = a[j+<span class="number">1</span>];</span><br><span class="line">            a[j+<span class="number">1</span>] = tmp;</span><br><span class="line">            flag = <span class="number">1</span>;    <span class="comment">// 若发生交换，则设标记为1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">if</span> (flag==<span class="number">0</span>)</span><br><span class="line">        <span class="built_in">break</span>;            <span class="comment">// 若没发生交换，则说明数列已有序。</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">for</span> (<span class="keyword">int</span> ii:a)&#123;</span><br><span class="line">    System.out.<span class="built_in">print</span>(ii+<span class="string">","</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上方代码就是我们冒泡排序的一个简单实现了。你手写的是不是比我的更强呢。</p>
 <p>上方的代码还有一个flag我们没有说到，不知道你注意到了么，本身待排序的数组是需要数组长度-1大轮排序才能得出结果，但是我们这个数组在第三轮排序完成后就已经有序了，第四轮的时候其实内层的循环是没有进去的，那么我们是不是可以得出结论，既然第四轮没有进行排序那么再后面的排序是不是也不需要了，所以我们使用了一个flag标记来避免多余的操作。</p>
 <p>一个简单的冒泡排序讲完了。在这里温馨提示大家，学习算法时，我们没必要拘泥于代码的实现，那没有意义。我的建议就是深入理解步骤，当你理解步骤以后代码是随你怎么玩都可以的。</p>
@@ -336,7 +317,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -408,8 +389,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -425,11 +405,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

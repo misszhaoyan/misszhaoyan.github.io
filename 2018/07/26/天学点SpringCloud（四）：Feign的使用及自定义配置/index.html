@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -216,74 +220,30 @@
 <p>Feign的使用</p>
 <p>我们先来看一看如何在项目中使用Feign</p>
 <ol>
-<li>首先呢 ，我们把原先的cloud-demo-consumer项目复制一份，artifactId改为cloud-demo-consumer-feign，然后添加依赖 （温馨提醒，没有看过前几篇文章的朋友，建议先从第一篇文章开始学习效果更佳哦 每天学点SpringCloud（一）：使用SpringBoot2.0.3整合SpringCloud）<br>
-`<br>
-<dependency><br>
-<groupid>org.springframework.cloud</groupid>   <!--注意此处的依赖是SpringBoot2.0以后专用的，如果您使用的SpringBoot版本低于2.0请使用spring-cloud-starter-feign-->
-<artifactid>spring-cloud-starter-openfeign</artifactid><br>
-</dependency><br>
-`</li>
+<li>首先呢 ，我们把原先的cloud-demo-consumer项目复制一份，artifactId改为cloud-demo-consumer-feign，然后添加依赖 （温馨提醒，没有看过前几篇文章的朋友，建议先从第一篇文章开始学习效果更佳哦 每天学点SpringCloud（一）：使用SpringBoot2.0.3整合SpringCloud）</li>
 </ol>
-<p>2.CloudDemoConsumerApplication启动类改名为CloudDemoConsumerFeignApplication，删除上次使用的RestTemplate，并在类上添加注解@EnableFeignClients，标示此项目为Feign客户端<br>
-`<br>
-@SpringBootApplication<br>
-@EnableEurekaClient<br>
-@EnableFeignClients<br>
-public class CloudDemoConsumerFeignApplication {</p>
-<p>public static void main(String[] args) {<br>
-SpringApplication.run(CloudDemoConsumerFeignApplication.class, args);<br>
-}<br>
-}<br>
-`</p>
-<p>3.在cn.org.zhixiang包下增加feign包 然后添加UserFeignClient接口：<br>
-`<br>
-@FeignClient(“provider-demo”)<br>
-public interface UserFeignClient {</p>
-<p>@GetMapping (value = “/user/getUser/{id}”)<br>
-public User getUser(@PathVariable(“id”)Long id);<br>
-}<br>
-`<br>
-这个接口呢，就是我们使用Feign的关键了，我们先来看一下@FeignClient(“provider-demo”)注解，它括号里的内容 看着是不是很熟悉，这不就是我们的服务提供者的名称么，<a href="http://xn--spring-hz8ij7o62cxt9aqiar1b5u617dy9ntid570g8dfca9238gh9ke22d.application.name" target="_blank" rel="noopener">对其实它就是我们需要调用的服务的spring.application.name</a>。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!--注意此处的依赖是SpringBoot2.0以后专用的，如果您使用的SpringBoot版本低于2.0请使用spring-cloud-starter-feign--&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.CloudDemoConsumerApplication启动类改名为CloudDemoConsumerFeignApplication，删除上次使用的RestTemplate，并在类上添加注解@EnableFeignClients，标示此项目为Feign客户端</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@SpringBootApplication</span></span><br><span class="line"><span class="variable">@EnableEurekaClient</span></span><br><span class="line"><span class="variable">@EnableFeignClients</span></span><br><span class="line">public class CloudDemoConsumerFeignApplication &#123;</span><br><span class="line"></span><br><span class="line">   <span class="selector-tag">public</span> <span class="selector-tag">static</span> <span class="selector-tag">void</span> <span class="selector-tag">main</span>(String[] args) &#123;</span><br><span class="line">      <span class="selector-tag">SpringApplication</span><span class="selector-class">.run</span>(CloudDemoConsumerFeignApplication.class, args);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.在cn.org.zhixiang包下增加feign包 然后添加UserFeignClient接口：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@FeignClient</span>(<span class="string">"provider-demo"</span>)</span><br><span class="line">public interface UserFeignClient &#123;</span><br><span class="line"></span><br><span class="line"> <span class="variable">@GetMapping</span> (value = <span class="string">"/user/getUser/&#123;id&#125;"</span>)</span><br><span class="line"> public User getUser(<span class="variable">@PathVariable</span>(<span class="string">"id"</span>)Long id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个接口呢，就是我们使用Feign的关键了，我们先来看一下@FeignClient(“provider-demo”)注解，它括号里的内容 看着是不是很熟悉，这不就是我们的服务提供者的名称么，<a href="http://xn--spring-hz8ij7o62cxt9aqiar1b5u617dy9ntid570g8dfca9238gh9ke22d.application.name" target="_blank" rel="noopener">对其实它就是我们需要调用的服务的spring.application.name</a>。</p>
 <p>接着是@RequestMapping(value = “/user/getUser/{id}”, method = RequestMethod.GET)</p>
 <p>@PathVariable(“id”)，这个注解咋还写上value了呢，我记得没写过呀，其实这就是一个坑了，如果不写的话是启动不起来滴。</p>
 <p>4.接着我们看UserController类，刚才我们已经把RestTemple的Bean给干掉了，那么在这断然没有在使用它的道理。</p>
-<p>我们现在要使用的就是我们刚才定义的UserFeignClient 接口<br>
-`<br>
-@RestController<br>
-@RequestMapping(&quot;/user&quot;)<br>
-public class UserController {</p>
-<p>@Autowired<br>
-private UserFeignClient userFeignClient;</p>
-<p>@GetMapping(&quot;/getUser/{id}&quot;)<br>
-public User getUser(@PathVariable Long id){<br>
-return userFeignClient.getUser(id);<br>
-}<br>
-}`</p>
+<p>我们现在要使用的就是我们刚才定义的UserFeignClient 接口</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@RestController</span></span><br><span class="line"><span class="variable">@RequestMapping</span>(<span class="string">"/user"</span>)</span><br><span class="line">public class UserController &#123;</span><br><span class="line"></span><br><span class="line">  <span class="variable">@Autowired</span></span><br><span class="line">  private UserFeignClient userFeignClient;</span><br><span class="line"></span><br><span class="line">  <span class="variable">@GetMapping</span>(<span class="string">"/getUser/&#123;id&#125;"</span>)</span><br><span class="line">  public User getUser(<span class="variable">@PathVariable</span> Long id)&#123;</span><br><span class="line">     <span class="selector-tag">return</span> <span class="selector-tag">userFeignClient</span><span class="selector-class">.getUser</span>(id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>5现在我们就可以测试了，先启动Eureka服务，然后随便启动我们定义的两个服务提供者中的其中一个，最后启动我们的这个项目。</p>
 <p>浏览器访问http://localhost:8089/user/getUser/1，不知道你获取到数据了么？</p>
 <p>修改Feign的默认配置</p>
 <p>修改Feign的默认配置其实也存在包扫描的问题，因为上一篇文章（自定义Eureka集群负载均衡策略）已经讲过了，这里就不浪费时间了，没有看过的同学可以先去参考一下。</p>
 <p>这里我们就简单省事，把配置文件放到ComponentScan扫描不到的地方吧：cn.org.config,在这里呢，我们新建了Configuration配置类</p>
-<p>`</p>
-<p>@org.springframework.context.annotation.Configuration<br>
-public class Configuration {<br>
-@Bean<br>
-public Contract feignContract() {<br>
-return new Contract.Default();<br>
-}<br>
-}<br>
-`</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@<span class="keyword">org</span>.<span class="keyword">springframework</span>.<span class="keyword">context</span>.<span class="keyword">annotation</span>.<span class="keyword">Configuration</span></span><br><span class="line"><span class="keyword">public</span> class Configuration &#123;</span><br><span class="line">  @<span class="keyword">Bean</span></span><br><span class="line">  public Contract feignContract() &#123;</span><br><span class="line">    <span class="selector-tag">return</span> <span class="selector-tag">new</span> <span class="selector-tag">Contract</span><span class="selector-class">.Default</span>();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>然后在UserFeignClient类中指定configuration</p>
 <p><code>@FeignClient(value = &quot;provider-demo&quot;,configuration = Configuration.class)</code><br>
 注意，我们在此类中修改了Feign的Contract ，那么Contract 是什么呢。它叫做契约。因为Feign一开始使用的契约是SpringMVC，所以刚才我们SpringMVC的注解的时候直接成功了，但是你如果现在启动项目你就会发现已经启动不了了。因为Contract.Default()使用的契约是Feign自己的，也就是说我们要把SpringMVC的注解修改为Feign的注解</p>
-<p>SpringMVC版本<br>
-`<br>
-@GetMapping (value = “/user/getUser/{id}”)<br>
-public User getUser(@PathVariable(“id”)Long id);<br>
-Feign版本</p>
-<p>@RequestLine(“GET /user/getUser/{id}”)<br>
-public User getUser(@Param(“id”) Long id);<br>
-`</p>
+<p>SpringMVC版本</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@GetMapping</span> (value = <span class="string">"/user/getUser/&#123;id&#125;"</span>)</span><br><span class="line">public User getUser(<span class="variable">@PathVariable</span>(<span class="string">"id"</span>)Long id);</span><br><span class="line"><span class="selector-tag">Feign</span>版本</span><br><span class="line"></span><br><span class="line">@<span class="selector-tag">RequestLine</span>(<span class="string">"GET /user/getUser/&#123;id&#125;"</span>)</span><br><span class="line"> <span class="selector-tag">public</span> <span class="selector-tag">User</span> <span class="selector-tag">getUser</span>(<span class="variable">@Param</span>(<span class="string">"id"</span>) Long id);</span><br></pre></td></tr></table></figure>
 <p>当你学会修改Feign的契约时修改别的默认同样不在话下了已经。</p>
 <p>GitHub：<a href="https://github.com/2388386839/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/2388386839/spring-cloud-demo</a></p>
 <p>码云：<a href="https://gitee.com/zhixiang_blog/spring-cloud-demo" target="_blank" rel="noopener">https://gitee.com/zhixiang_blog/spring-cloud-demo</a></p>
@@ -369,7 +329,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -441,8 +401,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -458,11 +417,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

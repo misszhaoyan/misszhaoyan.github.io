@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -209,6 +213,34 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/t如何提交被忽视的部分代码/">
+        <h2 class="post-title">
+            Git如何提交被忽视的部分代码
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            我们都知道，在我们使用Vue的时候我们node_modules文件夹是不会上传到git中的。但是尴尬的是Vue所使用的依赖的代码源码又都在这里面，如果这个时候我们修改了一处源码不可能让所有人都修改吧，也不可能直接把node_modules文件都提交到git上吧。这里就存在了一个折中的办法，只让git记录我们修改过的这一部分代码。下边以我曾经修改过的vue-quill-editor的源码示例：......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#git" title="git">git</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/batis中Blob类型乱码问题/">
         <h2 class="post-title">
             Mybatis中Blob类型乱码问题
@@ -218,8 +250,7 @@
         </h3>
         <div class="post-content-preview">
             智享网站的博客在数据库中的存储其实使用的就是longblob类型，这个类型在查询出来的时候如果不进行处理的话就会出现乱码问题。一个简单的处理方式就是在Mybatis查询数据库的时候增加一个拦截器，给这个类型的字段改变一下编码方式。
-`public class BlobTypeHandler extends BaseTypeHandler {
-private static final Stri......
+123456789101112131415161718192021222324252627282930313233343536373839404142434445......
         </div>
     </a>
     
@@ -248,7 +279,7 @@ private static final Stri......
         </h3>
         <div class="post-content-preview">
             使用之前首先添加maven依赖或者是jar包
-&lt;dependency&gt; &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt; &lt;artifactId&gt;httpclient&lt;/artifactId&gt; &lt;version&gt;4.5.2&lt;/version&gt; &lt;/dependen......
+12345&lt;dependency&gt;    &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;    &lt;artifactId&gt;httpclient&lt;/artifactId&gt;    &lt;version&gt;4.5.2&lt;/version&gt;......
         </div>
     </a>
     
@@ -276,13 +307,7 @@ private static final Stri......
             
         </h3>
         <div class="post-content-preview">
-            `
-public class MailUtil {
-private final org.slf4j.Logger log = LoggerFactory.getLogger(WebConfigurer.class);
-static final Properties props = new Properties();
-
-static {
-    props.put(&quot;mail.smt......
+            123456789101112131415161718192021222324252627282930313233343536373839404142434445464748public class MailUtil &#123;    private final org.slf4j.Logger log = LoggerFactory.getLogger(WebConfigurer.cla......
         </div>
     </a>
     
@@ -310,11 +335,7 @@ static {
             
         </h3>
         <div class="post-content-preview">
-            `public class DateUtil {
-private static Logger logger = Logger.getLogger(DateUtil.class);
-private static String defaultDatePattern = null;
-private static String timePattern = &quot;HH:mm&quot;;
-pri......
+            12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110......
         </div>
     </a>
     
@@ -345,7 +366,7 @@ pri......
             有很多朋友可能在项目中都可能会碰到需要读取Excel来做导入或者其它功能。但是可能对POI又不是太熟悉，在这里分享一个简单的小技巧可以不使用POI来读取Excel文件。
 这里我们假设操作的是下图所示的一个表格：
 在操作之前我们先把此Excel另存为.csv逗号分隔符文件，然后使用普通的文件上传方式把此文件上传到服务器
-public Result uploadFile(MultipartFil......
+123456789101112131415public Result up......
         </div>
     </a>
     
@@ -354,42 +375,6 @@ public Result uploadFile(MultipartFil......
             2018-07-26 作
         </p>
         <div class="tags">
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/26/希尔排序/">
-        <h2 class="post-title">
-            单例模式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            了解单例模式之前我们先来了解一下单例模式的三个要点：
-1.一个类只能有一个实例（就是只需要new一次呗）
-2.它必须自行创建这个实例（就是构造方法不对外暴露呗）
-3.它必须向整个系统提供这个实例（就是获取实例的方法是静态的呗）
-其实通过分析上方三个要点我们就已经了解了单例模式了。也就是说我们只要满足上方的要求就算是一个单例了。
-按照上方的要点这里给出几个例子供大家参考一下：
-饿汉式：
-`
-p......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
             
         </div>
     
@@ -420,6 +405,41 @@ p......
         <div class="tags">
             
               <a href="/tags/#基础算法" title="基础算法">基础算法</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/希尔排序/">
+        <h2 class="post-title">
+            单例模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            了解单例模式之前我们先来了解一下单例模式的三个要点：
+1.一个类只能有一个实例（就是只需要new一次呗）
+2.它必须自行创建这个实例（就是构造方法不对外暴露呗）
+3.它必须向整个系统提供这个实例（就是获取实例的方法是静态的呗）
+其实通过分析上方三个要点我们就已经了解了单例模式了。也就是说我们只要满足上方的要求就算是一个单例了。
+按照上方的要点这里给出几个例子供大家参考一下：
+饿汉式：
+123......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
             
         </div>
     
@@ -495,7 +515,7 @@ p......
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -567,8 +587,7 @@ p......
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -584,11 +603,12 @@ p......
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -218,59 +222,35 @@
 <p><img src="2.png" alt="1"></p>
 <p>Zuul呢就负责了所有的调用，解耦了客户端和微服务。也符合我们设计的单一职责原则。</p>
 <p>使用Zuul</p>
-<p>首先呢，我们在原先的父项目下新增一个cloud-demo-zuul模块，引入依赖<br>
-<code>&lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-server&lt;/artifactId&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-starter-netflix-zuul&lt;/artifactId&gt; &lt;/dependency&gt;</code><br>
-创建包cn.org.zhixiang，在此包下新建启动类CloudDemoZuulApplication<br>
-<code>@SpringBootApplication @EnableZuulProxy public class CloudDemoZuulApplication { public static void main(String[] args) { SpringApplication.run(CloudDemoZuulApplication.class, args); } }</code><br>
-@EnableZuulProxy就是开启Zuul的注解</p>
-<p>接下来看一下application.yml<br>
-`<br>
-spring:<br>
-application:<br>
-name: zuul-demo</p>
-<p>server:<br>
-port: 8093<br>
-eureka:<br>
-client:<br>
-register-with-eureka: true<br>
-service-url:<br>
-defaultZone: <a href="http://root:root@localhost:8761/eureka%60" target="_blank" rel="noopener">http://root:root@localhost:8761/eureka`</a><br>
-这个配置其实是跟我们以往的服务消费者的配置是一样的，为什么要这样配置呢，因为在这个之前我们需要先复习一下以往的知识点，没有看过以往博客的小伙伴可以先参考这个：<a href="https://zhixiang.org.cn" target="_blank" rel="noopener">https://zhixiang.org.cn</a></p>
+<p>首先呢，我们在原先的父项目下新增一个cloud-demo-zuul模块，引入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-zuul<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>创建包cn.org.zhixiang，在此包下新建启动类CloudDemoZuulApplication</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@SpringBootApplication</span></span><br><span class="line"><span class="variable">@EnableZuulProxy</span></span><br><span class="line">public class CloudDemoZuulApplication &#123;</span><br><span class="line">    <span class="selector-tag">public</span> <span class="selector-tag">static</span> <span class="selector-tag">void</span> <span class="selector-tag">main</span>(String[] args) &#123;</span><br><span class="line">        <span class="selector-tag">SpringApplication</span><span class="selector-class">.run</span>(CloudDemoZuulApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@EnableZuulProxy就是开启Zuul的注解</p>
+<p>接下来看一下application.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">zuul-demo</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8093</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://root:root@localhost:8761/eureka</span></span><br></pre></td></tr></table></figure>
+<p>这个配置其实是跟我们以往的服务消费者的配置是一样的，为什么要这样配置呢，因为在这个之前我们需要先复习一下以往的知识点，没有看过以往博客的小伙伴可以先参考这个：<a href="https://zhixiang.org.cn" target="_blank" rel="noopener">https://zhixiang.org.cn</a></p>
 <p>首先启动我们的Eureka服务，然后启动一个提供者cloud-demo-provider。我们知道这个时候我们直接访问http://localhost:8078/user/getUser/2是可以获得数据的对吧，那么我的Zuul是怎么使用的呢。我们启动一下我们的Zuul。</p>
 <p>这个时候我们访问http://localhost:8093/provider-demo/user/getUser/2获得的数据是一样的，也就是说我们的Zuul做了一个路由转发。我们可以看到这个url中有一个provider-demo，这个呢是提供者的spring.application.name的值，那么如果我们不想使用这个呢，比如说现在我知道这是user微服务，我就想如果访问user微服务我就使用http://localhost:8093/user/user/getUser/2怎么办呢。</p>
 <p>配置<br>
-我们需要在yml中加上一个配置。<br>
-<code>zuul: routes: provider-demo: /user/**</code><br>
-这个配置呢就是把服务id为provider-demo的微服务项目地址映射为/user/<em><em>.注意最后是两个</em>，为什么是两个呢，如果是一个</em>只能匹配/user/a,/user/b这种路径，而匹配不了/user/a/b这种。而我们配两个*的话不仅可以匹配/user/a/b,还能匹配/user/a/b/c/d等。</p>
+我们需要在yml中加上一个配置。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">zuul:</span></span><br><span class="line"><span class="symbol">  routes:</span></span><br><span class="line">    provider-demo: <span class="meta-keyword">/user/</span>**</span><br></pre></td></tr></table></figure>
+<p>这个配置呢就是把服务id为provider-demo的微服务项目地址映射为/user/<em><em>.注意最后是两个</em>，为什么是两个呢，如果是一个</em>只能匹配/user/a,/user/b这种路径，而匹配不了/user/a/b这种。而我们配两个*的话不仅可以匹配/user/a/b,还能匹配/user/a/b/c/d等。</p>
 <p>这个时候我们访问http://localhost:8093/user/user/getUser/2的时候就可以得到数据了。</p>
 <p>其实还有别的写法。我们来看一下</p>
 <ol>
 <li></li>
 </ol>
-<p><code>zuul: routes: demo: path: /user/** serviceId: provider-demo</code></p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">zuul:</span></span><br><span class="line"><span class="symbol">  routes:</span></span><br><span class="line"><span class="symbol">    demo:</span></span><br><span class="line"><span class="symbol">      path:</span> <span class="meta-keyword">/user/</span>**</span><br><span class="line"><span class="symbol">      serviceId:</span> provider-demo</span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li></li>
 </ol>
-<p>`<br>
-zuul:<br>
-routes:<br>
-demo:<br>
-path: /user/**<br>
-url: <a href="http://localhost:8078/" target="_blank" rel="noopener">http://localhost:8078/</a></p>
-<p>`</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">zuul:</span></span><br><span class="line"><span class="symbol">  routes:</span></span><br><span class="line"><span class="symbol">    demo:</span></span><br><span class="line"><span class="symbol">      path:</span> <span class="meta-keyword">/user/</span>**</span><br><span class="line"><span class="symbol">      url:</span> http:<span class="comment">//localhost:8078/</span></span><br></pre></td></tr></table></figure>
 <p>上方这两种方式都是可以的，那个demo呢其实是自定义的，只要不是重复就行。然后path呢就是网页上我们访问的url。这两种方式就是分别将这哥path映射到serviceId或者一个url。</p>
 <p>负载均衡</p>
 <p>刚才我们探讨的一直都是单个服务的情况，那么当我们有多个微服务的时候应该怎么操作呢</p>
-<p>`</p>
-<p>zuul:<br>
-routes:<br>
-demo:<br>
-path: /user/**<br>
-serviceId: provider-demo<br>
-provider-demo:<br>
-ribbon:<br>
-listOfServers: <a href="http://localhost:8078" target="_blank" rel="noopener">http://localhost:8078</a>,http://localhost:8079`<br>
-使用这种方式以后，我们再启动一下我们原先的cloud-demo-provider-2项目，然后启动Zuul访问时会发现已经实现了负载均衡</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="symbol">zuul:</span></span><br><span class="line"><span class="symbol">  routes:</span></span><br><span class="line"><span class="symbol">    demo:</span></span><br><span class="line"><span class="symbol">      path:</span> <span class="meta-keyword">/user/</span>**</span><br><span class="line"><span class="symbol">      serviceId:</span> provider-demo</span><br><span class="line">provider-demo:</span><br><span class="line"><span class="symbol">  ribbon:</span></span><br><span class="line"><span class="symbol">      listOfServers:</span> http:<span class="comment">//localhost:8078,http://localhost:8079</span></span><br></pre></td></tr></table></figure>
+<p>使用这种方式以后，我们再启动一下我们原先的cloud-demo-provider-2项目，然后启动Zuul访问时会发现已经实现了负载均衡</p>
 <p>文件上传</p>
 <p>我们使用zuul做路由的时候可能会碰到上传文件的需求，上传小文件到是没事，但是如果大文件的话是无法上传呢，这儿呢就有一个办法来绕过SpringMVC的DispatchServlet。</p>
 <p>例如我们上传文件的接口为http://localhost:8093/user/user/uploadFile 那么我们在上传的时候就可以访问http://localhost:8093/zuul/user/user/uploadFile来实现上传大文件</p>
@@ -354,7 +334,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -426,8 +406,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -443,11 +422,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

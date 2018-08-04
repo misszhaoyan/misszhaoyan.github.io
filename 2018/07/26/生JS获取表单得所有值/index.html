@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -211,51 +215,11 @@
                 col-sm-12 col-xs-12
                 post-container">
 
-                <p>今天碰到了一个没有使用任何框架的表单，大概包含20多个属性，简单抽取几个：<br>
-`<br>
-<from id="auditFrom"><br>
-				<label>房龄：</label> <input name="houseAge" type="number"><br>
-				<label>权属情况：</label> <input name="houseOwner" type="text"></from></p>
-<pre><code>			&lt;label&gt;是否抵贷不一：&lt;/label&gt;
-			&lt;select name=&quot;mortgageLoan&quot;&gt;
-				&lt;option&gt;是&lt;/option&gt;
-				&lt;option&gt;否&lt;/option&gt;
-			&lt;/select&gt;  
-
-			&lt;label&gt;抵押情况：&lt;/label&gt;
-			&lt;select name=&quot;mortgage&quot;&gt;
-				&lt;option&gt;一抵&lt;/option&gt;
-				&lt;option&gt;二抵&lt;/option&gt;
-				&lt;option&gt;多抵&lt;/option&gt;
-			&lt;/select&gt; 
-
-			&lt;label&gt;有无备用房信息：&lt;/label&gt; 
-			&lt;select name=&quot;spareHouse&quot;&gt;
-				&lt;option&gt;有&lt;/option&gt;
-				&lt;option&gt;无&lt;/option&gt;
-			&lt;/select&gt; 
-
-			&lt;label&gt;放款金额：&lt;/label&gt; &lt;input name=&quot;fkAmount&quot; type=&quot;text&quot; &gt;
-
-			&lt;label&gt;备注：&lt;/label&gt; &lt;input name=&quot;remark&quot; type=&quot;textarea&quot; &gt;
-</code></pre>
-
-`
-当我要获取它的值时发现如果我要是写上20多个document.getElementById也太low了吧，所以就自己动手封装了一个小方法
-`
-function(formId){
-	var from=document.getElementById(formId);
-	var tagElements=from.getElementsByClassName('el-input');//这里我把所有我要获取值得属性都使用了同一个类来标识；
-	var json={};
-	  for (var j = 0; j < tagElements.length; j++){  
-			var name=tagElements[j].name;//这里就是要获取得name属性，将此name属性作为json对象得key；
-			var value=tagElements[j].value;
-	  		json[name] = value; 	//注意这里必须要使用这种方式给json赋值。如果使用json.name=value得话你会发现你所有的key都是一个字符串name，而不是name代表的值
-	  }  
-	return json;
-}
-`
-此方法最后返回的json就是整个表单里的值了
+                <p>今天碰到了一个没有使用任何框架的表单，大概包含20多个属性，简单抽取几个：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">from</span> <span class="attr">id</span>=<span class="string">"auditFrom"</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span>&gt;</span>房龄：<span class="tag">&lt;/<span class="name">label</span>&gt;</span> <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"houseAge"</span> <span class="attr">type</span>=<span class="string">"number"</span> &gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span>&gt;</span>权属情况：<span class="tag">&lt;/<span class="name">label</span>&gt;</span> <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"houseOwner"</span> <span class="attr">type</span>=<span class="string">"text"</span> &gt;</span></span><br><span class="line">		</span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span>&gt;</span>是否抵贷不一：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"mortgageLoan"</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">option</span>&gt;</span>是<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">option</span>&gt;</span>否<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">select</span>&gt;</span>  </span><br><span class="line"></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span>&gt;</span>抵押情况：<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"mortgage"</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">option</span>&gt;</span>一抵<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">option</span>&gt;</span>二抵<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">option</span>&gt;</span>多抵<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">select</span>&gt;</span> </span><br><span class="line"></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span>&gt;</span>有无备用房信息：<span class="tag">&lt;/<span class="name">label</span>&gt;</span> </span><br><span class="line">				<span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"spareHouse"</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">option</span>&gt;</span>有<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">option</span>&gt;</span>无<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">select</span>&gt;</span> </span><br><span class="line"></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span>&gt;</span>放款金额：<span class="tag">&lt;/<span class="name">label</span>&gt;</span> <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"fkAmount"</span> <span class="attr">type</span>=<span class="string">"text"</span> &gt;</span></span><br><span class="line"></span><br><span class="line">				<span class="tag">&lt;<span class="name">label</span>&gt;</span>备注：<span class="tag">&lt;/<span class="name">label</span>&gt;</span> <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"remark"</span> <span class="attr">type</span>=<span class="string">"textarea"</span> &gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当我要获取它的值时发现如果我要是写上20多个document.getElementById也太low了吧，所以就自己动手封装了一个小方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params">formId</span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> <span class="keyword">from</span>=<span class="built_in">document</span>.getElementById(formId);</span><br><span class="line">	<span class="keyword">var</span> tagElements=<span class="keyword">from</span>.getElementsByClassName(<span class="string">'el-input'</span>);<span class="comment">//这里我把所有我要获取值得属性都使用了同一个类来标识；</span></span><br><span class="line">	<span class="keyword">var</span> json=&#123;&#125;;</span><br><span class="line">	  <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; tagElements.length; j++)&#123;  </span><br><span class="line">			<span class="keyword">var</span> name=tagElements[j].name;<span class="comment">//这里就是要获取得name属性，将此name属性作为json对象得key；</span></span><br><span class="line">			<span class="keyword">var</span> value=tagElements[j].value;</span><br><span class="line">	  		json[name] = value; 	<span class="comment">//注意这里必须要使用这种方式给json赋值。如果使用json.name=value得话你会发现你所有的key都是一个字符串name，而不是name代表的值</span></span><br><span class="line">	  &#125;  </span><br><span class="line">	<span class="keyword">return</span> json;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此方法最后返回的json就是整个表单里的值了</p>
 
                 
 
@@ -337,7 +301,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -409,8 +373,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -426,11 +389,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

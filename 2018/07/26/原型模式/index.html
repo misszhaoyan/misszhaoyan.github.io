@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -221,80 +225,9 @@
 <p>Prototype:抽象接口，所有具体原型类应该实现的接口</p>
 <p>User：具体原型类</p>
 <p>Client：提出clone请求的客户端角色</p>
-<p>PrototypeManage：对clone过程的管理类<br>
-`<br>
-public interface Prototype extends Cloneable{<br>
-public Object clone();</p>
-<p>public void setName(String name);</p>
-<p>public String getName();</p>
-<p>public boolean equals(Object obj);</p>
-<p>}<br>
-public class User implements Prototype {<br>
-private String name;</p>
-<p>@Override<br>
-public synchronized Object clone() {<br>
-Prototype p=null;<br>
-try {<br>
-p=(Prototype) super.clone();<br>
-} catch (CloneNotSupportedException e) {<br>
-e.printStackTrace();<br>
-}<br>
-return p;<br>
-}</p>
-<p>@Override<br>
-public void setName(String name) {<br>
-this.name=name;<br>
-}<br>
-public String getName(){<br>
-return <a href="http://this.name" target="_blank" rel="noopener">this.name</a>;<br>
-}<br>
-@Override<br>
-public boolean equals(Object prototype) {<br>
-if(prototype instanceof Prototype){<br>
-if(this.getName()==null&amp;&amp;((Prototype) prototype).getName()==null){<br>
-return true;<br>
-}<br>
-if(this.getName()==null&amp;&amp;((Prototype) prototype).getName()!=null){<br>
-return false;<br>
-}<br>
-if(this.getName()!=null&amp;&amp;((Prototype) prototype).getName()==null){<br>
-return false;<br>
-}<br>
-if(this.getName().equals(((Prototype) prototype).getName())){<br>
-return true;<br>
-}<br>
-}<br>
-return false;<br>
-}</p>
-<p>}<br>
-public class PrototypeManage {<br>
-private Vector vector=new Vector();</p>
-<pre><code>public void add(Prototype p){
-    vector.add(p);
-}
-public Prototype get(int i){
-   return (Prototype)vector.get(i);
-}
-public int size(){
-   return vector.size();
-}
-</code></pre>
-<p>}<br>
-public class Client {<br>
-private static Prototype p;<br>
-private static PrototypeManage prototypeManage;</p>
-<pre><code>public static void main(String[] args){
-   p=new User();
-   p.setName(&quot;zhang3&quot;);
-   prototypeManage=new PrototypeManage();
-   Prototype user=(Prototype) p.clone();
-   System.out.println(p.equals(user));
-   prototypeManage.add(user);
-  
- }
-</code></pre>
-<p>}`<br>
-执行上述代码我们发现prototypeManage中所管理的user与第一次我们创建的原型对象相比较是符合我们上方定义的三个条件的。</p>
+<p>PrototypeManage：对clone过程的管理类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Prototype</span> <span class="keyword">extends</span> <span class="title">Cloneable</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span></span>;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>;</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object obj)</span></span>;</span><br><span class="line">  </span><br><span class="line">  &#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">implements</span> <span class="title">Prototype</span> </span>&#123;</span><br><span class="line">     <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      Prototype p=<span class="keyword">null</span>;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">         p=(Prototype) <span class="keyword">super</span>.clone();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> p;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.name=name;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.name;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object prototype)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(prototype <span class="keyword">instanceof</span> Prototype)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.getName()==<span class="keyword">null</span>&amp;&amp;((Prototype) prototype).getName()==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.getName()==<span class="keyword">null</span>&amp;&amp;((Prototype) prototype).getName()!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.getName()!=<span class="keyword">null</span>&amp;&amp;((Prototype) prototype).getName()==<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.getName().equals(((Prototype) prototype).getName()))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PrototypeManage</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Vector vector=<span class="keyword">new</span> Vector();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Prototype p)</span></span>&#123;</span><br><span class="line">        vector.add(p);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Prototype <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">       <span class="keyword">return</span> (Prototype)vector.get(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">size</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="keyword">return</span> vector.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Prototype p;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> PrototypeManage prototypeManage;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">       p=<span class="keyword">new</span> User();</span><br><span class="line">       p.setName(<span class="string">"zhang3"</span>);</span><br><span class="line">       prototypeManage=<span class="keyword">new</span> PrototypeManage();</span><br><span class="line">       Prototype user=(Prototype) p.clone();</span><br><span class="line">       System.out.println(p.equals(user));</span><br><span class="line">       prototypeManage.add(user);</span><br><span class="line">      </span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>执行上述代码我们发现prototypeManage中所管理的user与第一次我们创建的原型对象相比较是符合我们上方定义的三个条件的。</p>
 <p>深克隆和浅克隆<br>
 在Java中存在这个现象，如果被克隆对象中存在一个Dog类对象dog，克隆出来的对象如果指向的仍然是dog的话，那么这个clone就是浅克隆。如果在此克隆过程中dog也被克隆一份的话那么此次克隆就是深克隆。</p>
 
@@ -378,7 +311,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -450,8 +383,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -467,11 +399,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

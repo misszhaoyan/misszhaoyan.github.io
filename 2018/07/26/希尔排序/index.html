@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -217,34 +221,11 @@
 <p>3.它必须向整个系统提供这个实例（就是获取实例的方法是静态的呗）</p>
 <p>其实通过分析上方三个要点我们就已经了解了单例模式了。也就是说我们只要满足上方的要求就算是一个单例了。</p>
 <p>按照上方的要点这里给出几个例子供大家参考一下：</p>
-<p>饿汉式：<br>
-`<br>
-public class HungrySingle {</p>
-<pre><code>private static final HungrySingle single=new HungrySingle();
-
-private HungrySingle(){ }
-
-public static HungrySingle getInstance() {
-    return single;
-}
-</code></pre>
-<p>}`</p>
+<p>饿汉式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HungrySingle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> HungrySingle single=<span class="keyword">new</span> HungrySingle();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">HungrySingle</span><span class="params">()</span></span>&#123; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HungrySingle <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> single;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>观察上述代码我们可以发现，饿汉式单例模式可能是最直观的体现出单例模式的要点的一种写法了。不过呢，这种写法并不是很完美。例如当同一个jvm拥有多个类加载器时，如果多个加载器同时加载这个类的话就会出现多个实例。</p>
-<p>懒汉式：<br>
-`<br>
-public class lazySingle {</p>
-<pre><code>private static lazySingle single;
-
-private lazySingle(){}
-
-public static synchronized lazySingle getInstance() {
-    if(single==null){
-        single=new lazySingle();
-    }
-    return single;
-}
-</code></pre>
-<p>}`</p>
+<p>懒汉式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">lazySingle</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> lazySingle single;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">lazySingle</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">synchronized</span> lazySingle <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(single==<span class="keyword">null</span>)&#123;</span><br><span class="line">            single=<span class="keyword">new</span> lazySingle();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> single;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>不同于饿汉式的加载类时就实例化出对象，懒汉式就解决了饿汉式可能出现的多次加载问题，它把实例化的时机选择在了调用时。不过呢，它同样也存在一定的局限性。例如当单例类作为资源时，并且这个资源在进行初始化还很慢的时候，当有多个线程请求此类将会带来一些负面影响。</p>
 <p>结语：<br>
 其实我们可以在网上看到很多关于单例模式的文章，例如单例的n种写法、你一直再用的哪个单例是错的等等一类的文章。我在这里给大家一个忠告：我们这些写文章的人也是和大家一样的人，我们也可能会犯错。当你看到一篇文章时不要忙着去吸收，先按照你自己的想法去验证一下。就比如单例模式，看看很多写法满足了三个要点吗？</p>
@@ -256,13 +237,9 @@ public static synchronized lazySingle getInstance() {
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2018/07/26/Java简单操作Excel文件/" data-toggle="tooltip" data-placement="top" title="Java简单操作Excel文件">&larr; 上一篇</a>
+                            <a href="/2018/07/26/尔排序-1/" data-toggle="tooltip" data-placement="top" title="希尔排序">&larr; 上一篇</a>
                         </li>
                     
-                    
-                        <li class="next">
-                            <a href="/2018/07/26/尔排序-1/" data-toggle="tooltip" data-placement="top" title="希尔排序">下一篇 &rarr;</a>
-                        </li>
                     
                 </ul>
 
@@ -329,7 +306,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -401,8 +378,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -418,11 +394,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

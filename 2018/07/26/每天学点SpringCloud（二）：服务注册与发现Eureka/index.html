@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -214,106 +218,22 @@
                 <p>相信看过 每天学点SpringCloud（一）：简单服务提供者消费者调用的同学都发现了，在最后消费者调用提供者的时候把提供者的地址硬编码在了代码中，这样的方式肯定是不行的，今天，我们就是要Eureka来解决这个问题</p>
 <p>创建Eureka服务</p>
 <p>1.我们在原先项目的基础上再新建一个项目cloud-demo-eureka</p>
-<p>此项目的依赖为<br>
-`</p>
-<?xml version="1.0" encoding="UTF-8"?>
-<p><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"><br>
-<parent><br>
-<artifactid>spring-cloud-demo</artifactid><br>
-<groupid>cn.org.zhixiang</groupid><br>
-<version>0.0.1-SNAPSHOT</version><br>
-</parent><br>
-<modelversion>4.0.0</modelversion></project></p>
-<pre><code>&lt;artifactId&gt;cloud-demo-eureka&lt;/artifactId&gt;
-
-&lt;properties&gt;
-    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
-    &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
-    &lt;java.version&gt;1.8&lt;/java.version&gt;
-&lt;/properties&gt;
-&lt;dependencies&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-        &lt;!--注意此处的依赖是SpringBoot2.0以后专用的，如果您使用的SpringBoot版本低于2.0请使用spring-cloud-starter-eureka-server--&gt;
-        &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-server&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-    &lt;dependency&gt;
-        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-        &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
-    &lt;/dependency&gt;
-&lt;/dependencies&gt;
-
-&lt;build&gt;
-    &lt;plugins&gt;
-        &lt;plugin&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
-        &lt;/plugin&gt;
-    &lt;/plugins&gt;
-&lt;/build&gt;
-</code></pre>
-
-`
-<p>2.创建application.yml<br>
-`<br>
-spring:<br>
-application:<br>
-name: eureka-server<br>
-#开启权限认证<br>
-security:<br>
-basic:<br>
-enabled: true<br>
-user:<br>
-name: root<br>
-password: root</p>
-<p>server:<br>
-host: localhost<br>
-port: 8761<br>
-eureka:<br>
-client:<br>
-#此项目不作为客户端注册<br>
-register-with-eureka: false<br>
-fetch-registry: false<br>
-service-url:<br>
-#开启权限验证后Eureka地址为 用户名：密码@地址：端口号，如未开启权限验证则直接使用 地址：端口号<br>
-defaultZone: <a href="http://$%7Bspring.security.user.name%7D:$%7Bspring.security.user.password%7D@$" target="_blank" rel="noopener">http://${spring.security.user.name}:${spring.security.user.password}@$</a>{server.host}:${server.port}/eureka<br>
-`</p>
-<p>3.创建cn.org.zhixiang包，在此包下创建CloudDemoEureApplication启动类<br>
-`<br>
-package cn.org.zhixiang;</p>
-<p>import org.springframework.boot.SpringApplication;<br>
-import org.springframework.boot.autoconfigure.SpringBootApplication;<br>
-import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;</p>
-<p>@SpringBootApplication<br>
-@EnableEurekaServer<br>
-public class CloudDemoEureApplication {<br>
-public static void main(String[] args) {<br>
-SpringApplication.run(CloudDemoEureApplication.class, args);<br>
-}<br>
-}<br>
-`<br>
-4.如果您开启了权限验证并且SpringBoot版本为2.0以上的话还需要一个操作，如果不是此布可以忽略</p>
+<p>此项目的依赖为</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"UTF-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-demo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.org.zhixiang<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>cloud-demo-eureka<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!--注意此处的依赖是SpringBoot2.0以后专用的，如果您使用的SpringBoot版本低于2.0请使用spring-cloud-starter-eureka-server--&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.创建application.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">eureka-server</span></span><br><span class="line"><span class="comment">#开启权限认证</span></span><br><span class="line"><span class="attr">  security:</span> </span><br><span class="line"><span class="attr">    basic:</span></span><br><span class="line"><span class="attr">      enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    user:</span></span><br><span class="line"><span class="attr">      name:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">      password:</span> <span class="string">root</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  host:</span> <span class="string">localhost</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line">    <span class="comment">#此项目不作为客户端注册</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    fetch-registry:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line">      <span class="comment">#开启权限验证后Eureka地址为 用户名：密码@地址：端口号，如未开启权限验证则直接使用 地址：端口号</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://$&#123;spring.security.user.name&#125;:$&#123;spring.security.user.password&#125;@$&#123;server.host&#125;:$&#123;server.port&#125;/eureka</span></span><br></pre></td></tr></table></figure>
+<p>3.创建cn.org.zhixiang包，在此包下创建CloudDemoEureApplication启动类</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.org.zhixiang;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableEurekaServer</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CloudDemoEureApplication</span> &#123;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) &#123;</span><br><span class="line">        SpringApplication.run(CloudDemoEureApplication.<span class="keyword">class</span>, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.如果您开启了权限验证并且SpringBoot版本为2.0以上的话还需要一个操作，如果不是此布可以忽略</p>
 <p>因为2.0默认开启了csrf，如果我们现在直接启动Eureka服务的话客户端是注册不上的，所以需要把csrf关闭</p>
-<p>在cn.org.zhixiang包下新建security包，新建WebSecurityConfigurer类<br>
-<code>@EnableWebSecurity public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter { @Override protected void configure(HttpSecurity http) throws Exception { http.csrf().disable(); super.configure(http); } }</code></p>
+<p>在cn.org.zhixiang包下新建security包，新建WebSecurityConfigurer类</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">WebSecurityConfigurer</span> <span class="keyword">extends</span> <span class="title">WebSecurityConfigurerAdapter</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> void configure(<span class="type">HttpSecurity</span> http) <span class="keyword">throws</span> <span class="type">Exception</span> &#123;</span><br><span class="line">        http.csrf().disable();</span><br><span class="line">        <span class="keyword">super</span>.configure(http);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>5.在CloudDemoEureApplication启动类中启动Eureka服务，浏览器访问http://localhost:8761/eureka，输入用户名root和密码root登陆Eureka后Eureka服务创建成功。</p>
 <p>修改服务提供者</p>
-<p>1.在原先的cloud-demo-provider项目中添加Eureka依赖<br>
-<code>&lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-server&lt;/artifactId&gt; &lt;/dependency&gt;</code></p>
-<p>2.修改application.yml，增加以下配置<br>
-`<br>
-eurekaServer:<br>
-host: localhost<br>
-port: 8761<br>
-user: root<br>
-password: root</p>
-<p>eureka:<br>
-client:<br>
-#将此项目注册到Eureka服务<br>
-register-with-eureka: true<br>
-service-url:<br>
-defaultZone: <a href="http://$%7BeurekaServer.user%7D:$%7BeurekaServer.password%7D@$" target="_blank" rel="noopener">http://${eurekaServer.user}:${eurekaServer.password}@$</a>{eurekaServer.host}:${eurekaServer.port}/eureka<br>
-`</p>
+<p>1.在原先的cloud-demo-provider项目中添加Eureka依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.修改application.yml，增加以下配置</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">eurekaServer:</span></span><br><span class="line"><span class="attr">  host:</span> <span class="string">localhost</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8761</span></span><br><span class="line"><span class="attr">  user:</span> <span class="string">root</span></span><br><span class="line"><span class="attr">  password:</span> <span class="string">root</span></span><br><span class="line"></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line">    <span class="comment">#将此项目注册到Eureka服务</span></span><br><span class="line"><span class="attr">    register-with-eureka:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    service-url:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://$&#123;eurekaServer.user&#125;:$&#123;eurekaServer.password&#125;@$&#123;eurekaServer.host&#125;:$&#123;eurekaServer.port&#125;/eureka</span></span><br></pre></td></tr></table></figure>
 <p>3.在CloudDemoProviderApplication启动类中增加一个注解：@EnableEurekaClient标示此项目是Eureka客户端</p>
 <p>4.紧接着先启动刚才创建的Eureka服务再启动此项目，当我们再次访问Eureka的时候可以发现我们的项目已经注册上了Eureka<br>
 <img src="1.png" alt="1"></p>
@@ -326,26 +246,13 @@ defaultZone: <a href="http://$%7BeurekaServer.user%7D:$%7BeurekaServer.password%
 <p>就是这个provider-demo的服务有两个提供者的意思</p>
 <p>修改消费者</p>
 <p>现在我们已经开始修改上次服务地址硬编码的问题了</p>
-<p>1.cloud-demo-consumer项目增加Eureka依赖<br>
-<code>&lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-server&lt;/artifactId&gt; &lt;/dependency&gt;</code><br>
-2.启动类中增加了两个注解<br>
-<code>@SpringBootApplication @EnableEurekaClient public class CloudDemoConsumerApplication { @Bean @LoadBalanced//开启负载均衡 public RestTemplate restTemplate(){ return new RestTemplate(); } public static void main(String[] args) { SpringApplication.run(CloudDemoConsumerApplication.class, args); } }</code></p>
-<p>3.在UserController中做一下改变<br>
-`<br>
-@RestController<br>
-@RequestMapping(&quot;/user&quot;)<br>
-public class UserController {</p>
-<pre><code>@Autowired
-private RestTemplate restTemplate;
-
-@GetMapping(&quot;/getUser/{id}&quot;)
-public User getUser(@PathVariable Long id){
-     return restTemplate.getForObject(&quot;http://provider-demo/user/getUser/&quot;+id,User.class);
-}
-</code></pre>
-<p>}<br>
-`<br>
-可以看到，我们上次使用的localhost:8078/user/getUser已经换成了provider-demo/user/getUser了。不知道大家还记不记得这个provider-demo么？它呢，是两个项目中spring.application.name的属性值，在Eureka中呢，就对应着一个服务的id，也就是说在Eureka中，我们可以不使用ip+端口而是使用Ip去访问服务。</p>
+<p>1.cloud-demo-consumer项目增加Eureka依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-server<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>2.启动类中增加了两个注解</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@SpringBootApplication</span></span><br><span class="line"><span class="variable">@EnableEurekaClient</span></span><br><span class="line">public class CloudDemoConsumerApplication &#123;</span><br><span class="line">   <span class="variable">@Bean</span></span><br><span class="line">   <span class="variable">@LoadBalanced</span><span class="comment">//开启负载均衡</span></span><br><span class="line">   public RestTemplate restTemplate()&#123;</span><br><span class="line">      <span class="selector-tag">return</span> <span class="selector-tag">new</span> <span class="selector-tag">RestTemplate</span>();</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="selector-tag">public</span> <span class="selector-tag">static</span> <span class="selector-tag">void</span> <span class="selector-tag">main</span>(String[] args) &#123;</span><br><span class="line">      <span class="selector-tag">SpringApplication</span><span class="selector-class">.run</span>(CloudDemoConsumerApplication.class, args);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.在UserController中做一下改变</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@RestController</span></span><br><span class="line"><span class="variable">@RequestMapping</span>(<span class="string">"/user"</span>)</span><br><span class="line">public class UserController &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable">@Autowired</span></span><br><span class="line">    private RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="variable">@GetMapping</span>(<span class="string">"/getUser/&#123;id&#125;"</span>)</span><br><span class="line">    public User getUser(<span class="variable">@PathVariable</span> Long id)&#123;</span><br><span class="line">         <span class="selector-tag">return</span> <span class="selector-tag">restTemplate</span><span class="selector-class">.getForObject</span>(<span class="string">"http://provider-demo/user/getUser/"</span>+id,User.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到，我们上次使用的localhost:8078/user/getUser已经换成了provider-demo/user/getUser了。不知道大家还记不记得这个provider-demo么？它呢，是两个项目中spring.application.name的属性值，在Eureka中呢，就对应着一个服务的id，也就是说在Eureka中，我们可以不使用ip+端口而是使用Ip去访问服务。</p>
 <p>大家将这四个项目都启动起来以后，访问http://localhost:8088/user/getUser/5，是不是发现一会会返回张三，一会会返回李四呢。这个就是我们一开始加的@LoadBalanced注解，也就是开启了Eureka的负载均衡。这样的话我们是不是已经完美的完成了昨天遗留的问题呢？</p>
 <p>GitHub：<a href="https://github.com/2388386839/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/2388386839/spring-cloud-demo</a></p>
 <p>码云：<a href="https://gitee.com/zhixiang_blog/spring-cloud-demo" target="_blank" rel="noopener">https://gitee.com/zhixiang_blog/spring-cloud-demo</a></p>
@@ -431,7 +338,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -503,8 +410,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -520,11 +426,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

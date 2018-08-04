@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -215,41 +219,23 @@
 <p>比如说我们有三个微服务 A、B、C，其中A依赖于B，B依赖于C，如果这时候C出现了问题，那么就导致B不可用，紧接着A也不可用，更有可能导致整个系统不可用。我们接下来就来看看如何利用Hystrix预防这种情况</p>
 <p>创建项目<br>
 首先我们复制一份cloud-demo-consumer项目，改名为cloud-demo-consumer-hystrix</p>
-<p>引入Hystrix的依赖<br>
-<code>&lt;dependency&gt; &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt; &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt; &lt;/dependency&gt;</code></p>
-<p>application.xml不用变<br>
-<code>spring: application: name: consumer-demo-hystrix server: port: 8090 eureka: client: healthcheck: enabled: true serviceUrl: defaultZone: http://root:root@localhost:8761/eureka instance: prefer-ip-address: true</code></p>
+<p>引入Hystrix的依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-hystrix<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">`</span><br></pre></td></tr></table></figure>
+<p>application.xml不用变</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">consumer-demo-hystrix</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8090</span></span><br><span class="line"><span class="attr">eureka:</span></span><br><span class="line"><span class="attr">  client:</span></span><br><span class="line"><span class="attr">    healthcheck:</span></span><br><span class="line"><span class="attr">      enabled:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">    serviceUrl:</span></span><br><span class="line"><span class="attr">      defaultZone:</span> <span class="attr">http://root:root@localhost:8761/eureka</span></span><br><span class="line"><span class="attr">  instance:</span></span><br><span class="line"><span class="attr">    prefer-ip-address:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <p>CloudDemoConsumerApplication改名为CloudDemoConsumerHystrixApplication，并且它的注解应该是</p>
 <p><code>@SpringBootApplication @EnableEurekaClient @EnableCircuitBreake</code><br>
 上方我们不认识的这个@EnableCircuitBreake注解就是表示开启断路器模式的注解</p>
-<p>然后我们看一下controller<br>
-`<br>
-@RestController<br>
-@RequestMapping(&quot;/user&quot;)<br>
-public class UserController {</p>
-<pre><code>@Autowired
-private RestTemplate restTemplate;
-
-@GetMapping(&quot;/getUser/{id}&quot;)
-@HystrixCommand(fallbackMethod = &quot;getUserFallback&quot;)
-public User getUser(@PathVariable Long id){
-     return restTemplate.getForObject(&quot;http://provider-demo/user/getUser/&quot;+id,User.class);
-}
-public User getUserFallback(Long id) {
-    User user = new User();
-    user.setName(&quot;王五&quot;);
-    return user;
-}
-</code></pre>
-<p>}`<br>
-它相比较于原先的controller仅仅是多了一个@HystrixCommand(fallbackMethod = “getUserFallback”)注解和一个方法，这个注解呢就是指定Hystrix在此方法超时时调用的方法。</p>
+<p>然后我们看一下controller</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(<span class="meta-string">"/user"</span>)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(<span class="meta-string">"/getUser/&#123;id&#125;"</span>)</span></span><br><span class="line">    <span class="meta">@HystrixCommand(fallbackMethod = <span class="meta-string">"getUserFallback"</span>)</span></span><br><span class="line">    <span class="keyword">public</span> User getUser(<span class="meta">@PathVariable</span> <span class="built_in">Long</span> id)&#123;</span><br><span class="line">         <span class="keyword">return</span> restTemplate.getForObject(<span class="string">"http://provider-demo/user/getUser/"</span>+id,User.<span class="keyword">class</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> User getUserFallback(<span class="built_in">Long</span> id) &#123;</span><br><span class="line">        User user = new User();</span><br><span class="line">        user.setName(<span class="string">"王五"</span>);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它相比较于原先的controller仅仅是多了一个@HystrixCommand(fallbackMethod = “getUserFallback”)注解和一个方法，这个注解呢就是指定Hystrix在此方法超时时调用的方法。</p>
 <p>测试<br>
 首先启动我们代表Eureka服务的项目，然后启动cloud-demo-provider项目，紧接着启动我们现在的项目。</p>
 <p>项目启动以后我们打开浏览器访问localhost:8088/user/getUser/2的时候发现一切正常，网页上返回了张三这个用户。如果我们没有引入Hystrix的时候如果这时候把服务提供者停掉的话在访问会出现什么情况呢，是不是会报错，或者超时呀。</p>
 <p>但是现在不一样了，我们引入了Hystrix，所以我们现在停掉提供者访问的时候会发现程序走了注解指定的fallbackMethod，也就是方法getUserFallBack，这个时候我们浏览器得到的结果是王五。</p>
 <p>Hystrix默认的超时时间是1秒，也就是说它在等待服务提供者1秒后如果得不到结果的话就会认为提供者挂了，紧接着调用fallbackMethod。</p>
 <p>这个时间其实我们可以控制，只需要在yml文件中配置一个属性就可以自定义这个时间</p>
-<p><code>hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 1000 #1000毫秒</code></p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hystrix<span class="selector-class">.command</span><span class="selector-class">.default</span><span class="selector-class">.execution</span><span class="selector-class">.isolation</span><span class="selector-class">.thread</span><span class="selector-class">.timeoutInMilliseconds</span>: <span class="number">1000</span> <span class="number">#100</span>0毫秒</span><br></pre></td></tr></table></figure>
 <p>Feign的支持<br>
 接下来我们看一下Feign是怎么使用Hystrix,</p>
 <p>这次我们改造cloud-demo-consumer-feign项目，项目名称改为cloud-demo-consumer-feign-hystrix，同样向上述 方式一样引入Hystrix的依赖，</p>
@@ -258,8 +244,8 @@ public User getUserFallback(Long id) {
 <p><code>feign.hystrix.enabled: true</code></p>
 <p>这里controller中需要改造的不再是指定单个方法，而是指定接口的实现类</p>
 <p><code>@FeignClient(name = &quot;provider-demo&quot;, fallback = HystrixClientFallback.class)</code><br>
-来看一下这个实现类<br>
-<code>@Component public class HystrixClientFallback implements UserFeignClient { @Override public User getUser(Long id) { User user = new User(); user.setName(&quot;王五&quot;); return user; } }</code></p>
+来看一下这个实现类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HystrixClientFallback</span> <span class="keyword">implements</span> <span class="title">UserFeignClient</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> User <span class="title">getUser</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User();</span><br><span class="line">        user.setName(<span class="string">"王五"</span>);</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样的话如果接口中有多个方法的话我们就不必为每一个方法取指定了。</p>
 <p>现在我们已经解决了服务提供者挂掉的事情了，但是有点不好的是，我们现在还不能知道服务提供者到底是咋挂的，要是能捕获到服务提供者</p>
 <p>抛的异常就好了，其实Hystrix对这个是支持的，我们接下来看一下</p>
@@ -267,26 +253,7 @@ public User getUserFallback(Long id) {
 <p>UserFeignClient上方的注解需要变一下</p>
 <p><code>@FeignClient(name = &quot;provider-demo&quot;, fallbackFactory = HystrixClientFactory.class)</code><br>
 这次使用的是fallbackFactory这个属性，我们看一下它指定的这个类又是怎么实现的呢</p>
-<p>`</p>
-<p>@Component<br>
-public class HystrixClientFactory implements FallbackFactory<userfeignclient> {</userfeignclient></p>
-<pre><code>private static final Logger LOGGER = LoggerFactory.getLogger(HystrixClientFactory.class);
-
-@Override
-public UserFeignClient create(Throwable cause) {
-    HystrixClientFactory.LOGGER.info(&quot;the provider error is: {}&quot;, cause.getMessage());
-    return new UserFeignClient() {
-        @Override
-        public User getUser(Long id) {
-            User user = new User();
-            user.setName(&quot;王五&quot;);
-            return user;
-        }
-    };
-}
-</code></pre>
-<p>}<br>
-`</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HystrixClientFactory</span> <span class="keyword">implements</span> <span class="title">FallbackFactory</span>&lt;<span class="title">UserFeignClient</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger LOGGER = LoggerFactory.getLogger(HystrixClientFactory.class);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> UserFeignClient <span class="title">create</span><span class="params">(Throwable cause)</span> </span>&#123;</span><br><span class="line">        HystrixClientFactory.LOGGER.info(<span class="string">"the provider error is: &#123;&#125;"</span>, cause.getMessage());</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UserFeignClient() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> User <span class="title">getUser</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">                User user = <span class="keyword">new</span> User();</span><br><span class="line">                user.setName(<span class="string">"王五"</span>);</span><br><span class="line">                <span class="keyword">return</span> user;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们可以看到，在这个create的工厂方法中，它的入参就是服务提供者的异常，得到了这个异常以后才会去做实现。这样是不是更加灵活了呢？</p>
 <p>GitHub：<a href="https://github.com/2388386839/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/2388386839/spring-cloud-demo</a></p>
 <p>码云：<a href="https://gitee.com/zhixiang_blog/spring-cloud-demo" target="_blank" rel="noopener">https://gitee.com/zhixiang_blog/spring-cloud-demo</a></p>
@@ -372,7 +339,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -444,8 +411,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -461,11 +427,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

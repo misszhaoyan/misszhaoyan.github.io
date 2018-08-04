@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -220,62 +224,14 @@
 <p>首先最上方就是所有女孩必须要实现的接口，它定义了一个自我介绍的方法，所有的女孩都要实现它。<br>
 下面给出的两个实现类分别为一个温柔的女孩还有一个彪悍的女孩<br>
 而工厂类型提供了一个getGirl方法，根据客户的要求，提供对应的女孩。<br>
-来看代码：<br>
-`<br>
-public interface SimpleInterface {<br>
-public void say();<br>
-}</p>
-<p>public class TenderGirl implements  SimpleInterface{<br>
-@Override<br>
-public void say() {<br>
-System.out.println(“人家是一个淡淡的女子。。。”);<br>
-}<br>
-}</p>
-<p>public class ToughGirl implements  SimpleInterface{<br>
-@Override<br>
-public void say() {<br>
-System.out.println(“你瞅啥。。。”);<br>
-}<br>
-}</p>
-<p>public class SimpleFactory {<br>
-public static SimpleInterface getGirl(String type) throws Exception {<br>
-SimpleInterface girl=null;<br>
-switch (type) {        <a href="//xn--jdk1-fr6gx52b9srw0c.xn--8-306am0g49c900a44au8hi7p68c">//注意此处jdk1.8以后才支持此写法</a><br>
-case “温柔”:<br>
-girl=new TenderGirl();<br>
-break;<br>
-case “彪悍”:<br>
-girl=new ToughGirl();<br>
-break;<br>
-default:<br>
-throw new Exception(“Not Girl”);<br>
-}<br>
-return girl;<br>
-}<br>
-}<br>
-`<br>
-上方给出了一个简单工厂的简单实现，但是仔细一想，不对呀，那要是再来个例如高冷类型的女孩子怎么办呀，难道我们要去修改getGirl方法么，这样可不符合我们的开闭原则呀。那要不我们就看工厂模式有没有解决这个问题吧</p>
+来看代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SimpleInterface</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">say</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TenderGirl</span> <span class="keyword">implements</span>  <span class="title">SimpleInterface</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">say</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"人家是一个淡淡的女子。。。"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ToughGirl</span> <span class="keyword">implements</span>  <span class="title">SimpleInterface</span></span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">say</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"你瞅啥。。。"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SimpleInterface <span class="title">getGirl</span><span class="params">(String type)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        SimpleInterface girl=<span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">switch</span> (type) &#123;        <span class="comment">//注意此处jdk1.8以后才支持此写法</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">"温柔"</span>:</span><br><span class="line">                girl=<span class="keyword">new</span> TenderGirl();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">"彪悍"</span>:</span><br><span class="line">                girl=<span class="keyword">new</span> ToughGirl();</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"Not Girl"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> girl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上方给出了一个简单工厂的简单实现，但是仔细一想，不对呀，那要是再来个例如高冷类型的女孩子怎么办呀，难道我们要去修改getGirl方法么，这样可不符合我们的开闭原则呀。那要不我们就看工厂模式有没有解决这个问题吧</p>
 <p>工厂模式：</p>
 <p><img src="2.png" alt="图片"></p>
-<p>工厂模式与简单工厂的区别就是把原先的工厂类抽象出来了，这个时候每当增加一个女孩的时候我们不需要修改代码，只需要增加一个工厂就够了。来看一下实现吧（注：女孩的接口和实现类请参考上方的简单工厂，这里就不给出了）<br>
-`<br>
-public interface AbstractFactory {<br>
-public Girl getGirl();<br>
-}</p>
-<p>public class TenderGirlFactory implements AbstractFactory {<br>
-@Override<br>
-public Girl getGirl() {<br>
-return new TenderGirl();<br>
-}<br>
-}</p>
-<p>public class ToughGirlFactory implements AbstractFactory {<br>
-@Override<br>
-public Girl getGirl() {<br>
-return new ToughGirl();<br>
-}<br>
-}<br>
-`<br>
-抽象工厂：</p>
+<p>工厂模式与简单工厂的区别就是把原先的工厂类抽象出来了，这个时候每当增加一个女孩的时候我们不需要修改代码，只需要增加一个工厂就够了。来看一下实现吧（注：女孩的接口和实现类请参考上方的简单工厂，这里就不给出了）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Girl <span class="title">getGirl</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TenderGirlFactory</span> <span class="keyword">implements</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Girl <span class="title">getGirl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> TenderGirl();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ToughGirlFactory</span> <span class="keyword">implements</span> <span class="title">AbstractFactory</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Girl <span class="title">getGirl</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ToughGirl();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>抽象工厂：</p>
 <p>抽象工厂的出现目的是为了解决产品族的问题，什么是产品族呢？</p>
 <p>举一个离我们最近的例子：我们在开发中使用最多的是什么，电脑。我们有的人电脑是Windows的有的是Linux的当我们开发的时候需要很多的软件，JDK和Tomcat等，不同的系统安装不同格式的软件，这里不同格式的软件就是产品族了。先来看一下类图</p>
 <p><img src="3.png" alt="图片"></p>
@@ -365,7 +321,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -437,8 +393,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -454,11 +409,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>

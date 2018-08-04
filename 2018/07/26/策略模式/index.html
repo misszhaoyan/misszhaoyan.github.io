@@ -9,8 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
     <meta name="keyword"  content="石玉军,个人博客,Java">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
@@ -64,6 +63,11 @@
 
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
 	<!-- Modified by Yu-Hsuan Yen -->
 <!-- Post Header -->
 <style type="text/css">
@@ -214,30 +218,9 @@
                 <p>策略模式：使算法在不影响客户端的情况下发生变化。</p>
 <p>例如某宝上的一件商品，有时候8折并返现3元、有时候7折返现1元、有时候9折不返现、有时候不打折返现2元等等，我们可以看到这个商品不同时刻要计算利润或者什么的时候是不一样的，现在就可以用到策略模式了。</p>
 <p><img src="1.png" alt="1"></p>
-<p>代码：<br>
-`<br>
-public abstract class Algorithm {<br>
-public abstract void method();<br>
-}</p>
-<p>public class Algorithm1 extends Algorithm {<br>
-@Override<br>
-public void method() {<br>
-}<br>
-}<br>
-public class Algorithm2 extends Algorithm {<br>
-@Override<br>
-public void method() {<br>
-}<br>
-}</p>
-<p>public class Algorithm3 extends Algorithm {<br>
-@Override<br>
-public void method() {<br>
-}<br>
-}</p>
-<p>public class Client {<br>
-private Algorithm algorithm;<br>
-}`<br>
-当需要更换算法实现的时候我们只需要更换Client对象持有的Algorithm的实现就可以了</p>
+<p>代码：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Algorithm</span> </span>&#123;</span><br><span class="line">    public <span class="keyword">abstract</span> void method();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Algorithm1</span> <span class="keyword">extends</span> <span class="title">Algorithm</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void method() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Algorithm2</span> <span class="keyword">extends</span> <span class="title">Algorithm</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void method() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Algorithm3</span> <span class="keyword">extends</span> <span class="title">Algorithm</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    public void method() &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">Client</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">Algorithm</span> algorithm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当需要更换算法实现的时候我们只需要更换Client对象持有的Algorithm的实现就可以了</p>
 
                 
 
@@ -319,7 +302,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
 
         
 
@@ -391,8 +374,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
 <ul >
 
-        <li style="border:1px #333 soild"><a>小编所写的SpringCloud的代码demo已经在GitHub和码云上更新了</a></li>
-		        <li><a>石玉军的个人博客今天上线了</a></li>
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
 
 </ul>
 </div>
@@ -408,11 +390,12 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         <!-- SNS Link -->
         <ul class="list-inline">
-                <li class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
-                <li class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
-                <li class="qq tp"></li>
-                <li class="gitee tp"></li>
-                <li class="qq tp"></li>
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
         </ul>
 
     </div>
