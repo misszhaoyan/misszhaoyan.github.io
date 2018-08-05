@@ -143,14 +143,14 @@
 
                         
                         <li>
-                            <a href="/tags/">标签</a>
+                            <a href="/about/">关于我</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">关于我</a>
+                            <a href="/tags/">标签</a>
                         </li>
                         
                     
@@ -474,21 +474,19 @@ Cof......
 
 <div class="post-preview">
 
-    <a href="/2018/07/26/元/">
+    <a href="/2018/07/26/代理模式/">
         <h2 class="post-title">
-            享元模式
+            代理模式
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            享元模式：以共享的方式高效的支持大量的细粒度对象
-我们以咖啡为例，一家咖啡店一天卖出几千杯咖啡其实这几千杯也不过是几十种口味。在Java中你觉得是new几千次咖啡好还是new几十次口味好呢？享元模式就是利用的这个原理来共享的变量了。
-来看一下类图：
+            代理模式;给某个对象提供一个代理对象，由代理对象持有对原对象的引用。
+代理模式就比较符合中国人含蓄的性格，假如有个姑娘想要找个对象，但是直接满大街去喊我要找对象的不是很多吧。大部分的女孩还是倾向于先去找一个媒人，让媒人来给自己介绍对象。这里的媒人其实就是女孩的代理对象了。
+先来看一下类图：
 
-FlavorFactory：口味工厂，根据客户所需口味生产咖啡
-Client：售货员，负责通知工厂生产咖啡，以及出售咖啡和统计销售情况
-Cof......
+我们可以看到女孩跟媒人都实现了一个相亲的接口，然后呢媒人持有女孩的引用来调用女孩展示自己的方法，代码......
         </div>
     </a>
     
@@ -508,19 +506,23 @@ Cof......
 
 <div class="post-preview">
 
-    <a href="/2018/07/26/代理模式/">
+    <a href="/2018/07/26/模式/">
         <h2 class="post-title">
-            代理模式
+            合成模式
         </h2>
         <h3 class="post-subtitle">
             
         </h3>
         <div class="post-content-preview">
-            代理模式;给某个对象提供一个代理对象，由代理对象持有对原对象的引用。
-代理模式就比较符合中国人含蓄的性格，假如有个姑娘想要找个对象，但是直接满大街去喊我要找对象的不是很多吧。大部分的女孩还是倾向于先去找一个媒人，让媒人来给自己介绍对象。这里的媒人其实就是女孩的代理对象了。
-先来看一下类图：
+            合成模式的职责是将对象组织到树结构中
 
-我们可以看到女孩跟媒人都实现了一个相亲的接口，然后呢媒人持有女孩的引用来调用女孩展示自己的方法，代码......
+观察上方类图：
+interface，一个接口定义了一个获得当前对象名字的方法
+leaf：树中的叶子节点，实现了interface
+Branch：树枝节点，不仅实现了getName方法，同样它本身具有添加节点删除节点的方法且本身可以包含多个树枝节点以及叶子节点
+通过上述结论我们可以发现其实合成模式就是树的结构的实现
+来看一下代码：
+12345678910......
         </div>
     </a>
     
@@ -578,7 +580,7 @@ Cof......
     <div class="tags">
         
 
-            <a href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
 
         
 
@@ -594,6 +596,18 @@ Cof......
 
         
 
+            <a href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
+
+        
+
+            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+
+        
+
+            <a href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+
+        
+
             <a href="/tags/#Vue" title="Vue" rel="1">Vue</a>
 
         
@@ -602,19 +616,7 @@ Cof......
 
         
 
-            <a href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
-
-        
-
-            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
-
-        
-
-            <a href="/tags/#设计模式" title="设计模式" rel="19">设计模式</a>
-
-        
-
-            <a href="/tags/#Https" title="Https" rel="1">Https</a>
+            <a href="/tags/#Java工具类" title="Java工具类" rel="2">Java工具类</a>
 
         
 
@@ -622,11 +624,7 @@ Cof......
 
         
 
-            <a href="/tags/#Java工具类" title="Java工具类" rel="2">Java工具类</a>
-
-        
-
-            <a href="/tags/#Java工具栏" title="Java工具栏" rel="1">Java工具栏</a>
+            <a href="/tags/#SpringCloud" title="SpringCloud" rel="7">SpringCloud</a>
 
         
 
@@ -634,7 +632,11 @@ Cof......
 
         
 
-            <a href="/tags/#SpringCloud" title="SpringCloud" rel="7">SpringCloud</a>
+            <a href="/tags/#Https" title="Https" rel="1">Https</a>
+
+        
+
+            <a href="/tags/#Java工具栏" title="Java工具栏" rel="1">Java工具栏</a>
 
         
     </div>

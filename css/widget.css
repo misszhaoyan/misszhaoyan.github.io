@@ -47,6 +47,18 @@ ul
 .gitee:hover {
   background-image: url("images/G1.png");
 }
+.qqq {
+  background-image: url("images/qqq.png");
+}
+.qqq:hover {
+  background-image: url("images/qqq1.png");
+}
+.github {
+  background-image: url("images/github.png");
+}
+.github:hover {
+  background-image: url("images/github1.png");
+}
 .category-list-count,
 .tag-list-count,
 .archive-list-count {
