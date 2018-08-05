@@ -58,6 +58,20 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
 </head>
 
 
@@ -143,14 +157,14 @@
 
                         
                         <li>
-                            <a href="/tags/">标签</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/tags/">标签</a>
                         </li>
                         
                     
@@ -200,31 +214,31 @@
             <!-- 标签云 -->
             <div id='tag_cloud' class="tags">
                 
-                    <a href="#Redis" title="Redis" rel="1">Redis</a>
-                
-                    <a href="#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+                    <a href="#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
                 
                     <a href="#git" title="git" rel="1">git</a>
                 
-                    <a href="#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+                    <a href="#Redis" title="Redis" rel="1">Redis</a>
                 
                     <a href="#基础算法" title="基础算法" rel="7">基础算法</a>
                 
-                    <a href="#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+                    <a href="#Mybatis" title="Mybatis" rel="1">Mybatis</a>
                 
                     <a href="#Vue" title="Vue" rel="1">Vue</a>
                 
                     <a href="#设计模式" title="设计模式" rel="18">设计模式</a>
                 
-                    <a href="#UML" title="UML" rel="1">UML</a>
+                    <a href="#第三方登录" title="第三方登录" rel="1">第三方登录</a>
                 
-                    <a href="#JS" title="JS" rel="2">JS</a>
+                    <a href="#UML" title="UML" rel="1">UML</a>
                 
                     <a href="#Java工具类" title="Java工具类" rel="2">Java工具类</a>
                 
                     <a href="#Https" title="Https" rel="1">Https</a>
                 
                     <a href="#SpringCloud" title="SpringCloud" rel="7">SpringCloud</a>
+                
+                    <a href="#JS" title="JS" rel="2">JS</a>
                 
                     <a href="#web安全" title="web安全" rel="1">web安全</a>
                 
@@ -236,8 +250,8 @@
 
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="Redis">
-                    <span class="tag-text">Redis</span>
+                <span class="fa fa-tag listing-seperator" id="Elasticsearch">
+                    <span class="tag-text">Elasticsearch</span>
                 </span>
                 
                   <!-- <li class="listing-item">
@@ -245,31 +259,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2018/07/26/Redis基础命令/">
+                     <a href="/2018/07/26/Java简单操作Elasticsearch/">
                         <h2 class="post-title">
-                            Redis基础命令
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="Mybatis">
-                    <span class="tag-text">Mybatis</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2018/07/26/batis中Blob类型乱码问题/">
-                        <h2 class="post-title">
-                            Mybatis中Blob类型乱码问题
+                            使用Java简单操作Elasticsearch
                         </h2>
                         
                     </a>
@@ -302,8 +294,8 @@
             </div>
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="Elasticsearch">
-                    <span class="tag-text">Elasticsearch</span>
+                <span class="fa fa-tag listing-seperator" id="Redis">
+                    <span class="tag-text">Redis</span>
                 </span>
                 
                   <!-- <li class="listing-item">
@@ -311,9 +303,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2018/07/26/Java简单操作Elasticsearch/">
+                     <a href="/2018/07/26/Redis基础命令/">
                         <h2 class="post-title">
-                            使用Java简单操作Elasticsearch
+                            Redis基础命令
                         </h2>
                         
                     </a>
@@ -436,8 +428,8 @@
             </div>
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="第三方登录">
-                    <span class="tag-text">第三方登录</span>
+                <span class="fa fa-tag listing-seperator" id="Mybatis">
+                    <span class="tag-text">Mybatis</span>
                 </span>
                 
                   <!-- <li class="listing-item">
@@ -445,9 +437,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2018/07/26/、新浪微博、码云和百度的第三方登录/">
+                     <a href="/2018/07/26/batis中Blob类型乱码问题/">
                         <h2 class="post-title">
-                            QQ、新浪微博、码云和百度的第三方登录
+                            Mybatis中Blob类型乱码问题
                         </h2>
                         
                     </a>
@@ -489,9 +481,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2018/07/26/享元模式/">
+                     <a href="/2018/07/26/代理模式/">
                         <h2 class="post-title">
-                            享元模式
+                            代理模式
                         </h2>
                         
                     </a>
@@ -504,9 +496,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2018/07/26/代理模式/">
+                     <a href="/2018/07/26/享元模式/">
                         <h2 class="post-title">
-                            代理模式
+                            享元模式
                         </h2>
                         
                     </a>
@@ -684,9 +676,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2018/07/26/装饰者模式/">
+                     <a href="/2018/07/26/策略模式/">
                         <h2 class="post-title">
-                            装饰者模式
+                            策略模式
                         </h2>
                         
                     </a>
@@ -699,9 +691,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2018/07/26/策略模式/">
+                     <a href="/2018/07/26/装饰者模式/">
                         <h2 class="post-title">
-                            策略模式
+                            装饰者模式
                         </h2>
                         
                     </a>
@@ -729,9 +721,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2018/07/26/适配器模式/">
+                     <a href="/2018/07/26/责任链模式/">
                         <h2 class="post-title">
-                            适配器模式
+                            责任链模式
                         </h2>
                         
                     </a>
@@ -744,9 +736,31 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2018/07/26/责任链模式/">
+                     <a href="/2018/07/26/适配器模式/">
                         <h2 class="post-title">
-                            责任链模式
+                            适配器模式
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="第三方登录">
+                    <span class="tag-text">第三方登录</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2018/07/26/、新浪微博、码云和百度的第三方登录/">
+                        <h2 class="post-title">
+                            QQ、新浪微博、码云和百度的第三方登录
                         </h2>
                         
                     </a>
@@ -769,43 +783,6 @@
                      <a href="/2018/07/26/几分钟几张图教你学会如何使用UML/">
                         <h2 class="post-title">
                             几分钟几张图教你学会如何使用UML
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="JS">
-                    <span class="tag-text">JS</span>
-                </span>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2018/07/26/使用原生JS加CSS样式实现图片点击放大缩小功能/">
-                        <h2 class="post-title">
-                            使用原生JS加CSS样式实现图片点击放大缩小功能 
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2018/07/26/生JS获取表单得所有值/">
-                        <h2 class="post-title">
-                            原生JS获取表单得所有值
                         </h2>
                         
                     </a>
@@ -884,6 +861,21 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
+                     <a href="/2018/07/26/天学点SpringCloud（四）：Feign的使用及自定义配置/">
+                        <h2 class="post-title">
+                            每天学点SpringCloud（四）：Feign的使用及自定义配置
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
                      <a href="/2018/07/26/天学点SpringCloud（三）：自定义Eureka集群负载均衡策略/">
                         <h2 class="post-title">
                             每天学点SpringCloud（三）：自定义Eureka集群负载均衡策略
@@ -914,39 +906,9 @@
                   <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
                   </li> -->
                  <div class="post-preview">
-                     <a href="/2018/07/26/天学点SpringCloud（四）：Feign的使用及自定义配置/">
-                        <h2 class="post-title">
-                            每天学点SpringCloud（四）：Feign的使用及自定义配置
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
                      <a href="/2018/07/26/每天学点SpringCloud（一）：使用SpringBoot2-0-3整合SpringCloud/">
                         <h2 class="post-title">
                             每天学点SpringCloud（一）：使用SpringBoot2.0.3整合SpringCloud
-                        </h2>
-                        
-                    </a>
-                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-                </div>
-                <hr>
-                
-                  <!-- <li class="listing-item">
-                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-                  </li> -->
-                 <div class="post-preview">
-                     <a href="/2018/07/26/每天学点SpringCloud（二）：服务注册与发现Eureka/">
-                        <h2 class="post-title">
-                            每天学点SpringCloud（二）：服务注册与发现Eureka
                         </h2>
                         
                     </a>
@@ -977,6 +939,58 @@
                      <a href="/2018/07/26/每天学点SpringCloud（七）：路由器和过滤器-Zuul/">
                         <h2 class="post-title">
                             每天学点SpringCloud（七）：路由器和过滤器-Zuul
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2018/07/26/每天学点SpringCloud（二）：服务注册与发现Eureka/">
+                        <h2 class="post-title">
+                            每天学点SpringCloud（二）：服务注册与发现Eureka
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="JS">
+                    <span class="tag-text">JS</span>
+                </span>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2018/07/26/使用原生JS加CSS样式实现图片点击放大缩小功能/">
+                        <h2 class="post-title">
+                            使用原生JS加CSS样式实现图片点击放大缩小功能 
+                        </h2>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
+                
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2018/07/26/生JS获取表单得所有值/">
+                        <h2 class="post-title">
+                            原生JS获取表单得所有值
                         </h2>
                         
                     </a>

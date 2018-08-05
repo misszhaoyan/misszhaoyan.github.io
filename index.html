@@ -58,6 +58,20 @@
 
     <!-- ga & ba script hoook -->
     <script></script>
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
 </head>
 
 
@@ -143,14 +157,14 @@
 
                         
                         <li>
-                            <a href="/tags/">标签</a>
+                            <a href="/archive/">归档</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">归档</a>
+                            <a href="/tags/">标签</a>
                         </li>
                         
                     
@@ -569,11 +583,7 @@ Boy：持有一个状态实例。
     <div class="tags">
         
 
-            <a href="/tags/#Redis" title="Redis" rel="1">Redis</a>
-
-        
-
-            <a href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
 
         
 
@@ -581,7 +591,7 @@ Boy：持有一个状态实例。
 
         
 
-            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+            <a href="/tags/#Redis" title="Redis" rel="1">Redis</a>
 
         
 
@@ -589,7 +599,7 @@ Boy：持有一个状态实例。
 
         
 
-            <a href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+            <a href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
 
         
 
@@ -601,11 +611,11 @@ Boy：持有一个状态实例。
 
         
 
-            <a href="/tags/#UML" title="UML" rel="1">UML</a>
+            <a href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
 
         
 
-            <a href="/tags/#JS" title="JS" rel="2">JS</a>
+            <a href="/tags/#UML" title="UML" rel="1">UML</a>
 
         
 
@@ -618,6 +628,10 @@ Boy：持有一个状态实例。
         
 
             <a href="/tags/#SpringCloud" title="SpringCloud" rel="7">SpringCloud</a>
+
+        
+
+            <a href="/tags/#JS" title="JS" rel="2">JS</a>
 
         
 
