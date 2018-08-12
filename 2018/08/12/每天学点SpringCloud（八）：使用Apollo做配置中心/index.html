@@ -13,11 +13,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          适配器模式 - 石玉军的个人博客
+          每天学点SpringCloud（八）：使用Apollo做配置中心 - 石玉军的个人博客
         
     </title>
 
-    <link rel="canonical" href="http://yoursite-url/2018/07/26/适配器模式/">
+    <link rel="canonical" href="http://yoursite-url/2018/08/12/每天学点SpringCloud（八）：使用Apollo做配置中心/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -116,14 +116,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#设计模式" title="设计模式">设计模式</a>
+                              <a class="tag" href="/tags/#SpringCloud" title="SpringCloud">SpringCloud</a>
                             
                         </div>
-                        <h1>适配器模式</h1>
+                        <h1>每天学点SpringCloud（八）：使用Apollo做配置中心</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 石玉军 on
-                            2018-07-26
+                            2018-08-12
                         </span>
                     </div>
                 
@@ -241,14 +241,75 @@
                 col-sm-12 col-xs-12
                 post-container">
 
-                <p>适配器模式：把一个类的接口转换为客户端需要的另一个接口</p>
-<p>比如说，我们去相亲，目标中的女孩是会唱歌会跳舞的女孩，但是介绍人说这个女孩只会唱歌，不会跳舞，那你肯定不会满意呀。不过介绍人说，没关系，我有办法。哦？那我们来看看他有什么办法呢</p>
-<p><img src="1.png" alt="图片"></p>
-<p>上方Girl接口就是我们希望女孩的样子，也就是女孩接口，会唱歌会跳舞。<br>
-这个SimpleGirl就是介绍人一开始说的只会唱歌的女孩<br>
-下方Adapter就是介绍人的方法了，它就是通过这个类让我们实现了梦想中的女孩，来看一下实现吧</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Girl</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sing</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dance</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleGirl</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sing</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Adapter</span>  <span class="keyword">implements</span> <span class="title">Girl</span> </span>&#123;</span><br><span class="line">    SimpleGirl girl;</span><br><span class="line"></span><br><span class="line">    Adapter(SimpleGirl girl)&#123;</span><br><span class="line">        <span class="keyword">this</span>.girl=girl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dance</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sing</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        girl.sing();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个实现的原理呢其实就是在女孩类的外面包装了一层，使她学会了跳舞的方法。</p>
+                <p>由于Apollo支持的图形化界面相对于我们更加的友好，所以此次我们使用Apollo来做配置中心</p>
+<p>本篇文章实现了使用Apollo配置了dev和fat两个环境下的属性配置。<br>
+Apollo官方文档<a href="https://github.com/ctripcorp/apollo/wiki" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/wiki</a></p>
+<h2><span id="1下载依赖">1.下载依赖</span></h2>
+<ol>
+<li>从<a href="https://github.com/ctripcorp/apollo/releases" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/releases</a>页面下载最新版本的apollo-configservice-x.x.x-github.zip、apollo-adminservice-x.x.x-github.zip和apollo-portal-x.x.x-github.zip依赖包（需要翻墙。不能翻墙的同学建议使用第二种方式）。</li>
+<li>从<a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo</a>下载源码后在本地构建。构建步骤为:</li>
+</ol>
+<ol>
+<li>下载项目所需依赖</li>
+<li>使用scripts文件夹下的build.bat或build.sh构建</li>
+<li>分别拷贝出apollo-adminservice、apollo-configservice和apollo-portal三个文件夹下target/apollo-xxx-x.x.x-github.zip文件</li>
+</ol>
+<h2><span id="2-创建数据库">2. 创建数据库</span></h2>
+<ol>
+<li>从<a href="https://github.com/ctripcorp/apollo/tree/master/scripts/sql" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo/tree/master/scripts/sql</a>下载apolloconfigdb.sql和apolloportaldb.sql数据库文件。</li>
+<li>使用apolloportaldb.sql文件创建apolloportaldb数据库，此数据库是我们管理各种环境等的通用数据库。</li>
+<li>使用apolloconfigdb.sql文件分别创建apolloconfigdb_dev和apolloconfigdb_fat数据库作为我们两个环境的数据存储。</li>
+</ol>
+<h2><span id="3配置数据库连接信息">3.配置数据库连接信息</span></h2>
+<ol>
+<li>解压第一步下载的三个压缩文件</li>
+<li>apollo-portal-1.0.0-github</li>
+</ol>
+<ol>
+<li>在apollo-portal-1.0.0-github/config下application-github.properties文件中配置	apolloportaldb数据库的连接信息。</li>
+<li>打开apollo-env.properties文件修改dev.mate和fat.mate属性值为不同环境对	应的Eureka地址。例如在这里我fat环境使用的本地，dev使用的是服务器地址</li>
+<li>复制一份apollo-adminservice-1.0.0-github文件，分别重命名为apollo-adminservice-dev和apollo-adminservice-fat。</li>
+<li>在apollo-adminservice-dev和apollo-adminservice-fat 的config文件夹下的application-github.properties文件中分别配置	apolloconfigdb_dev和apolloconfigdb_fat数据库的连接信息。</li>
+<li>按照3.4步骤复制apollo-configservice-1.0.0-github并分别配置数据连接地址</li>
+</ol>
+<p>现在的数据库连接信息如下所示：<br>
+<img src="3.png" alt="图片"></p>
+<h2><span id="4启动服务">4.启动服务</span></h2>
+<ol>
+<li>使用apollo时portal只需要启动一个来进行管理，在这里我们暂时把它放在本地启动。为了启动方面，使用一个小的脚本</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">sh apollo-portal-1.0.0-github/scripts/startup.sh</span><br><span class="line">sh apollo-configservice-fat/scripts/startup.sh</span><br><span class="line">sh apollo-adminservice-fat/scripts/startup.sh</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>将apollo-configservice-dev和apollo-adminservice-dev上传到服务器，使用如下命令启动</li>
+</ol>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sh</span> ./apollo-configservice-dev/scripts/startup.<span class="keyword">sh</span> </span><br><span class="line"><span class="keyword">sh</span> ./apollo-adminservice-dev/scripts/startup.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>现在我们访问http://localhost:8080/以及http://10.10.10.10:8080/可以看到以下信息就没问题了<br>
+<img src="1.png" alt="图片"><img src="2.png" alt="图片"></li>
+<li>修改数据库apolloconfigdb_dev和apolloconfigdb_fat中的ServerConfig表中的key为eureka.service.url的数据，将value分别置为http://10.10.10.10:8080/eureka/和http://localhost:8080/eureka/</li>
+</ol>
+<h2><span id="5测试">5.测试</span></h2>
+<ol>
+<li>创建一个maven工程，引入apollo的相关依赖</li>
+</ol>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">apollo.version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">apollo.version</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.ctrip.framework.apollo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>apollo-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>$</span><span class="template-variable">&#123;apollo.version&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>在application.yml中指定应用的id，以及apollo配置中心的地址</li>
+</ol>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">App</span>:</span><br><span class="line">  <span class="attribute">Id</span>: demo</span><br><span class="line"><span class="attribute">apollo</span>:</span><br><span class="line">  <span class="attribute">Meta</span>: <span class="attribute">http</span>:<span class="comment">//10.10.10.10:8080 #指定dev环境</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>创建ConfigRefresher类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigRefresher</span> <span class="keyword">implements</span> <span class="title">ApplicationContextAware</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> ApplicationContext applicationContext;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ApolloConfig</span></span><br><span class="line">  <span class="keyword">private</span> Config config;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@PostConstruct</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    refresher(config.getPropertyNames());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@ApolloConfigChangeListener</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">onChange</span><span class="params">(ConfigChangeEvent changeEvent)</span> </span>&#123;</span><br><span class="line">    refresher(changeEvent.changedKeys());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">refresher</span><span class="params">(Set&lt;String&gt; changedKeys)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (String changedKey : changedKeys) &#123;</span><br><span class="line">      System.out.println(<span class="string">"this key is changed:"</span>+changedKey);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.applicationContext.publishEvent(<span class="keyword">new</span> EnvironmentChangeEvent(changedKeys));</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext applicationContext)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.applicationContext = applicationContext;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>创建启动类并启动</li>
+</ol>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@SpringBootApplication</span></span><br><span class="line"><span class="variable">@EnableApolloConfig</span></span><br><span class="line">public class Application &#123;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">public</span> <span class="selector-tag">static</span> <span class="selector-tag">void</span> <span class="selector-tag">main</span>(String[] args) &#123;</span><br><span class="line">        <span class="selector-tag">SpringApplication</span><span class="selector-class">.run</span>(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>修改配置文件中的 apollo.Meta为localhost:8080再次启动</li>
+<li>打开浏览器访问 <a href="http://localhost:8070" target="_blank" rel="noopener">http://localhost:8070</a> Apollo默认的用户名为 apollo，密码为admin。登陆后点击创建项目，<a href="http://xn--idapp-6n1hq8bkc523ao3g5ob210av8tnfl0tm124d82ena31rh91az71aye1geq8a.id" target="_blank" rel="noopener">项目的应用id和名称填写我们配置文件中的app.id</a>。</li>
+<li>进入项目可在dev和fat环境中分别发布不同的配置进行测试</li>
+</ol>
 
                 
 
@@ -256,18 +317,14 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2018/07/26/装饰者模式/" data-toggle="tooltip" data-placement="top" title="装饰者模式">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2018/07/26/工厂模式/" data-toggle="tooltip" data-placement="top" title="工厂模式">下一篇 &rarr;</a>
+                            <a href="/2018/07/26/每天学点SpringCloud（七）：路由器和过滤器-Zuul/" data-toggle="tooltip" data-placement="top" title="每天学点SpringCloud（七）：路由器和过滤器-Zuul">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
 
-<div id="SOHUCS" sid="zhixiang.org.cn/2018/07/26/适配器模式/"></div>
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/08/12/每天学点SpringCloud（八）：使用Apollo做配置中心/"></div>
 <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
 window.changyan.api.config({
@@ -443,7 +500,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录1</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1.下载依赖</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. 创建数据库</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3.配置数据库连接信息</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4.启动服务</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5.测试</span></a></li></ol>
         
         </div>
       </aside>

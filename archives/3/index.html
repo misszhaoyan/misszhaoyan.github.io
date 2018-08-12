@@ -239,6 +239,42 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/模式/">
+        <h2 class="post-title">
+            合成模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            合成模式的职责是将对象组织到树结构中
+
+观察上方类图：
+interface，一个接口定义了一个获得当前对象名字的方法
+leaf：树中的叶子节点，实现了interface
+Branch：树枝节点，不仅实现了getName方法，同样它本身具有添加节点删除节点的方法且本身可以包含多个树枝节点以及叶子节点
+通过上述结论我们可以发现其实合成模式就是树的结构的实现
+来看一下代码：
+12345678910......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/装饰者模式/">
         <h2 class="post-title">
             装饰者模式
@@ -530,40 +566,6 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/如何让你的网站免费使用阿里云的Https服务/">
-        <h2 class="post-title">
-            如何让你的网站免费使用阿里云的Https服务
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            刚刚给智享加上了Https,在这个过程中遇到了一些坑，特此记录一下
-首先就是购买的时候第一个坑如下图所示
-
-进入了购买页面以后发现，what？怎么没有免费版。其实这个真的是它隐藏的太深了，我们按照下图所示，首先选择品牌为Symantec然后选择保护类型为1个域名以后就会出现
-免费型的了
-
-接着就是证书购买以后进入我的控制台按照提示进行补全信息提交审核就可以了，个人感觉审核特别快，我的审核1分......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Https" title="Https">Https</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -648,7 +650,7 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
 
         
 
-            <a href="/tags/#SpringCloud" title="SpringCloud" rel="7">SpringCloud</a>
+            <a href="/tags/#SpringCloud" title="SpringCloud" rel="8">SpringCloud</a>
 
         
 
@@ -675,6 +677,10 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
     <ul>
       
         <li>
+          <a style="color:red;" href="/2018/08/12/每天学点SpringCloud（八）：使用Apollo做配置中心/">每天学点SpringCloud（八）：使用Apollo做配置中心</a>
+        </li>
+      
+        <li>
           <a style="color:red;" href="/2018/07/26/每天学点SpringCloud（七）：路由器和过滤器-Zuul/">每天学点SpringCloud（七）：路由器和过滤器-Zuul</a>
         </li>
       
@@ -688,10 +694,6 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
       
         <li>
           <a style="color:red;" href="/2018/07/26/天学点SpringCloud（四）：Feign的使用及自定义配置/">每天学点SpringCloud（四）：Feign的使用及自定义配置</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/07/26/天学点SpringCloud（三）：自定义Eureka集群负载均衡策略/">每天学点SpringCloud（三）：自定义Eureka集群负载均衡策略</a>
         </li>
       
     </ul>
