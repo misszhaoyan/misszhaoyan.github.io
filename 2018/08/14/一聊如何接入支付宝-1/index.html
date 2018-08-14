@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
+    <meta name="keyword"  content="石玉军,个人博客,Java">
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          聊一聊如何接入支付宝 - 石玉军的个人博客
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2018/08/14/一聊如何接入支付宝-1/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+    <!--??????????? -->
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+    <!--???? -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26c56b9bc2b8d3a66705d7f712b5e211";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-o.png')
+            /*post*/
+        
+    }
+
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#支付" title="支付">支付</a>
+                            
+                        </div>
+                        <h1>聊一聊如何接入支付宝</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 石玉军 on
+                            2018-08-14
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">石玉军的个人博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">关于我</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12 col-xs-12
+                post-container">
+
+                <blockquote>
+<p>说起来做一个支付系统最基础的就是支付功能了，对于我们来说除了各大银行以外微信和支付宝也是必选项，毕竟人家这个庞大的用户群在那里摆着呢，你不用那不是想着放弃这些用户么。</p>
+</blockquote>
+<p>今天我们就来看一看对于我们开发者来说如何快速的进行接入。</p>
+<p>首先我们要做的就是先去蚂蚁金服开放平台注册账号<a href="https://open.alipay.com" target="_blank" rel="noopener">https://open.alipay.com</a>。这里需要注意的是如果我们是以个人注册的话，是没有办法投入生产使用的，只能是注册企业支付宝去申请才可以。不过呢，对于我们现在学习来说是已经足够了。</p>
+<h2><span id="创建应用">创建应用</span></h2>
+<p>第一步我们点击导航栏的 开发接入 按钮，找到支付应用。创建一个应用。<br>
+应用创建完成后就是补充应用的信息了，相信看着页面的描述你可以做到的，这里就不过多的描述了。不过有一点需要注意，就是我们的支付功能的话可以先选择一个当面付来玩一玩商场里的扫码枪是如何做到的。</p>
+<h2><span id="使用沙箱账号进行测试">使用沙箱账号进行测试</span></h2>
+<p>接下来呢，我们要准备测试用的环境了。进入此页面<a href="https://openhome.alipay.com/platform/appDaily.htm?tab=info" target="_blank" rel="noopener">https://openhome.alipay.com/platform/appDaily.htm?tab=info</a><br>
+这里面呢，有一些我们一会需要的信息，比如说APPID，支付宝公钥，支付宝网关等信息。页面持续往下拉，会有一个Android版的沙箱支付宝，先下载下来，登陆信息在左侧导航栏沙箱账号里。</p>
+<h2><span id="开始搞">开始搞</span></h2>
+<blockquote>
+<p>前面我们已经把需要准备的东西都准备好了，下面我们就开始开发吧。</p>
+</blockquote>
+<h4><span id="引入依赖">引入依赖</span></h4>
+<p>有很多教程里面都是直接引入的支付宝相关的jar包，个人感觉这种方式对于我们现在maven的时代还是比较不合适的。所以呢，咱们使用支付宝官方提供的maven依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alipay.sdk<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>alipay-sdk-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4><span id="配置基础信息">配置基础信息</span></h4>
+<p>创建一个名为 alipay_config.properties的配置文件</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#加密方式</span></span><br><span class="line">alipay.<span class="attribute">signType</span>=RSA2</span><br><span class="line"></span><br><span class="line"><span class="comment">#字符编码格式</span></span><br><span class="line">alipay.<span class="attribute">charset</span>=utf-8</span><br><span class="line"></span><br><span class="line"><span class="comment">#appid</span></span><br><span class="line">alipay.appId =xxx</span><br><span class="line"></span><br><span class="line"><span class="comment">#商户私钥</span></span><br><span class="line">alipay.appPrivateKey =xxx</span><br><span class="line"></span><br><span class="line"><span class="comment">#支付宝公钥</span></span><br><span class="line">alipay.<span class="attribute">appPublicKey</span>=xxx</span><br><span class="line"><span class="comment">#沙箱测试地址</span></span><br><span class="line">alipay.<span class="attribute">aliUrl</span>=https://openapi.alipaydev.com/gateway.do</span><br></pre></td></tr></table></figure>
+<p>上方几个信息详细你在沙箱里面已经看到了，这里我就不做详细解释了哦</p>
+<h4><span id="使用propertysource在java类中读取配置文件">使用@PropertySource在Java类中读取配置文件</span></h4>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Data</span></span><br><span class="line"><span class="variable">@Configuration</span></span><br><span class="line"><span class="variable">@ConfigurationProperties</span>(prefix = <span class="string">"alipay"</span>,ignoreUnknownFields = false)</span><br><span class="line"><span class="variable">@PropertySource</span>(value = &#123; <span class="string">"classpath:alipay_config.properties"</span> &#125;,ignoreResourceNotFound=false)</span><br><span class="line">public class AlipayConfig &#123;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">appId</span>;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">appPrivateKey</span>;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">appPublicKey</span>;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">aliUrl</span>;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">signType</span>;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">charset</span>;</span><br><span class="line"></span><br><span class="line">    @<span class="selector-tag">Bean</span></span><br><span class="line">    <span class="selector-tag">public</span> <span class="selector-tag">AlipayClient</span> <span class="selector-tag">alipayClient</span>()&#123;</span><br><span class="line">        <span class="selector-tag">return</span> <span class="selector-tag">new</span> <span class="selector-tag">DefaultAlipayClient</span>(aliUrl,</span><br><span class="line">                appId, appPrivateKey, <span class="string">"JSON"</span>, charset, appPublicKey, signType);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个配置方式呢，其实就是一个简单的把配置文件中的属性注入到这个类中的各个属性，然后呢使用一个@Bean的注解把这些配置组合成一个AlipayClient类来放入Spring的容器中进行管理</p>
+<h4><span id="撸代码">撸代码</span></h4>
+<p>接下来的这个时候其实已经不需要我来讲了。API接口文档在这：<a href="https://docs.open.alipay.com/api_1/alipay.trade.pay" target="_blank" rel="noopener">https://docs.open.alipay.com/api_1/alipay.trade.pay</a></p>
+<p>大家可以直接参考着搞起来了。我这里给两个简单的例子</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line">@Service</span><br><span class="line">public class AlipayService &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private AlipayClient alipayClient;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 条码支付，声波支付</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public void tradePay()&#123;</span><br><span class="line"></span><br><span class="line">        AlipayTradePayRequest request = new AlipayTradePayRequest();</span><br><span class="line">        request.setBizContent(<span class="string">"&#123;"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>out_trade_no<span class="subst">\"</span>:<span class="subst">\"</span>20150324450101001<span class="subst">\"</span>,"</span> + <span class="comment">//订单号，全局唯一</span></span><br><span class="line"><span class="string">"<span class="subst">\"</span>scene<span class="subst">\"</span>:<span class="subst">\"</span>bar_code<span class="subst">\"</span>,"</span> +                <span class="comment">//支付方式：条码支付</span></span><br><span class="line"><span class="string">"<span class="subst">\"</span>auth_code<span class="subst">\"</span>:<span class="subst">\"</span>2876323325664394<span class="subst">\"</span>,"</span> +	<span class="comment">//登陆沙箱支付宝，打开付款码得到的一串数字</span></span><br><span class="line"><span class="string">"<span class="subst">\"</span>subject<span class="subst">\"</span>:<span class="subst">\"</span>Iphone6 16G<span class="subst">\"</span>,"</span> +            <span class="comment">//订单标题</span></span><br><span class="line"><span class="string">"<span class="subst">\"</span>total_amount<span class="subst">\"</span>:888.88,"</span> +			    <span class="comment">//订单金额</span></span><br><span class="line"><span class="string">"<span class="subst">\"</span>body<span class="subst">\"</span>:<span class="subst">\"</span>Iphone6 16G<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"      <span class="subst">\"</span>goods_detail<span class="subst">\"</span>:[&#123;"</span> +</span><br><span class="line"><span class="string">"        <span class="subst">\"</span>goods_id<span class="subst">\"</span>:<span class="subst">\"</span>apple-01<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>goods_name<span class="subst">\"</span>:<span class="subst">\"</span>ipad<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>quantity<span class="subst">\"</span>:1,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>price<span class="subst">\"</span>:2000,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>goods_category<span class="subst">\"</span>:<span class="subst">\"</span>34543238<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>body<span class="subst">\"</span>:<span class="subst">\"</span>特价手机<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>show_url<span class="subst">\"</span>:<span class="subst">\"</span>http://www.alipay.com/xxx.jpg<span class="subst">\"</span>"</span> +</span><br><span class="line"><span class="string">"        &#125;],"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>operator_id<span class="subst">\"</span>:<span class="subst">\"</span>yx_001<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>store_id<span class="subst">\"</span>:<span class="subst">\"</span>NJ_001<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>terminal_id<span class="subst">\"</span>:<span class="subst">\"</span>NJ_T_001<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>extend_params<span class="subst">\"</span>:&#123;"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>sys_service_provider_id<span class="subst">\"</span>:<span class="subst">\"</span>2088511833207846<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>industry_reflux_info<span class="subst">\"</span>:<span class="subst">\"</span>&#123;<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>scene_code<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>:<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>metro_tradeorder<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>,<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>channel<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>:<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>xxxx<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>,<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>scene_data<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>:&#123;<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>asset_name<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>:<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>ALIPAY<span class="subst">\\</span><span class="subst">\\</span><span class="subst">\\</span><span class="subst">\"</span>&#125;&#125;<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>card_type<span class="subst">\"</span>:<span class="subst">\"</span>S0JP0000<span class="subst">\"</span>"</span> +</span><br><span class="line"><span class="string">"    &#125;,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>timeout_express<span class="subst">\"</span>:<span class="subst">\"</span>90m<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>auth_confirm_mode<span class="subst">\"</span>:<span class="subst">\"</span>COMPLETE：转交易支付完成结束预授权;NOT_COMPLETE：转交易支付完成不结束预授权<span class="subst">\"</span>,"</span> +</span><br><span class="line"><span class="string">"<span class="subst">\"</span>terminal_params<span class="subst">\"</span>:<span class="subst">\"</span>&#123;<span class="subst">\\</span><span class="subst">\"</span>key<span class="subst">\\</span><span class="subst">\"</span>:<span class="subst">\\</span><span class="subst">\"</span>value<span class="subst">\\</span><span class="subst">\"</span>&#125;<span class="subst">\"</span>"</span> +</span><br><span class="line"><span class="string">"  &#125;"</span>);</span><br><span class="line">        AlipayTradePayResponse response = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            response = alipayClient.execute(request);</span><br><span class="line">        &#125; catch (AlipayApiException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        if(response.isSuccess())&#123;</span><br><span class="line">            System.out.println(<span class="string">"调用成功"</span>);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            System.out.println(<span class="string">"调用失败"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 查询</span></span><br><span class="line"><span class="comment">     * @return</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    public void queryOrder()&#123;</span><br><span class="line">        AlipayTradeQueryRequest request = new AlipayTradeQueryRequest();</span><br><span class="line">        request.setBizContent(<span class="string">"&#123;"</span> +</span><br><span class="line">                <span class="string">"<span class="subst">\"</span>out_trade_no<span class="subst">\"</span>:<span class="subst">\"</span>20150320010101001<span class="subst">\"</span>,"</span> +  	 <span class="comment">// 系统订单号</span></span><br><span class="line">                <span class="string">"<span class="subst">\"</span>trade_no<span class="subst">\"</span>:<span class="subst">\"</span>2018081421001004570200746674<span class="subst">\"</span>"</span> + <span class="comment">//支付宝交易订单号</span></span><br><span class="line">                <span class="string">"  &#125;"</span>);</span><br><span class="line">        AlipayTradeQueryResponse response = null;</span><br><span class="line">        try &#123;</span><br><span class="line">            response = alipayClient.execute(request);</span><br><span class="line">        &#125; catch (AlipayApiException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        if(response.isSuccess())&#123;</span><br><span class="line">            System.out.println(<span class="string">"调用成功"</span>);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            System.out.println(<span class="string">"调用失败"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>相信聪明的你已经可以看着文档开启的你的支付之路了。</p>
+<blockquote>
+<p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
+</blockquote>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/08/12/每天学点SpringCloud（八）：使用Apollo做配置中心/" data-toggle="tooltip" data-placement="top" title="每天学点SpringCloud（八）：使用Apollo做配置中心">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/08/14/一聊如何接入支付宝-1/"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytJA6t4E',
+conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
+});
+</script>
+
+
+
+            </div>
+             <div>
+                        <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        
+
+
+
+    <h5>标签</h5>
+
+    <div class="tags">
+        
+
+            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+
+        
+
+            <a href="/tags/#git" title="git" rel="1">git</a>
+
+        
+
+            <a href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+
+        
+
+            <a href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
+
+        
+
+            <a href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+
+        
+
+            <a href="/tags/#Vue" title="Vue" rel="1">Vue</a>
+
+        
+
+            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+
+        
+
+            <a href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+
+        
+
+            <a href="/tags/#UML" title="UML" rel="1">UML</a>
+
+        
+
+            <a href="/tags/#Java工具类" title="Java工具类" rel="2">Java工具类</a>
+
+        
+
+            <a href="/tags/#Https" title="Https" rel="1">Https</a>
+
+        
+
+            <a href="/tags/#SpringCloud" title="SpringCloud" rel="8">SpringCloud</a>
+
+        
+
+            <a href="/tags/#JS" title="JS" rel="2">JS</a>
+
+        
+
+            <a href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a href="/tags/#Java工具栏" title="Java工具栏" rel="1">Java工具栏</a>
+
+        
+
+            <a href="/tags/#支付" title="支付" rel="1">支付</a>
+
+        
+    </div>
+
+
+        <hr>
+    
+        
+<section class="visible-md visible-lg">
+  <h5>最近更新</h5>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/14/一聊如何接入支付宝-1/">聊一聊如何接入支付宝</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/12/每天学点SpringCloud（八）：使用Apollo做配置中心/">每天学点SpringCloud（八）：使用Apollo做配置中心</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/每天学点SpringCloud（七）：路由器和过滤器-Zuul/">每天学点SpringCloud（七）：路由器和过滤器-Zuul</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/学点SpringCloud（六）：Hystrix使用/">每天学点SpringCloud（六）：Hystrix使用</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/07/26/每天学点SpringCloud（五）：如何使用高可用的Eureka/">每天学点SpringCloud（五）：如何使用高可用的Eureka</a>
+        </li>
+      
+    </ul>
+  </div>
+  </section>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+<section class="visible-md visible-lg">
+
+<h5>重要通知</h5>
+    <div class="widget">
+
+<ul >
+
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
+
+</ul>
+</div>
+</section>
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5>关注我</h5>
+    <div class="short-about">
+        <!-- 图片以及自我介绍被删除-->
+
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
+        </ul>
+
+    </div>
+	
+
+
+</section>
+        <hr>
+    
+</div>
+                        </div>
+            <!-- Tabe of Content -->
+            <!-- Table of Contents 读博客右边栏
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录1</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">创建应用</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">使用沙箱账号进行测试</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">开始搞</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.1.</span> <span class="toc-nav-text">引入依赖</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.2.</span> <span class="toc-nav-text">配置基础信息</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.3.</span> <span class="toc-nav-text">使用@PropertySource在Java类中读取配置文件</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.4.</span> <span class="toc-nav-text">撸代码</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+-->
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+               
+            </div>
+
+
+        </div>
+    </div>
+
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer style="padding:0px;">
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+   
+    
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 石玉军 2018  
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_pv">本网站已被访问<span id="busuanzi_value_site_pv"></span>次</span>
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_uv">您是第<span id="busuanzi_value_site_uv"></span>位访客</span>
+    
+                    <br>
+                    
+                <a target="_black" href="http://www.miitbeian.gov.cn/">鲁ICP备18002448号-1</a>    
+                </p>
+				
+				
+				
+				
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
