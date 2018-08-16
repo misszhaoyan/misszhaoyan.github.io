@@ -239,6 +239,137 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/天学点SpringCloud（三）：自定义Eureka集群负载均衡策略/">
+        <h2 class="post-title">
+            每天学点SpringCloud（三）：自定义Eureka集群负载均衡策略
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            相信看了 每天学点SpringCloud（一）：简单服务提供者消费者调用，每天学点SpringCloud（二）：服务注册与发现Eureka这两篇的同学都了解到了我的套路，没错，本篇博客同样是为了解决上篇的问题的。
+上篇我们使用Eureka默认的负载均衡解决了消费方调用服务方硬编码的问题，不过呢，因为是使用的默认负载均衡的策略，所以这次我们就搞一搞事情，来自定义一下它的策略。
+搞这个策略呢有两......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#SpringCloud" title="SpringCloud">SpringCloud</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/每天学点SpringCloud（二）：服务注册与发现Eureka/">
+        <h2 class="post-title">
+            每天学点SpringCloud（二）：服务注册与发现Eureka
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            相信看过 每天学点SpringCloud（一）：简单服务提供者消费者调用的同学都发现了，在最后消费者调用提供者的时候把提供者的地址硬编码在了代码中，这样的方式肯定是不行的，今天，我们就是要Eureka来解决这个问题
+创建Eureka服务
+1.我们在原先项目的基础上再新建一个项目cloud-demo-eureka
+此项目的依赖为
+12345678910111213141516171819202......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#SpringCloud" title="SpringCloud">SpringCloud</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/每天学点SpringCloud（一）：使用SpringBoot2-0-3整合SpringCloud/">
+        <h2 class="post-title">
+            每天学点SpringCloud（一）：使用SpringBoot2.0.3整合SpringCloud
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            最近开始学习SpringCloud，在此把我学习的过程记录起来，跟大家分享一下，一起学习。想学习SpringCloud的同学赶快上车吧。
+本次学习使用得SpringBoot版本为2.0.3.RELEASE，SpringCloud版本为Finchley.RELEASE
+创建父Maven工程
+首先我们创建一个Maven项目
+
+我们把此项目当做我们项目的父项目，以后我们所有的子项目都应该继承这个项......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#SpringCloud" title="SpringCloud">SpringCloud</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/状态模式/">
+        <h2 class="post-title">
+            状态模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            状态模式：允许一个对象在其内部状态改变时改变其行为。
+举一个简单的小例子，我们在对一个小姐姐搭讪的时候，根据小姐姐的心情如何我们可能会得到不同的回复。
+看一下类图
+
+Girl：抽象状态接口：用于封装男孩对象搭讪小姐姐获得回复的接口
+AngryGirl、HappyGirl:两个状态实现类。不同的状态就对应了男孩在不同时刻获得的回复。
+Boy：持有一个状态实例。
+看一下代码：
+123456789......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/备忘录模式/">
         <h2 class="post-title">
             备忘录模式
@@ -434,137 +565,6 @@ ClassImpl1，ClassImpl2都继承了抽象类，并分别对方法1和2进行了�
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/策略模式/">
-        <h2 class="post-title">
-            策略模式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            策略模式：使算法在不影响客户端的情况下发生变化。
-例如某宝上的一件商品，有时候8折并返现3元、有时候7折返现1元、有时候9折不返现、有时候不打折返现2元等等，我们可以看到这个商品不同时刻要计算利润或者什么的时候是不一样的，现在就可以用到策略模式了。
-
-代码：
-123456789101112131415161718192021222324public abstract class Algori......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/26/桥梁模式/">
-        <h2 class="post-title">
-            桥梁模式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            桥梁模式：将抽象化与实现化脱藕，使二者可以独立的变化
-大家应该对日志记录比较熟悉，不知道有没有自己写过一个日志处理的程序，你又是如何实现的呢？
-今天的桥梁模式就根据一下需求来分析一下：
-支持2个以上平台
-支持2个以上格式
-大家可以看一下这个需求哈，2个以上，那我就实现2个呗，一般人可能都会这样想。然后开始写，比如Windows存Txt格式、Windows存Xml格式、Linux存Txt格式的......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/26/外观模式/">
-        <h2 class="post-title">
-            外观模式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            外观模式：外部系统与子系统的通信必须通过一个统一的对象进行
-举个例子，现在结婚是不是都找婚庆公司啊，为什么呢？因为如果不找婚庆公司自己筹备的话，我们可能得自己跑去订酒店，自己去找主持人，自己去找摄像，自己去找车队。是不是太麻烦了点，而有了婚庆公司就不一样了，我可以吩咐他去找酒店，找主持人等等。。。
-来看一下类图：
-
-在这里Facade就相当于婚庆公司的角色，我们作为client直接调用Fac......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/26/享元模式/">
-        <h2 class="post-title">
-            享元模式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            享元模式：以共享的方式高效的支持大量的细粒度对象
-我们以咖啡为例，一家咖啡店一天卖出几千杯咖啡其实这几千杯也不过是几十种口味。在Java中你觉得是new几千次咖啡好还是new几十次口味好呢？享元模式就是利用的这个原理来共享的变量了。
-来看一下类图：
-
-FlavorFactory：口味工厂，根据客户所需口味生产咖啡
-Client：售货员，负责通知工厂生产咖啡，以及出售咖啡和统计销售情况
-Cof......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -641,7 +641,7 @@ Cof......
 
         
 
-            <a href="/tags/#Java工具类" title="Java工具类" rel="2">Java工具类</a>
+            <a href="/tags/#Java工具类" title="Java工具类" rel="7">Java工具类</a>
 
         
 
@@ -661,7 +661,7 @@ Cof......
 
         
 
-            <a href="/tags/#Java工具栏" title="Java工具栏" rel="1">Java工具栏</a>
+            <a href="/tags/#Java工具栏" title="Java工具栏" rel="0">Java工具栏</a>
 
         
 
@@ -680,23 +680,23 @@ Cof......
     <ul>
       
         <li>
+          <a style="color:red;" href="/2018/08/16/IDEA中使用lombok插件/">IDEA中使用lombok插件</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/16/用Java类加载SpringBoot配置文件/">使用Java类加载SpringBoot、SpringCloud配置文件</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/16/va项目启动时执行指定方法的几种方式/">Java项目启动时执行指定方法的几种方式</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/16/ava定时任务解决方案/">Java定时任务解决方案</a>
+        </li>
+      
+        <li>
           <a style="color:red;" href="/2018/08/14/一聊如何接入支付宝-1/">聊一聊如何接入支付宝</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/12/每天学点SpringCloud（八）：使用Apollo做配置中心/">每天学点SpringCloud（八）：使用Apollo做配置中心</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/07/26/每天学点SpringCloud（七）：路由器和过滤器-Zuul/">每天学点SpringCloud（七）：路由器和过滤器-Zuul</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/07/26/学点SpringCloud（六）：Hystrix使用/">每天学点SpringCloud（六）：Hystrix使用</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/07/26/每天学点SpringCloud（五）：如何使用高可用的Eureka/">每天学点SpringCloud（五）：如何使用高可用的Eureka</a>
         </li>
       
     </ul>

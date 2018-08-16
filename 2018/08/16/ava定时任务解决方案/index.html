@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
+    <meta name="keyword"  content="石玉军,个人博客,Java">
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Java定时任务解决方案 - 石玉军的个人博客
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2018/08/16/ava定时任务解决方案/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+    <!--??????????? -->
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+    <!--???? -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26c56b9bc2b8d3a66705d7f712b5e211";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-o.png')
+            /*post*/
+        
+    }
+
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Java工具类" title="Java工具类">Java工具类</a>
+                            
+                        </div>
+                        <h1>Java定时任务解决方案</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 石玉军 on
+                            2018-08-16
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">石玉军的个人博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">关于我</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12 col-xs-12
+                post-container">
+
+                <blockquote>
+<p>很多项目中都会遇到需要定时任务的情况，本篇文章就结合了Spring中以及SpringBoot、SpringCloud中定时任务的解决方案。</p>
+</blockquote>
+<h3><span id="在spring中使用定时器">在Spring中使用定时器</span></h3>
+<blockquote>
+<p>用SpringBoot比较多的同学可能都会觉得Spring的xml配置确实比较麻烦，如果想在Spring中使用定时器的话其实是必须使用xml配置文件的。</p>
+</blockquote>
+<ol>
+<li>引入task约束</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http:<span class="regexp">//</span>www.springframework.org<span class="regexp">/schema/</span>task</span><br><span class="line">                       http:<span class="regexp">//</span>www.springframework.org<span class="regexp">/schema/</span>task<span class="regexp">/spring-task-3.0.xsd</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>开启注解</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;task:scheduler <span class="attribute">id</span>=<span class="string">"Scheduler"</span> <span class="attribute">pool-size</span>=<span class="string">"10"</span>/&gt; </span><br><span class="line"> &lt;task:annotation-driven <span class="attribute">scheduler</span>=<span class="string">"Scheduler"</span> <span class="attribute">proxy-target-class</span>=<span class="string">"true"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>以注解的方式使用</li>
+</ol>
+<p>在项目中使用时定时任务的类必须由Spring来管理，所以我们给这个类加上一个@Component注解</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Task</span> &#123;</span><br><span class="line"></span><br><span class="line"> 	  <span class="comment">/**</span></span><br><span class="line"><span class="comment">      *每分钟执行一次</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line">    @Scheduled(cron = <span class="string">"0 0/1 * * * ?"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"task定时任务"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>@Scheduled注解呢，就是表示启用定时任务，括号里的cron的值呢，其实就是一种表达式，就像上边的例子呢就是表示每分钟执行一次。（文章最后会有cron的详细用法介绍哦）</p>
+<h3><span id="在springboot和springcloud中使用定时器">在SpringBoot和SpringCloud中使用定时器</span></h3>
+<blockquote>
+<p>在SpringBoot中使用的话相比较于Spring中就简单明了多了，一起来看一下吧。</p>
+</blockquote>
+<ol>
+<li>
+<p>引入task<br>
+灰常简单，启动类增加一个注解@EnableScheduling完事</p>
+</li>
+<li>
+<p>使用<br>
+和Spring的使用方式一样，这里就不多做介绍了。</p>
+ <figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Component</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Task</span> &#123;</span><br><span class="line"></span><br><span class="line"> 	  <span class="comment">/**</span></span><br><span class="line"><span class="comment">      *每分钟执行一次</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line">    @Scheduled(cron = <span class="string">"0 0/1 * * * ?"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        System.<span class="keyword">out</span>.println(<span class="string">"task定时任务"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3><span id="优雅的初始化定时器">优雅的初始化定时器</span></h3>
+<blockquote>
+<p>有的时候我们的定时任务可能几个小时需要执行一次。但是呢，我们可能会需要一些初始值。（假如说我们需要一些缓存，不想每次查询缓存都去判断的话我们就可以先在项目启动时就查询出来，然后定时刷新）如果把这个值的初始化过程放在类的构造方法中感觉岂不是太low了，那么有没有别的办法呢？</p>
+</blockquote>
+<p>@PostConstruct注解，这个注解呢，可以在Spring加载这个类的时候执行一次，完美的解决我们上方所说的问题<br>
+	 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">int</span> num;</span><br><span class="line">     </span><br><span class="line">     <span class="keyword">private</span> Random rand = <span class="keyword">new</span> Random();</span><br><span class="line">     </span><br><span class="line"> 	  <span class="comment">/**</span></span><br><span class="line"><span class="comment">      *每分钟执行一次</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line">    <span class="meta">@Scheduled</span>(cron = <span class="string">"0 0/1 * * * ?"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"task定时任务"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	changeNum();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">changeNum</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="comment">//假装这是个查询数据库的操作</span></span><br><span class="line">    	num=rand.nextInt(<span class="number">100</span>);</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<h3><span id="cron表达式详解">cron表达式详解</span></h3>
+<blockquote>
+<p>来看一下如何使用cron表达式如何使用的吧</p>
+</blockquote>
+<blockquote>
+<h5><span id="语法">语法</span></h5>
+</blockquote>
+<p>一个cron表达式有至少6个（也可能7个）有空格分隔的时间元素。<br>
+按顺序依次为</p>
+<p>秒（0~59）</p>
+<p>分钟（0~59）</p>
+<p>小时（0~23）</p>
+<p>天（月）（0~31）</p>
+<p>月（0~11）</p>
+<p>天（星期）（1~7 1=SUN 或 SUN，MON，TUE，WED，THU，FRI，SAT）</p>
+<p>年份（1970－2099）</p>
+<p>-区间</p>
+<p>*通配符</p>
+<p>? 你不想设置那个字段</p>
+<blockquote>
+<h5><span id="demo">demo</span></h5>
+<p>注意下方*之间有空格</p>
+</blockquote>
+<p>“0 0 1 ? ** ” 每天凌晨1点触发</p>
+<p>“0 30 1 ? ** ” 每天凌晨1：30触发</p>
+<p>“30 30 1 ? ** ” 每天凌晨1：30：30触发</p>
+<p>“30 30 1 ** ? 2018” 2018年的每天凌晨1：30：30触发</p>
+<p>“0 0/1 *** ?” 每分钟触发 一次</p>
+<p>“0 0 0/1 ** ?” 每小时触发一次</p>
+<p>“0 15 10 ? * MON-FRI” 周一到周五的10：15触发</p>
+<p>如果觉得会用的到的话可以收藏转载哦！</p>
+<blockquote>
+<p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
+</blockquote>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/08/16/va项目启动时执行指定方法的几种方式/" data-toggle="tooltip" data-placement="top" title="Java项目启动时执行指定方法的几种方式">&larr; 上一篇</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/08/14/一聊如何接入支付宝-1/" data-toggle="tooltip" data-placement="top" title="聊一聊如何接入支付宝">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/08/16/ava定时任务解决方案/"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytJA6t4E',
+conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
+});
+</script>
+
+
+
+            </div>
+             <div>
+                        <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        
+
+
+
+    <h5>标签</h5>
+
+    <div class="tags">
+        
+
+            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+
+        
+
+            <a href="/tags/#git" title="git" rel="1">git</a>
+
+        
+
+            <a href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+
+        
+
+            <a href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
+
+        
+
+            <a href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+
+        
+
+            <a href="/tags/#Vue" title="Vue" rel="1">Vue</a>
+
+        
+
+            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+
+        
+
+            <a href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+
+        
+
+            <a href="/tags/#UML" title="UML" rel="1">UML</a>
+
+        
+
+            <a href="/tags/#Java工具类" title="Java工具类" rel="7">Java工具类</a>
+
+        
+
+            <a href="/tags/#Https" title="Https" rel="1">Https</a>
+
+        
+
+            <a href="/tags/#SpringCloud" title="SpringCloud" rel="8">SpringCloud</a>
+
+        
+
+            <a href="/tags/#JS" title="JS" rel="2">JS</a>
+
+        
+
+            <a href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a href="/tags/#Java工具栏" title="Java工具栏" rel="0">Java工具栏</a>
+
+        
+
+            <a href="/tags/#支付" title="支付" rel="1">支付</a>
+
+        
+    </div>
+
+
+        <hr>
+    
+        
+<section class="visible-md visible-lg">
+  <h5>最近更新</h5>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/16/IDEA中使用lombok插件/">IDEA中使用lombok插件</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/16/用Java类加载SpringBoot配置文件/">使用Java类加载SpringBoot、SpringCloud配置文件</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/16/va项目启动时执行指定方法的几种方式/">Java项目启动时执行指定方法的几种方式</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/16/ava定时任务解决方案/">Java定时任务解决方案</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/14/一聊如何接入支付宝-1/">聊一聊如何接入支付宝</a>
+        </li>
+      
+    </ul>
+  </div>
+  </section>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+<section class="visible-md visible-lg">
+
+<h5>重要通知</h5>
+    <div class="widget">
+
+<ul >
+
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
+
+</ul>
+</div>
+</section>
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5>关注我</h5>
+    <div class="short-about">
+        <!-- 图片以及自我介绍被删除-->
+
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
+        </ul>
+
+    </div>
+	
+
+
+</section>
+        <hr>
+    
+</div>
+                        </div>
+            <!-- Tabe of Content -->
+            <!-- Table of Contents 读博客右边栏
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录1</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">在Spring中使用定时器</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">在SpringBoot和SpringCloud中使用定时器</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">优雅的初始化定时器</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">cron表达式详解</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.1.</span> <span class="toc-nav-text">语法</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.2.</span> <span class="toc-nav-text">demo</span></a></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+-->
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+               
+            </div>
+
+
+        </div>
+    </div>
+
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer style="padding:0px;">
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+   
+    
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 石玉军 2018  
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_pv">本网站已被访问<span id="busuanzi_value_site_pv"></span>次</span>
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_uv">您是第<span id="busuanzi_value_site_uv"></span>位访客</span>
+    
+                    <br>
+                    
+                <a target="_black" href="http://www.miitbeian.gov.cn/">鲁ICP备18002448号-1</a>    
+                </p>
+				
+				
+				
+				
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
+    <meta name="keyword"  content="石玉军,个人博客,Java">
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          IDEA中使用lombok插件 - 石玉军的个人博客
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2018/08/16/IDEA中使用lombok插件/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+    <!--??????????? -->
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+    <!--???? -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26c56b9bc2b8d3a66705d7f712b5e211";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-o.png')
+            /*post*/
+        
+    }
+
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Java工具类" title="Java工具类">Java工具类</a>
+                            
+                        </div>
+                        <h1>IDEA中使用lombok插件</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 石玉军 on
+                            2018-08-16
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">石玉军的个人博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">关于我</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12 col-xs-12
+                post-container">
+
+                <h2><span id="lombok是什么">Lombok是什么？</span></h2>
+<p>lombok是一个可以通过简单的注解的形式来帮助我们简化消除一些必须有但显得很臃肿的 Java 代码的工具，简单来说，比如我们新建了一个类，然后在其中写了几个字段，然后通常情况下我们需要手动去建立get、set、构造方法、log、toString、hashCode、equals等等，尤其是一个类有几十个属性时，那个长长的get、set方法真的是惨不忍睹。lombok的作用就是为了省去我们手动创建这些代码的麻烦，它能够在我们编译源码的时候自动帮我们生成这些方法。</p>
+<h2><span id="1下载插件">1.下载插件</span></h2>
+<p>在IDEA中第一次使用的时候是需要去下载一个插件的，下载步骤为：</p>
+<p>File–&gt;Setting–&gt;Plugins–&gt;Browse repositories–&gt;搜索框输入lombok–&gt;Install。<br>
+<img src="1.png" alt="图片"></p>
+<h2><span id="2引用依赖">2.引用依赖</span></h2>
+<p>最新的lombok依赖为1.18.2，我们在pom文件中引入即可</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3><span id="使用">使用</span></h3>
+<p>我所常用的注解其实只有两个，一个是@Data，一个是@Slf4j。<br>
+下面是我在一个哥们的博客上拷贝的一段比较详细的介绍，大家可以参考一下。<a href="https://blog.csdn.net/qq_40081976/article/details/79139565" target="_blank" rel="noopener">原文链接</a></p>
+<ul>
+<li>
+<p>@Data：注解在类上，相当于同时使用了@ToString、@EqualsAndHashCode、@Getter、@Setter和@RequiredArgsConstrutor这些注解，对于POJO类十分有用</p>
+</li>
+<li>
+<p>val：用在局部变量前面，相当于将变量声明为final</p>
+</li>
+<li>
+<p>@NonNull：给方法参数增加这个注解会自动在方法内对该参数进行是否为空的校验，如果为空，则抛出NPE（NullPointerException）</p>
+</li>
+<li>
+<p>@Cleanup：自动管理资源，用在局部变量之前，在当前变量范围内即将执行完毕退出之前会自动清理资源，自动生成try-finally这样的代码来关闭流</p>
+</li>
+<li>
+<p>@Getter/@Setter：用在属性上，再也不用自己手写setter和getter方法了，还可以指定访问范围</p>
+</li>
+<li>
+<p>@ToString：用在类上，可以自动覆写toString方法，当然还可以加其他参数，例如@ToString(exclude=”id”)排除id属性，或者@ToString(callSuper=true, includeFieldNames=true)调用父类的toString方法，包含所有属性</p>
+</li>
+<li>
+<p>@EqualsAndHashCode：用在类上，自动生成equals方法和hashCode方法</p>
+</li>
+<li>
+<p>@NoArgsConstructor, @RequiredArgsConstructor and @AllArgsConstructor：用在类上，自动生成无参构造和使用所有参数的构造函数以及把所有@NonNull属性作为参数的构造函数，如果指定staticName = “of”参数，同时还会生成一个返回类对象的静态工厂方法，比使用构造函数方便很多</p>
+</li>
+<li>
+<p>@Value：用在类上，是@Data的不可变形式，相当于为属性添加final声明，只提供getter方法，而不提供setter方法</p>
+</li>
+<li>
+<p>@Builder：用在类、构造器、方法上，为你提供复杂的builder APIs，让你可以像如下方式一样调用Person.builder().name(“Adam Savage”).city(“San Francisco”).job(“Mythbusters”).job(“Unchained Reaction”).build();更多说明参考Builder</p>
+</li>
+<li>
+<p>@SneakyThrows：自动抛受检异常，而无需显式在方法上使用throws语句</p>
+</li>
+<li>
+<p>@Synchronized：用在方法上，将方法声明为同步的，并自动加锁，而锁对象是一个私有的属性$lock或$LOCK，而java中的synchronized关键字锁对象是this，锁在this或者自己的类对象上存在副作用，就是你不能阻止非受控代码去锁this或者类对象，这可能会导致竞争条件或者其它线程错误</p>
+</li>
+<li>
+<p>@Getter(lazy=true)：可以替代经典的Double Check Lock样板代码</p>
+</li>
+<li>
+<p>@Log：根据不同的注解生成不同类型的log对象，但是实例名称都是log，有六种可选实现类</p>
+</li>
+<li>
+<p>@CommonsLog Creates log = org.apache.commons.logging.LogFactory.getLog(LogExample.class);</p>
+</li>
+<li>
+<p>@Log Creates log = java.util.logging.Logger.getLogger(LogExample.class.getName());</p>
+</li>
+<li>
+<p>@Log4j Creates log = org.apache.log4j.Logger.getLogger(LogExample.class);</p>
+</li>
+<li>
+<p>@Log4j2 Creates log = org.apache.logging.log4j.LogManager.getLogger(LogExample.class);</p>
+</li>
+<li>
+<p>@Slf4j Creates log = org.slf4j.LoggerFactory.getLogger(LogExample.class);</p>
+</li>
+<li>
+<p>@XSlf4j Creates log = org.slf4j.ext.XLoggerFactory.getXLogger(LogExample.class);</p>
+</li>
+</ul>
+<p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/08/16/用Java类加载SpringBoot配置文件/" data-toggle="tooltip" data-placement="top" title="使用Java类加载SpringBoot、SpringCloud配置文件">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/08/16/IDEA中使用lombok插件/"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytJA6t4E',
+conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
+});
+</script>
+
+
+
+            </div>
+             <div>
+                        <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        
+
+
+
+    <h5>标签</h5>
+
+    <div class="tags">
+        
+
+            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+
+        
+
+            <a href="/tags/#git" title="git" rel="1">git</a>
+
+        
+
+            <a href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+
+        
+
+            <a href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
+
+        
+
+            <a href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+
+        
+
+            <a href="/tags/#Vue" title="Vue" rel="1">Vue</a>
+
+        
+
+            <a href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+
+        
+
+            <a href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+
+        
+
+            <a href="/tags/#UML" title="UML" rel="1">UML</a>
+
+        
+
+            <a href="/tags/#Java工具类" title="Java工具类" rel="7">Java工具类</a>
+
+        
+
+            <a href="/tags/#Https" title="Https" rel="1">Https</a>
+
+        
+
+            <a href="/tags/#SpringCloud" title="SpringCloud" rel="8">SpringCloud</a>
+
+        
+
+            <a href="/tags/#JS" title="JS" rel="2">JS</a>
+
+        
+
+            <a href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a href="/tags/#Java工具栏" title="Java工具栏" rel="0">Java工具栏</a>
+
+        
+
+            <a href="/tags/#支付" title="支付" rel="1">支付</a>
+
+        
+    </div>
+
+
+        <hr>
+    
+        
+<section class="visible-md visible-lg">
+  <h5>最近更新</h5>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/16/IDEA中使用lombok插件/">IDEA中使用lombok插件</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/16/用Java类加载SpringBoot配置文件/">使用Java类加载SpringBoot、SpringCloud配置文件</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/16/va项目启动时执行指定方法的几种方式/">Java项目启动时执行指定方法的几种方式</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/16/ava定时任务解决方案/">Java定时任务解决方案</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/14/一聊如何接入支付宝-1/">聊一聊如何接入支付宝</a>
+        </li>
+      
+    </ul>
+  </div>
+  </section>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+<section class="visible-md visible-lg">
+
+<h5>重要通知</h5>
+    <div class="widget">
+
+<ul >
+
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
+
+</ul>
+</div>
+</section>
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5>关注我</h5>
+    <div class="short-about">
+        <!-- 图片以及自我介绍被删除-->
+
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
+        </ul>
+
+    </div>
+	
+
+
+</section>
+        <hr>
+    
+</div>
+                        </div>
+            <!-- Tabe of Content -->
+            <!-- Table of Contents 读博客右边栏
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录1</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Lombok是什么？</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">1.下载插件</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">2.引用依赖</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">使用</span></a></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+-->
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+               
+            </div>
+
+
+        </div>
+    </div>
+
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer style="padding:0px;">
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+   
+    
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 石玉军 2018  
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_pv">本网站已被访问<span id="busuanzi_value_site_pv"></span>次</span>
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_uv">您是第<span id="busuanzi_value_site_uv"></span>位访客</span>
+    
+                    <br>
+                    
+                <a target="_black" href="http://www.miitbeian.gov.cn/">鲁ICP备18002448号-1</a>    
+                </p>
+				
+				
+				
+				
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
