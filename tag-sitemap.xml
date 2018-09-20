@@ -93,13 +93,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Java%E5%B7%A5%E5%85%B7%E7%B1%BB/</loc>
-        <lastmod>2018-08-16T15:34:37.025Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite-url/tags/Java%E5%B0%8F%E6%8A%80%E5%B7%A7/</loc>
         <lastmod>2018-08-19T15:44:33.357Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -109,6 +102,27 @@
     <url>
         <loc>http://yoursite-url/tags/%E6%94%AF%E4%BB%98/</loc>
         <lastmod>2018-08-19T15:56:07.884Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Java%E5%B7%A5%E5%85%B7%E7%B1%BB/</loc>
+        <lastmod>2018-09-20T15:14:15.494Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Spring/</loc>
+        <lastmod>2018-09-20T15:14:51.701Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/maven/</loc>
+        <lastmod>2018-09-20T15:16:14.177Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

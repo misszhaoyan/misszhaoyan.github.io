@@ -239,6 +239,110 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/模式/">
+        <h2 class="post-title">
+            合成模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            合成模式的职责是将对象组织到树结构中
+
+观察上方类图：
+interface，一个接口定义了一个获得当前对象名字的方法
+leaf：树中的叶子节点，实现了interface
+Branch：树枝节点，不仅实现了getName方法，同样它本身具有添加节点删除节点的方法且本身可以包含多个树枝节点以及叶子节点
+通过上述结论我们可以发现其实合成模式就是树的结构的实现
+来看一下代码：
+12345678910......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/装饰者模式/">
+        <h2 class="post-title">
+            装饰者模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            装饰模式：以对客户端透明的方式扩展对象的功能
+装饰模式类图如下：
+
+我们分析一下类图：
+Girl：女孩接口，定义了一个getName（）方法
+XiaoWang：女孩的实现类，她实现了getName方法，
+Decorator：装饰类，当我们想要扩展小王的方法时，又不能改变她的代码，也不推荐使用继承，那么这个时候装饰类就上场了。此装饰类对小王进行了包装，由他来提供小王的方法
+Decorator1......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/适配器模式/">
+        <h2 class="post-title">
+            适配器模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            适配器模式：把一个类的接口转换为客户端需要的另一个接口
+比如说，我们去相亲，目标中的女孩是会唱歌会跳舞的女孩，但是介绍人说这个女孩只会唱歌，不会跳舞，那你肯定不会满意呀。不过介绍人说，没关系，我有办法。哦？那我们来看看他有什么办法呢
+
+上方Girl接口就是我们希望女孩的样子，也就是女孩接口，会唱歌会跳舞。
+这个SimpleGirl就是介绍人一开始说的只会唱歌的女孩
+下方Adapter就是介绍......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/工厂模式/">
         <h2 class="post-title">
             工厂模式
@@ -462,104 +566,6 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/如何让你的网站免费使用阿里云的Https服务/">
-        <h2 class="post-title">
-            如何让你的网站免费使用阿里云的Https服务
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            刚刚给智享加上了Https,在这个过程中遇到了一些坑，特此记录一下
-首先就是购买的时候第一个坑如下图所示
-
-进入了购买页面以后发现，what？怎么没有免费版。其实这个真的是它隐藏的太深了，我们按照下图所示，首先选择品牌为Symantec然后选择保护类型为1个域名以后就会出现
-免费型的了
-
-接着就是证书购买以后进入我的控制台按照提示进行补全信息提交审核就可以了，个人感觉审核特别快，我的审核1分......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Https" title="Https">Https</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/26/原型模式/">
-        <h2 class="post-title">
-            原型模式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            引言：通过给出一个原型对象来指明所创建的对象的类型，然后复制这个原型对象来创作同类型的对象
-Java中使用原型模式必须要满足的条件如下：
-1.对于任何对象都有x.clone()!=x 。(也就是说克隆的对象和原先的对象不是一个对象)
-2.x.clone().getClass()==x.getClass().(克隆出来的对象跟被克隆的对象是类型一样)
-3.x.clone().equals(x)......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/26/快速排序/">
-        <h2 class="post-title">
-            快速排序
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            快速排序是一个运用了分治法和递归算法的排序方式。
-假如我们现在要排序的数组为[3,1,0,2,8,4,2]。那么在进行快速排序的时候我们先要进行一些准备：
-n作为一个数组中的标杆，一趟排序过后我们要把数组中所有大于n的数放在它的右边，所有小于n的放在它的左边。一般情况下我们会取数组第一个元素作为n，在此数组中就是n=3
-i我们使用i来找数组中大于标杆的值，i初始指向数组第一个位置
-j我们使用......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#基础算法" title="基础算法">基础算法</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -600,7 +606,7 @@ j我们使用......
     <div class="tags">
         
 
-            <a style="color:#333;" href="/tags/#Java工具类" title="Java工具类" rel="7">Java工具类</a>
+            <a style="color:#333;" href="/tags/#Java工具类" title="Java工具类" rel="8">Java工具类</a>
 
         
 
@@ -663,6 +669,14 @@ j我们使用......
             <a style="color:#333;" href="/tags/#web安全" title="web安全" rel="1">web安全</a>
 
         
+
+            <a style="color:#333;" href="/tags/#Spring" title="Spring" rel="1">Spring</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#maven" title="maven" rel="1">maven</a>
+
+        
     </div>
 
 
@@ -675,23 +689,23 @@ j我们使用......
     <ul>
       
         <li>
+          <a style="color:red;" href="/2018/09/20/是如何把自定义注解应用到生产的/">我是如何把自定义注解应用到生产的</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/09/20/如何将自己的jar包发布到mavan中央仓库/">如何将自己的jar包发布到mavan中央仓库</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/09/20/SpringBoot条件注解@Conditional/">SpringBoot条件注解@Conditional</a>
+        </li>
+      
+        <li>
           <a style="color:red;" href="/2018/08/19/IDEA远程Debug/">IDEA远程Debug</a>
         </li>
       
         <li>
           <a style="color:red;" href="/2018/08/19/聊一聊Java如何接入招行一网通支付功能/">聊一聊Java如何接入招行一网通支付功能</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/16/IDEA中使用lombok插件/">IDEA中使用lombok插件</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/16/用Java类加载SpringBoot配置文件/">使用Java类加载SpringBoot、SpringCloud配置文件</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/16/va项目启动时执行指定方法的几种方式/">Java项目启动时执行指定方法的几种方式</a>
         </li>
       
     </ul>

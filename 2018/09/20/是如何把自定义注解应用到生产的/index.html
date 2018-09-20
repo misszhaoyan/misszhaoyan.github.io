@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
+    <meta name="keyword"  content="石玉军,个人博客,Java">
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          我是如何把自定义注解应用到生产的 - 石玉军的个人博客
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2018/09/20/是如何把自定义注解应用到生产的/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+    <!--??????????? -->
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+    <!--???? -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26c56b9bc2b8d3a66705d7f712b5e211";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-o.png')
+            /*post*/
+        
+    }
+
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Java工具类" title="Java工具类">Java工具类</a>
+                            
+                        </div>
+                        <h1>我是如何把自定义注解应用到生产的</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 石玉军 on
+                            2018-09-20
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">石玉军的个人博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">关于我</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12 col-xs-12
+                post-container">
+
+                <p>最近自己写了一个关于网关限流的插件，为了实现限流时的灵活性所以选择了使用自定义注解，但是在百度了很多篇文章时发现大部分的答案是使用反射，一部分是使用注解处理器。个人感觉这样实现都不是很合适，感兴趣的兄弟可以看一下我是如何使用的。</p>
+<h3><span id="1-如何自定义注解">1. 如何自定义注解</span></h3>
+<p>这个其实网络上的文章太多太多了，我这里就简单的说一下</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Target</span>(ElementType.TYPE)<span class="comment">//ElementType.TYPE表示可以用在类上，ElementType.METHOD表示可以用在方法上</span></span><br><span class="line"><span class="variable">@Retention</span>(RetentionPolicy.RUNTIME)<span class="comment">//RetentionPolicy.RUNTIME运行事保留RetentionPolicy.CLASS编译时保留</span></span><br><span class="line"><span class="variable">@Documented</span><span class="comment">//会被 javadoc 之类的工具处理</span></span><br><span class="line"><span class="variable">@Inherited</span><span class="comment">//表示可以被继承</span></span><br><span class="line">public <span class="variable">@interface</span> ClassRateLimit &#123;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="2-通过切面的方式处理注解">2. 通过切面的方式处理注解</span></h3>
+<p>我们定义这样的一个切面来对注解标注的方法或者类来进行处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassAnnotationAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Pointcut</span>(<span class="string">"@within(classRateLimit)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">annotationPointcut</span><span class="params">(ClassRateLimit classRateLimit)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span>(<span class="string">"@within(classRateLimit)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doBefore</span><span class="params">(JoinPoint joinPoint, ClassRateLimit classRateLimit)</span> </span>&#123;</span><br><span class="line">    	<span class="comment">//classRateLimit 通过这个对象获取注解中的属性</span></span><br><span class="line">        MethodSignature signature = (MethodSignature) joinPoint.getSignature();<span class="comment">//通过这个对象取得本次请求的方法信息</span></span><br><span class="line">            </span><br><span class="line">            Class[] clazz=joinPoint.getClass();<span class="comment">//通过这个对象取得本次请求的类信息</span></span><br><span class="line">             ServletRequestAttributes requestAttributes = (ServletRequestAttributes) <span class="comment">//通过这个对象取得本次请求的request和response信息</span></span><br><span class="line">             RequestContextHolder.getRequestAttributes();</span><br><span class="line">        HttpServletRequest request = requestAttributes.getRequest();</span><br><span class="line">        HttpServletResponse response = requestAttributes.getResponse();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="3-如何应用于实践呢">3. 如何应用于实践呢</span></h3>
+<p>在1和2的两个步骤中，我们自定义了一个注解，也给他写了一个处理方法，如果是我们应用于自己的项目其实已经是没问题的，只要让ClassAnnotationAspect类被Spring管理就行了。<br><br>
+但是还有一种场景时，我们的这个注解作为一个jar包，提供给别人用，别人的Spring又不会管理我们jar包里的bean。这个时候怎么办呢？<br>
+<br><br>
+这时我们就用到了另一个注解@Import，使用这个注解可以引入一个配置类，当我们作为一个第三方jar包存在时想要别人的Spring可以管理到我们的bean的时候，我们可以提供一个统一的配置类，在这个配置类中进行扫包，注册bean等一系列操作。然后别人只需要引入我们的配置类就ok了。<br><br>
+比如说，我的很多bean，包括刚才说的ClassAnnotationAspect类都在在cn.org.zhixiang包和它的子包下，那么我就可以新建一个配置类</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Configuration</span></span><br><span class="line"><span class="variable">@ComponentScan</span>(basePackages=<span class="string">"cn.org.zhixiang"</span>)</span><br><span class="line">public class EnableSyjRateLimitConfiguration &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当别人要使用我提供的服务时只需要这样引入即可</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@Import</span>(EnableSyjRateLimitConfiguration.class)</span><br><span class="line"><span class="variable">@Configuration</span></span><br><span class="line">public class SyjRateLimitConfig &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="4看看别人是怎么实现的">4.看看别人是怎么实现的</span></h3>
+<p>其实有些东西在文字中可能体现的不是那么完美，那么就请看一下我是在代码中如何用的吧<br>
+<a href="https://github.com/2388386839/syj-ratelimit" target="_blank" rel="noopener">https://github.com/2388386839/syj-ratelimit</a></p>
+<blockquote>
+<p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
+</blockquote>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/09/20/如何将自己的jar包发布到mavan中央仓库/" data-toggle="tooltip" data-placement="top" title="如何将自己的jar包发布到mavan中央仓库">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/09/20/是如何把自定义注解应用到生产的/"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytJA6t4E',
+conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
+});
+</script>
+
+
+
+            </div>
+             <div>
+                        <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        
+
+
+
+    <h5>标签</h5>
+
+    <div class="tags">
+        
+
+            <a style="color:#333;" href="/tags/#Java工具类" title="Java工具类" rel="8">Java工具类</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#Java小技巧" title="Java小技巧" rel="1">Java小技巧</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#git" title="git" rel="1">git</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#支付" title="支付" rel="2">支付</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#Vue" title="Vue" rel="1">Vue</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#UML" title="UML" rel="1">UML</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#JS" title="JS" rel="2">JS</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#SpringCloud" title="SpringCloud" rel="8">SpringCloud</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#Https" title="Https" rel="1">Https</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#Spring" title="Spring" rel="1">Spring</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#maven" title="maven" rel="1">maven</a>
+
+        
+    </div>
+
+
+        <hr>
+    
+        
+<section class="visible-md visible-lg">
+  <h5>最近更新</h5>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a style="color:red;" href="/2018/09/20/是如何把自定义注解应用到生产的/">我是如何把自定义注解应用到生产的</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/09/20/如何将自己的jar包发布到mavan中央仓库/">如何将自己的jar包发布到mavan中央仓库</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/09/20/SpringBoot条件注解@Conditional/">SpringBoot条件注解@Conditional</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/19/IDEA远程Debug/">IDEA远程Debug</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/08/19/聊一聊Java如何接入招行一网通支付功能/">聊一聊Java如何接入招行一网通支付功能</a>
+        </li>
+      
+    </ul>
+  </div>
+  </section>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+<section class="visible-md visible-lg">
+
+<h5>重要通知</h5>
+    <div class="widget">
+
+<ul >
+
+		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
+
+</ul>
+</div>
+</section>
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5>关注我</h5>
+    <div class="short-about">
+        <!-- 图片以及自我介绍被删除-->
+
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+
+                <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+                <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+                <li title="GitHub" class="github tp" onclick="window.open('https://github.com/2388386839')"></li>
+                <li title="码云" class="gitee tp" onclick="window.open('https://gitee.com/zhixiang_blog')"></li>
+                <li title="QQ群" class="qqq tp" onclick="window.open('https://shang.qq.com/wpa/qunwpa?idkey=d45324b056242c9171abd284c697d99e182b5963bf5f6018315c14cb243d8e01')"></li>
+        </ul>
+
+    </div>
+	
+
+
+</section>
+        <hr>
+    
+</div>
+                        </div>
+            <!-- Tabe of Content -->
+            <!-- Table of Contents 读博客右边栏
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录1</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. 如何自定义注解</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. 通过切面的方式处理注解</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. 如何应用于实践呢</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4.看看别人是怎么实现的</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+-->
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+               
+            </div>
+
+
+        </div>
+    </div>
+
+</article>
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer style="padding:0px;">
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+   
+    
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 石玉军 2018  
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_pv">本网站已被访问<span id="busuanzi_value_site_pv"></span>次</span>
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_uv">您是第<span id="busuanzi_value_site_uv"></span>位访客</span>
+    
+                    <br>
+                    
+                <a target="_black" href="http://www.miitbeian.gov.cn/">鲁ICP备18002448号-1</a>    
+                </p>
+				
+				
+				
+				
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

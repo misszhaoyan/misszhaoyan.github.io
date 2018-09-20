@@ -239,6 +239,92 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/t如何提交被忽视的部分代码/">
+        <h2 class="post-title">
+            Git如何提交被忽视的部分代码
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            我们都知道，在我们使用Vue的时候我们node_modules文件夹是不会上传到git中的。但是尴尬的是Vue所使用的依赖的代码源码又都在这里面，如果这个时候我们修改了一处源码不可能让所有人都修改吧，也不可能直接把node_modules文件都提交到git上吧。这里就存在了一个折中的办法，只让git记录我们修改过的这一部分代码。下边以我曾经修改过的vue-quill-editor的源码示例：......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#git" title="git">git</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/batis中Blob类型乱码问题/">
+        <h2 class="post-title">
+            Mybatis中Blob类型乱码问题
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            智享网站的博客在数据库中的存储其实使用的就是longblob类型，这个类型在查询出来的时候如果不进行处理的话就会出现乱码问题。一个简单的处理方式就是在Mybatis查询数据库的时候增加一个拦截器，给这个类型的字段改变一下编码方式。
+123456789101112131415161718192021222324252627282930313233343536373839404142434445......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Mybatis" title="Mybatis">Mybatis</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/务器发送HTTP请求/">
+        <h2 class="post-title">
+            在服务器发送HTTP请求
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            使用之前首先添加maven依赖或者是jar包
+12345&lt;dependency&gt;    &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;    &lt;artifactId&gt;httpclient&lt;/artifactId&gt;    &lt;version&gt;4.5.2&lt;/version&gt;......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java工具类" title="Java工具类">Java工具类</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/用阿里云邮件推送发送邮件/">
         <h2 class="post-title">
             使用阿里云邮件推送发送邮件
@@ -324,6 +410,36 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/尔排序-1/">
+        <h2 class="post-title">
+            希尔排序
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            今天讲一下希尔排序，希尔排序呢，其实可以理解为插入算法排序的一个升级版了，不了解插入排序的小伙伴可以先看一下这篇文章：死磕算法之插入排序
+我们知道，插入排序在进行排序时如果当数据量很大的时候，有一个很小的数据出现在了数组的最后，那么我们就要移动了这个数据前面所有的元素给它放置到合适的元素。例如：
+我们要排序的数组为[1,2,3,4,5,6,7，。。。此处省略一百万。。.,0]。详细大家肯定不......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#基础算法" title="基础算法">基础算法</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/希尔排序/">
         <h2 class="post-title">
             单例模式
@@ -350,36 +466,6 @@
         <div class="tags">
             
               <a href="/tags/#设计模式" title="设计模式">设计模式</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/26/尔排序-1/">
-        <h2 class="post-title">
-            希尔排序
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            今天讲一下希尔排序，希尔排序呢，其实可以理解为插入算法排序的一个升级版了，不了解插入排序的小伙伴可以先看一下这篇文章：死磕算法之插入排序
-我们知道，插入排序在进行排序时如果当数据量很大的时候，有一个很小的数据出现在了数组的最后，那么我们就要移动了这个数据前面所有的元素给它放置到合适的元素。例如：
-我们要排序的数组为[1,2,3,4,5,6,7，。。。此处省略一百万。。.,0]。详细大家肯定不......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#基础算法" title="基础算法">基础算法</a>
             
         </div>
     
@@ -423,7 +509,7 @@
     <div class="tags">
         
 
-            <a style="color:#333;" href="/tags/#Java工具类" title="Java工具类" rel="7">Java工具类</a>
+            <a style="color:#333;" href="/tags/#Java工具类" title="Java工具类" rel="8">Java工具类</a>
 
         
 
@@ -486,6 +572,14 @@
             <a style="color:#333;" href="/tags/#web安全" title="web安全" rel="1">web安全</a>
 
         
+
+            <a style="color:#333;" href="/tags/#Spring" title="Spring" rel="1">Spring</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#maven" title="maven" rel="1">maven</a>
+
+        
     </div>
 
 
@@ -498,23 +592,23 @@
     <ul>
       
         <li>
+          <a style="color:red;" href="/2018/09/20/是如何把自定义注解应用到生产的/">我是如何把自定义注解应用到生产的</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/09/20/如何将自己的jar包发布到mavan中央仓库/">如何将自己的jar包发布到mavan中央仓库</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/09/20/SpringBoot条件注解@Conditional/">SpringBoot条件注解@Conditional</a>
+        </li>
+      
+        <li>
           <a style="color:red;" href="/2018/08/19/IDEA远程Debug/">IDEA远程Debug</a>
         </li>
       
         <li>
           <a style="color:red;" href="/2018/08/19/聊一聊Java如何接入招行一网通支付功能/">聊一聊Java如何接入招行一网通支付功能</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/16/IDEA中使用lombok插件/">IDEA中使用lombok插件</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/16/用Java类加载SpringBoot配置文件/">使用Java类加载SpringBoot、SpringCloud配置文件</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/16/va项目启动时执行指定方法的几种方式/">Java项目启动时执行指定方法的几种方式</a>
         </li>
       
     </ul>

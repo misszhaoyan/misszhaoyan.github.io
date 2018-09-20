@@ -239,6 +239,104 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/如何让你的网站免费使用阿里云的Https服务/">
+        <h2 class="post-title">
+            如何让你的网站免费使用阿里云的Https服务
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            刚刚给智享加上了Https,在这个过程中遇到了一些坑，特此记录一下
+首先就是购买的时候第一个坑如下图所示
+
+进入了购买页面以后发现，what？怎么没有免费版。其实这个真的是它隐藏的太深了，我们按照下图所示，首先选择品牌为Symantec然后选择保护类型为1个域名以后就会出现
+免费型的了
+
+接着就是证书购买以后进入我的控制台按照提示进行补全信息提交审核就可以了，个人感觉审核特别快，我的审核1分......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Https" title="Https">Https</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/原型模式/">
+        <h2 class="post-title">
+            原型模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            引言：通过给出一个原型对象来指明所创建的对象的类型，然后复制这个原型对象来创作同类型的对象
+Java中使用原型模式必须要满足的条件如下：
+1.对于任何对象都有x.clone()!=x 。(也就是说克隆的对象和原先的对象不是一个对象)
+2.x.clone().getClass()==x.getClass().(克隆出来的对象跟被克隆的对象是类型一样)
+3.x.clone().equals(x)......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/快速排序/">
+        <h2 class="post-title">
+            快速排序
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            快速排序是一个运用了分治法和递归算法的排序方式。
+假如我们现在要排序的数组为[3,1,0,2,8,4,2]。那么在进行快速排序的时候我们先要进行一些准备：
+n作为一个数组中的标杆，一趟排序过后我们要把数组中所有大于n的数放在它的右边，所有小于n的放在它的左边。一般情况下我们会取数组第一个元素作为n，在此数组中就是n=3
+i我们使用i来找数组中大于标杆的值，i初始指向数组第一个位置
+j我们使用......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#基础算法" title="基础算法">基础算法</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/插入排序/">
         <h2 class="post-title">
             插入排序
@@ -459,92 +557,6 @@ npm install vue-quill-editor --save
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/t如何提交被忽视的部分代码/">
-        <h2 class="post-title">
-            Git如何提交被忽视的部分代码
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            我们都知道，在我们使用Vue的时候我们node_modules文件夹是不会上传到git中的。但是尴尬的是Vue所使用的依赖的代码源码又都在这里面，如果这个时候我们修改了一处源码不可能让所有人都修改吧，也不可能直接把node_modules文件都提交到git上吧。这里就存在了一个折中的办法，只让git记录我们修改过的这一部分代码。下边以我曾经修改过的vue-quill-editor的源码示例：......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#git" title="git">git</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/26/batis中Blob类型乱码问题/">
-        <h2 class="post-title">
-            Mybatis中Blob类型乱码问题
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            智享网站的博客在数据库中的存储其实使用的就是longblob类型，这个类型在查询出来的时候如果不进行处理的话就会出现乱码问题。一个简单的处理方式就是在Mybatis查询数据库的时候增加一个拦截器，给这个类型的字段改变一下编码方式。
-123456789101112131415161718192021222324252627282930313233343536373839404142434445......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Mybatis" title="Mybatis">Mybatis</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/26/务器发送HTTP请求/">
-        <h2 class="post-title">
-            在服务器发送HTTP请求
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            使用之前首先添加maven依赖或者是jar包
-12345&lt;dependency&gt;    &lt;groupId&gt;org.apache.httpcomponents&lt;/groupId&gt;    &lt;artifactId&gt;httpclient&lt;/artifactId&gt;    &lt;version&gt;4.5.2&lt;/version&gt;......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Java工具类" title="Java工具类">Java工具类</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -585,7 +597,7 @@ npm install vue-quill-editor --save
     <div class="tags">
         
 
-            <a style="color:#333;" href="/tags/#Java工具类" title="Java工具类" rel="7">Java工具类</a>
+            <a style="color:#333;" href="/tags/#Java工具类" title="Java工具类" rel="8">Java工具类</a>
 
         
 
@@ -648,6 +660,14 @@ npm install vue-quill-editor --save
             <a style="color:#333;" href="/tags/#web安全" title="web安全" rel="1">web安全</a>
 
         
+
+            <a style="color:#333;" href="/tags/#Spring" title="Spring" rel="1">Spring</a>
+
+        
+
+            <a style="color:#333;" href="/tags/#maven" title="maven" rel="1">maven</a>
+
+        
     </div>
 
 
@@ -660,23 +680,23 @@ npm install vue-quill-editor --save
     <ul>
       
         <li>
+          <a style="color:red;" href="/2018/09/20/是如何把自定义注解应用到生产的/">我是如何把自定义注解应用到生产的</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/09/20/如何将自己的jar包发布到mavan中央仓库/">如何将自己的jar包发布到mavan中央仓库</a>
+        </li>
+      
+        <li>
+          <a style="color:red;" href="/2018/09/20/SpringBoot条件注解@Conditional/">SpringBoot条件注解@Conditional</a>
+        </li>
+      
+        <li>
           <a style="color:red;" href="/2018/08/19/IDEA远程Debug/">IDEA远程Debug</a>
         </li>
       
         <li>
           <a style="color:red;" href="/2018/08/19/聊一聊Java如何接入招行一网通支付功能/">聊一聊Java如何接入招行一网通支付功能</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/16/IDEA中使用lombok插件/">IDEA中使用lombok插件</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/16/用Java类加载SpringBoot配置文件/">使用Java类加载SpringBoot、SpringCloud配置文件</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/16/va项目启动时执行指定方法的几种方式/">Java项目启动时执行指定方法的几种方式</a>
         </li>
       
     </ul>
