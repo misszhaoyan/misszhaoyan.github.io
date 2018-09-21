@@ -239,6 +239,39 @@
 
 <div class="post-preview">
 
+    <a href="/2018/09/21/何使用Redis执行Lua脚本/">
+        <h2 class="post-title">
+            如何使用Redis执行Lua脚本
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            为什么要使用Lua脚本？
+lua脚本有很多的优点，但是对于我来说我使用它只因为它能保证原子性。为什么它能保证原子性你就使用它呢？一个简单的例子，在我们的Java代码中，一个简单的++i都不能保证原子性更别提复杂的情况了。但是使用lua在执行几百行代码的情况下都不需要考虑高并发所带来的问题。
+lua基础
+
+创建lua脚本
+就像创建其他的文件一样，新建一个以.lua为后缀的文件，比如说test.......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-09-21 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Redis" title="Redis">Redis</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/09/20/是如何把自定义注解应用到生产的/">
         <h2 class="post-title">
             我是如何把自定义注解应用到生产的
@@ -535,38 +568,6 @@ lombok是一个可以通过简单的注解的形式来帮助我们简化消除�
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/08/14/一聊如何接入支付宝-1/">
-        <h2 class="post-title">
-            聊一聊如何接入支付宝
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-说起来做一个支付系统最基础的就是支付功能了，对于我们来说除了各大银行以外微信和支付宝也是必选项，毕竟人家这个庞大的用户群在那里摆着呢，你不用那不是想着放弃这些用户么。
-
-今天我们就来看一看对于我们开发者来说如何快速的进行接入。
-首先我们要做的就是先去蚂蚁金服开放平台注册账号https://open.alipay.com。这里需要注意的是如果我们是以个人注册的话，是没有办法投入生产使用的，只......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-08-14 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#支付" title="支付">支付</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -611,7 +612,7 @@ lombok是一个可以通过简单的注解的形式来帮助我们简化消除�
 
         
 
-            <a style="color:#333;" href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+            <a style="color:#333;" href="/tags/#Redis" title="Redis" rel="2">Redis</a>
 
         
 
@@ -686,6 +687,10 @@ lombok是一个可以通过简单的注解的形式来帮助我们简化消除�
     <ul>
       
         <li>
+          <a style="color:red;" href="/2018/09/21/何使用Redis执行Lua脚本/">如何使用Redis执行Lua脚本</a>
+        </li>
+      
+        <li>
           <a style="color:red;" href="/2018/09/20/是如何把自定义注解应用到生产的/">我是如何把自定义注解应用到生产的</a>
         </li>
       
@@ -699,10 +704,6 @@ lombok是一个可以通过简单的注解的形式来帮助我们简化消除�
       
         <li>
           <a style="color:red;" href="/2018/08/19/IDEA远程Debug/">IDEA远程Debug</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/19/聊一聊Java如何接入招行一网通支付功能/">聊一聊Java如何接入招行一网通支付功能</a>
         </li>
       
     </ul>

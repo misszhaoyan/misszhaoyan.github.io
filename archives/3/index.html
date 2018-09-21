@@ -239,6 +239,40 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/备忘录模式/">
+        <h2 class="post-title">
+            备忘录模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            备忘录模式：在不破坏封装的条件下，将一个对象的状态捕捉住，并在外部化存储起来，从而可以在将来合适的时候把这个对象还原到存储时的状态。
+通常的备忘录模式包含3个角色：
+发起人角色：这个角色就是需要被保存状态的角色
+备忘录角色：负责保存发起人角色的状态的对象
+负责人角色：负责保存备忘录对象，且它不能看到备忘录的内容
+我们通过一个简单的例子来描述一下这几个角色：
+我们知道现在有很多小姐姐喜欢自拍，......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/常见的web攻击手段/">
         <h2 class="post-title">
             常见的web攻击手段
@@ -531,38 +565,6 @@ Cof......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/代理模式/">
-        <h2 class="post-title">
-            代理模式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            代理模式;给某个对象提供一个代理对象，由代理对象持有对原对象的引用。
-代理模式就比较符合中国人含蓄的性格，假如有个姑娘想要找个对象，但是直接满大街去喊我要找对象的不是很多吧。大部分的女孩还是倾向于先去找一个媒人，让媒人来给自己介绍对象。这里的媒人其实就是女孩的代理对象了。
-先来看一下类图：
-
-我们可以看到女孩跟媒人都实现了一个相亲的接口，然后呢媒人持有女孩的引用来调用女孩展示自己的方法，代码......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -611,7 +613,7 @@ Cof......
 
         
 
-            <a style="color:#333;" href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+            <a style="color:#333;" href="/tags/#Redis" title="Redis" rel="2">Redis</a>
 
         
 
@@ -686,6 +688,10 @@ Cof......
     <ul>
       
         <li>
+          <a style="color:red;" href="/2018/09/21/何使用Redis执行Lua脚本/">如何使用Redis执行Lua脚本</a>
+        </li>
+      
+        <li>
           <a style="color:red;" href="/2018/09/20/是如何把自定义注解应用到生产的/">我是如何把自定义注解应用到生产的</a>
         </li>
       
@@ -699,10 +705,6 @@ Cof......
       
         <li>
           <a style="color:red;" href="/2018/08/19/IDEA远程Debug/">IDEA远程Debug</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/19/聊一聊Java如何接入招行一网通支付功能/">聊一聊Java如何接入招行一网通支付功能</a>
         </li>
       
     </ul>

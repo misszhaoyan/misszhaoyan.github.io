@@ -261,9 +261,24 @@
 <p>在项目的pom文件中增加配置</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>syj-ratelimit<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">description</span>&gt;</span>a project about ratelimit<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">url</span>&gt;</span>http://zhixiang.org.cn<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">licenses</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">license</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>The ApacheSoftware License, Version 2.0<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://www.apache.org/licenses/LICENSE-2.0.txt<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">distribution</span>&gt;</span>repo<span class="tag">&lt;/<span class="name">distribution</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">license</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">licenses</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">scm</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tag</span>&gt;</span>master<span class="tag">&lt;/<span class="name">tag</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>https://github.com/2388386839/syj-ratelimit.git<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">connection</span>&gt;</span>scm:git:https://github.com/2388386839/syj-ratelimit.git<span class="tag">&lt;/<span class="name">connection</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">developerConnection</span>&gt;</span>scm:git:https://github.com/2388386839/syj-ratelimit.git<span class="tag">&lt;/<span class="name">developerConnection</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">scm</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">developers</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">developer</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>ShiYuJun<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">email</span>&gt;</span>zxservice@zhixiang.org.cn<span class="tag">&lt;/<span class="name">email</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">organization</span>&gt;</span>xxx<span class="tag">&lt;/<span class="name">organization</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">developer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">developers</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.sonatype.oss<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>oss-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <ol start="6">
-<li>在项目中执行命令：gpg --gen-key，在执行命令的时候会让你输入一些信息，按照提示输入就行。记住其中的passphrase就行了。</li>
-<li>然后执行命令 mvn clean deploy -P sonatype-oss-release -Darguments=“gpg.passphrase=刚才让你记住的东西”</li>
-<li>这个时候你的jar包已经上传到了maven的一个仓库，不过别人还不能用。</li>
+<li>
+<p>在项目中执行命令：gpg --gen-key，在执行命令的时候会让你输入一些信息，按照提示输入就行。记住其中的passphrase就行了。</p>
+</li>
+<li>
+<p>然后执行命令 mvn clean deploy -P sonatype-oss-release -Darguments=“gpg.passphrase=刚才让你记住的东西”</p>
+</li>
+<li>
+<p>这个时候你的jar包已经上传到了maven的一个仓库，不过别人还不能用。</p>
+</li>
+<li>
+<p>这个时候你应该把你刚才用来加密的密钥上传到一个公共的地方供别人来校验<br>
+<br> 执行命令 gpg --list-keys<br>
+然后你会看到有一个pub的值，大概是这样的CE2DF6AC<br>
+然后执行下方命令</p>
+</li>
+</ol>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg <span class="params">--keyserver</span> hkp:<span class="string">//keyserver.ubuntu.com</span><span class="function">:11371</span> <span class="params">--send-keys</span> pub CE2DF6AC</span><br></pre></td></tr></table></figure>
+<ol start="10">
 <li>访问地址<a href="https://oss.sonatype.org/#stagingRepositories" target="_blank" rel="noopener">https://oss.sonatype.org/#stagingRepositories</a>,用你一开始的时候注册的用户名登录。在最下方应该能找到你刚刚提交的jar包。</li>
 <li>选择之后先close，close之后如果没问题的话接着点击release。当然，如果有问题的话可能就是你上传过程中出现了什么问题，如果解决不了欢迎在博客下方提问。</li>
 <li>此时在访问<a href="https://issues.sonatype.org/secure/Dashboard.jspa" target="_blank" rel="noopener">https://issues.sonatype.org/secure/Dashboard.jspa</a>会发现多了一条评论<br>
@@ -333,7 +348,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
 
         
 
-            <a style="color:#333;" href="/tags/#Redis" title="Redis" rel="1">Redis</a>
+            <a style="color:#333;" href="/tags/#Redis" title="Redis" rel="2">Redis</a>
 
         
 
@@ -408,6 +423,10 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
     <ul>
       
         <li>
+          <a style="color:red;" href="/2018/09/21/何使用Redis执行Lua脚本/">如何使用Redis执行Lua脚本</a>
+        </li>
+      
+        <li>
           <a style="color:red;" href="/2018/09/20/是如何把自定义注解应用到生产的/">我是如何把自定义注解应用到生产的</a>
         </li>
       
@@ -421,10 +440,6 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
       
         <li>
           <a style="color:red;" href="/2018/08/19/IDEA远程Debug/">IDEA远程Debug</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/19/聊一聊Java如何接入招行一网通支付功能/">聊一聊Java如何接入招行一网通支付功能</a>
         </li>
       
     </ul>
