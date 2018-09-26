@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite-url/2018/09/21/%E5%9E%8B%E7%BD%91%E7%AB%99%E9%99%90%E6%B5%81%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0%E5%92%8C%E6%94%B9%E9%80%A0/</loc>
+        <lastmod>2018-09-26T15:21:37.780Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite-url/2018/09/21/%E4%BD%95%E4%BD%BF%E7%94%A8Redis%E6%89%A7%E8%A1%8CLua%E8%84%9A%E6%9C%AC/</loc>
         <lastmod>2018-09-21T15:56:05.054Z</lastmod>
         <changefreq>weekly</changefreq>

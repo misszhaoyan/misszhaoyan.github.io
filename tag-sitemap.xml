@@ -58,13 +58,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</loc>
-        <lastmod>2018-08-04T13:39:03.774Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite-url/tags/web%E5%AE%89%E5%85%A8/</loc>
         <lastmod>2018-08-04T14:07:48.195Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -123,6 +116,13 @@
     <url>
         <loc>http://yoursite-url/tags/Redis/</loc>
         <lastmod>2018-09-21T15:56:05.054Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</loc>
+        <lastmod>2018-09-26T15:21:37.780Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

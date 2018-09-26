@@ -239,6 +239,42 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/状态模式/">
+        <h2 class="post-title">
+            状态模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            状态模式：允许一个对象在其内部状态改变时改变其行为。
+举一个简单的小例子，我们在对一个小姐姐搭讪的时候，根据小姐姐的心情如何我们可能会得到不同的回复。
+看一下类图
+
+Girl：抽象状态接口：用于封装男孩对象搭讪小姐姐获得回复的接口
+AngryGirl、HappyGirl:两个状态实现类。不同的状态就对应了男孩在不同时刻获得的回复。
+Boy：持有一个状态实例。
+看一下代码：
+123456789......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/备忘录模式/">
         <h2 class="post-title">
             备忘录模式
@@ -531,40 +567,6 @@ ClassImpl1，ClassImpl2都继承了抽象类，并分别对方法1和2进行了�
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/享元模式/">
-        <h2 class="post-title">
-            享元模式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            享元模式：以共享的方式高效的支持大量的细粒度对象
-我们以咖啡为例，一家咖啡店一天卖出几千杯咖啡其实这几千杯也不过是几十种口味。在Java中你觉得是new几千次咖啡好还是new几十次口味好呢？享元模式就是利用的这个原理来共享的变量了。
-来看一下类图：
-
-FlavorFactory：口味工厂，根据客户所需口味生产咖啡
-Client：售货员，负责通知工厂生产咖啡，以及出售咖啡和统计销售情况
-Cof......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -633,7 +635,7 @@ Cof......
 
         
 
-            <a style="color:#333;" href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
+            <a style="color:#333;" href="/tags/#基础算法" title="基础算法" rel="8">基础算法</a>
 
         
 
@@ -688,6 +690,10 @@ Cof......
     <ul>
       
         <li>
+          <a style="color:red;" href="/2018/09/21/型网站限流算法的实现和改造/">大型网站限流算法的实现和改造</a>
+        </li>
+      
+        <li>
           <a style="color:red;" href="/2018/09/21/何使用Redis执行Lua脚本/">如何使用Redis执行Lua脚本</a>
         </li>
       
@@ -701,10 +707,6 @@ Cof......
       
         <li>
           <a style="color:red;" href="/2018/09/20/SpringBoot条件注解@Conditional/">SpringBoot条件注解@Conditional</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/19/IDEA远程Debug/">IDEA远程Debug</a>
         </li>
       
     </ul>

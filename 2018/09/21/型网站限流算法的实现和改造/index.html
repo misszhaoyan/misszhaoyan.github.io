@@ -13,11 +13,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          常见的web攻击手段 - 石玉军的个人博客
+          大型网站限流算法的实现和改造 - 石玉军的个人博客
         
     </title>
 
-    <link rel="canonical" href="http://yoursite-url/2018/07/26/常见的web攻击手段/">
+    <link rel="canonical" href="http://yoursite-url/2018/09/21/型网站限流算法的实现和改造/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -116,14 +116,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#web安全" title="web安全">web安全</a>
+                              <a class="tag" href="/tags/#基础算法" title="基础算法">基础算法</a>
                             
                         </div>
-                        <h1>常见的web攻击手段</h1>
+                        <h1>大型网站限流算法的实现和改造</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 石玉军 on
-                            2018-07-26
+                            2018-09-21
                         </span>
                     </div>
                 
@@ -241,50 +241,93 @@
                 col-sm-12 col-xs-12
                 post-container">
 
-                <h2><span id="xss跨站脚本攻击">XSS：跨站脚本攻击</span></h2>
-<h3><span id="-典型实例为">-典型实例为：</span></h3>
-<p>当用户在表达输入一段数据后，提交给服务端进行持久化。如果此用户输入的是一段脚本语言，而服务端</p>
-<p>用户输入的数据没有经过转码、校验等就存入了数据库，在其他页面需要展示此数据时，就会执行此用户输入的语言。简单来说，JS的强大不用我来解释吧</p>
-<h3><span id="-推荐防御措施">-推荐防御措施：</span></h3>
-<p>对用户输入的信息进行转义，例如&lt;&gt;'等等特殊字符。当然，其实很多前端框架也支持这么做，快查一查你使用的框架支持么。</p>
-<h2><span id="crsf跨站请求伪造">CRSF：跨站请求伪造</span></h2>
-<h3><span id="-典型实例为">-典型实例为：</span></h3>
-<p>如果A银行存在CRSF漏洞，有用户在登陆完A银行后没有退出，A银行的cookie信息保存在浏览器。然后呢，用户不小心进入了恶意网站，</p>
-<p>此网站识别出了用户客户端存在A银行的信息，那么恶意网站就可以根据此cookie去请求A银行的转账接口，那么A银行会误认为是用户进行操作从而使恶意网站得逞。</p>
-<h3><span id="-推荐防御措施">-推荐防御措施：</span></h3>
-<p>假如我们的网站是A银行，为了防止用户信息泄露，我们应该做这三件事：</p>
-<p>将cookie设置为HttpOnly，让恶意网站无法通过脚本获取到cookie<br>
-所有增删改以及需要验证权限的请求都应该携带token<br>
-Http头中有一个Referer属性，此属性表示请求Url地址，验证每一个请求的Referer是不是由自己系统发起的</p>
-<h2><span id="sql注入">SQL注入</span></h2>
-<h3><span id="-典型实例为">-典型实例为：</span></h3>
-<p>用户输入的信息带有 delete 、drop等危害性十足的sql，就像用户登录时输入了用户名 “aaa;drop table user”,那么在我们没有任何防御措施的情况下就会变为“select * from user where username=‘aaa’;drop table user”。然后呢，表就没了，你说尴不尴尬？</p>
-<h3><span id="-推荐防御措施">-推荐防御措施：</span></h3>
-<p>使用原生jdbc时要使用PreparedStatement 而不要使用Statement，<br>
-使用orm框架，像MyBatis、Hibernate等框架都对sql注入进行了很好的预防<br>
-密码任何时候都不要使用明文存放，避免攻击者直接获取用户信息<br>
-后台发生错误时不要直接返回异常信息，避免对服务器信息的泄露。建议对异常进行封装，返回可控的异常信息。</p>
-<h2><span id="文件上传漏洞">文件上传漏洞</span></h2>
-<h3><span id="-典型实例为">-典型实例为：</span></h3>
-<p>没有对用户上传的文件做校验，恶意用户长时间上传超大文件占用系统资源，上传可执行脚本获取获取服务器信息</p>
-<h3><span id="-推荐防御措施">-推荐防御措施：</span></h3>
-<p>对用户上传做限流，每个用户每天最多上传多少内容。<br>
-对文件类型进行判断，不能通过后缀名判断，而要通过判断魔数（文件起始的几个字节）来判断，很多文件类型的魔数是不变的。</p>
-<h2><span id="ddos分布式拒绝服务攻击">DDOS：分布式拒绝服务攻击</span></h2>
-<h3><span id="-典型实例为">-典型实例为：</span></h3>
-<p>1.攻击者提前控制大量计算机，并在某一时刻指挥大量计算机同时对某一服务器进行访问来达到瘫痪主机的目的。</p>
-<p>2.相信大家都知道TCP三次握手的机制，（如不了解请参考文章底部补充）攻击者利用此机制对服务器返回的ACK确认包不回应，这样服务器就会存在大量的等待列表，不断重试，等待队列满了以后不再接受TCP连接，从而阻挡了正常用户的使用</p>
-<p>3.攻击者向DNS服务器发送海量的域名解析请求，DNS首先查缓存，如果缓存不存在的话会去递归调用上级服务器查询，直到查询到全球13台根服务器为止，当解析请求过多时正常用户访问就会出现DNS解析超时问题</p>
-<h3><span id="-推荐防御措施">-推荐防御措施：</span></h3>
-<p>使用缓存，当缓存中存在时就直接取出，不要频繁的连接数据库。</p>
-<p>缩短	SYN Timeout时间，即缩短从接受到SYN报文到确定这个报文无效并丢弃该连接的时间。</p>
-<p>限制源ip每秒发起的DNS请求等</p>
-<h2><span id="补充tcp三次握手机制">补充：TCP三次握手机制</span></h2>
-<p>首先，请求端（客户端）发送一个包含SYN标志的TCP报文，SYN即同步（Synchronize），同步报文会指明客户端使用的端口以及TCP连接的初始序号；</p>
-<p>第二步，服务器在收到客户端的SYN报文，将返回一个SYN+ACK的报文，表示客户端的请求被接受，同时TCP序号被加一，ACK即确认（Acknowledgment）。</p>
-<p>第三步，客户端也返回一个确认报文ACK给服务器端，同样TCP序列号被加一，到此一个TCP连接完成。</p>
-<h2><span id="结语">结语</span></h2>
-<p>写这篇文章的目的呢，其实不是说让大家通过这篇文章成为一个安全高手或者怎么的，只是想让大家了解一下这些常见的攻击手段。当你知道了这些攻击手段后看一下你手中的项目是否需要预防一下，毕竟未雨绸缪总是比临阵磨枪好的多，不是吗？</p>
+                <blockquote>
+<p>最近写了一个限流的插件，所以避免不了的接触到了一些限流算法。本篇文章就来分析一下这几种常见的限流算法</p>
+</blockquote>
+<h3><span id="分析之前">分析之前</span></h3>
+<ol>
+<li>依我个人的理解来说限流的话应该灵活到可以针对每一个接口来做。比如说一个类里面有5个接口，那么我的限流插件就应该能针对每一个接口就行不同的限流方案。所以呢，既然针对的每个接口所以就需要一个可以唯一标示这个接口的key（我取的是类名+方法名+入参）。</li>
+<li>分布式限流强烈推荐使用redis+lua或者nginx+lua来实现。</li>
+<li>这里用2个限流条件来做示例讲一下常见的限流算法：
+<ol>
+<li>接口1它10秒钟最大允许访问100次</li>
+<li>接口2它10秒钟最大允许每个人访问100次。</li>
+</ol>
+</li>
+</ol>
+<h3><span id="计数器算法">计数器算法</span></h3>
+<blockquote>
+<p>这个算法可以说是限流算法中最简单的一种算法了。</p>
+</blockquote>
+<h6><span id="核心思想">核心思想</span></h6>
+<p>计数器算法的意思呢就是当接口在一个时间单位中被访问时，我就记下来访问次数，直到它访问的次数到达上限。</p>
+<h6><span id="涉及变量">涉及变量</span></h6>
+<ol>
+<li>接口（key）</li>
+<li>时间单位（expire）</li>
+<li>允许访问多少次（limit）</li>
+<li>访问次数（value）</li>
+</ol>
+<h6><span id="条件一">条件一</span></h6>
+<p>当一个请求过来时，我们就会得到这个key。</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(存在<span class="built_in">key</span>)&#123;</span><br><span class="line">   value++;</span><br><span class="line">   <span class="keyword">if</span>(value&gt;=<span class="built_in">limit</span>)&#123;</span><br><span class="line">   		不能访问</span><br><span class="line">   	&#125;</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">   	添加<span class="built_in">key</span>，value为<span class="number">1</span></span><br><span class="line">       设置<span class="built_in">key</span>过期时间为expire</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h6><span id="条件二">条件二</span></h6>
+<blockquote>
+<p>既然条件一已经实现了，那条件二会复杂么 ？<br></p>
+</blockquote>
+<p>相比于条件一来说就是同一个key对应了多个用户。那么我们只需要把key加上用户的信息就可以了。比如说 key_用户1、key_用户2。</p>
+<h3><span id="漏桶算法">漏桶算法</span></h3>
+<h6><span id="核心思想">核心思想</span></h6>
+<p>漏桶算法的意思呢就是一个接口在一个时间单位中允许被访问次数是动态变化的（假如一分钟允许访问60次，那么从开始计时时不管有没有被访问第59秒只允许访问59次，30秒只允许30次）。为什么这样呢，因为有另外一个线程在进行递减操作</p>
+<h6><span id="涉及变量">涉及变量</span></h6>
+<ol>
+<li>接口（key）</li>
+<li>时间单位（expire）</li>
+<li>允许访问多少次（limit）</li>
+<li>递减间隔时间（interval）</li>
+<li>递减步长（step）</li>
+<li>剩余可访问次数（value）</li>
+<li>key的访问时间（lastUpdateTime）</li>
+<li>当前时间（nowTime）（注意nowTime的取值应为应用取得的时间而不是redis或者nginx取得的时间）</li>
+</ol>
+<h6><span id="条件一">条件一</span></h6>
+<p>线程一：</p>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(存在key)&#123;</span><br><span class="line">   <span class="keyword">value</span>--；</span><br><span class="line">   <span class="keyword">if</span>(<span class="keyword">value</span>&lt;=<span class="number">0</span>)&#123;</span><br><span class="line">   		不能访问</span><br><span class="line">   	&#125;</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">   	添加key，设置<span class="keyword">value</span>为limit</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>线程二：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(过去interval时间)&#123;</span><br><span class="line">   所有<span class="built_in">key</span>的value-<span class="keyword">step</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h6><span id="条件二">条件二</span></h6>
+<p>参考计数器算法条件二实现。</p>
+<h5><span id="算法升级">算法升级</span></h5>
+<p>可以看到实现漏桶算法的话需要每隔interval时间都要另外一条线程去遍历所key的value去做递减操作，那么有没有什么办法可以省略这一步呢。答案是肯定有。<br></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(存在key)&#123;</span><br><span class="line">   value--；</span><br><span class="line">   <span class="keyword">if</span>（（nowTime-lastUpdateTime）&gt;interval）&#123;</span><br><span class="line">   	<span class="attribute">value</span>=value-（nowTime-lastUpdateTime）/interval*step;</span><br><span class="line">       <span class="attribute">lastUpdateTime</span>=nowTime;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(value&lt;=0)&#123;</span><br><span class="line">   		不能访问</span><br><span class="line">   	&#125;</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">   	添加key，设置value为limit；</span><br><span class="line">       <span class="attribute">lastUpdateTime</span>=nowTime；</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3><span id="令牌桶算法">令牌桶算法</span></h3>
+<h6><span id="核心思想">核心思想</span></h6>
+<p>令牌桶算法呢，恰恰是和漏桶算法相反的一个算法，不过还是推荐你使用这个。这个算法的原理我不讲，我觉得聪明的你看了伪代码就明白了。</p>
+<h6><span id="涉及变量">涉及变量</span></h6>
+<ol>
+<li>接口（key）</li>
+<li>时间单位（expire）</li>
+<li>允许访问多少次（limit）</li>
+<li>递增间隔时间（interval）</li>
+<li>递增步长（step）</li>
+<li>当前可访问次数（value）</li>
+<li>key的访问时间（lastUpdateTime）</li>
+<li>当前时间（nowTime）（参照漏桶算法需要注意的点）</li>
+</ol>
+<h6><span id="条件一">条件一</span></h6>
+<p>线程一：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(存在<span class="built_in">key</span>)&#123;</span><br><span class="line">   value++；</span><br><span class="line">   <span class="keyword">if</span>(value&gt;=<span class="built_in">limit</span>)&#123;</span><br><span class="line">   		不能访问</span><br><span class="line">   	&#125;</span><br><span class="line">   &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">   	添加<span class="built_in">key</span>，设置value为<span class="built_in">limit</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>线程二：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(过去interval时间)&#123;</span><br><span class="line">   所有<span class="built_in">key</span>的value+<span class="keyword">step</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h6><span id="条件二">条件二</span></h6>
+<p>参考计算器算法条件二实现。</p>
+<h5><span id="算法升级">算法升级</span></h5>
+<p>参考漏桶算法升级实现。</p>
+<h3><span id="代码">代码</span></h3>
+<p>代码实现请参考我的限流框架<a href="https://github.com/2388386839/syj-ratelimit" target="_blank" rel="noopener">https://github.com/2388386839/syj-ratelimit</a></p>
+<blockquote>
+<p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
+</blockquote>
 
                 
 
@@ -292,18 +335,14 @@ Http头中有一个Referer属性，此属性表示请求Url地址，验证每一
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2018/07/26/备忘录模式/" data-toggle="tooltip" data-placement="top" title="备忘录模式">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2018/07/26/命令模式/" data-toggle="tooltip" data-placement="top" title="命令模式">下一篇 &rarr;</a>
+                            <a href="/2018/09/21/何使用Redis执行Lua脚本/" data-toggle="tooltip" data-placement="top" title="如何使用Redis执行Lua脚本">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
 
-<div id="SOHUCS" sid="zhixiang.org.cn/2018/07/26/常见的web攻击手段/"></div>
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/09/21/型网站限流算法的实现和改造/"></div>
 <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
 window.changyan.api.config({
@@ -491,7 +530,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录1</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">XSS：跨站脚本攻击</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">-典型实例为：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">-推荐防御措施：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">CRSF：跨站请求伪造</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">-典型实例为：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">-推荐防御措施：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">SQL注入</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">-典型实例为：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">-推荐防御措施：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">文件上传漏洞</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">-典型实例为：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.2.</span> <span class="toc-nav-text">-推荐防御措施：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">DDOS：分布式拒绝服务攻击</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">-典型实例为：</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">-推荐防御措施：</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">补充：TCP三次握手机制</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">结语</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">分析之前</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">计数器算法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.1.</span> <span class="toc-nav-text">核心思想</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.</span> <span class="toc-nav-text">涉及变量</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.3.</span> <span class="toc-nav-text">条件一</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.4.</span> <span class="toc-nav-text">条件二</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">漏桶算法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.0.1.</span> <span class="toc-nav-text">核心思想</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.0.2.</span> <span class="toc-nav-text">涉及变量</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.0.3.</span> <span class="toc-nav-text">条件一</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.0.4.</span> <span class="toc-nav-text">条件二</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.1.</span> <span class="toc-nav-text">算法升级</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">令牌桶算法</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.1.</span> <span class="toc-nav-text">核心思想</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.2.</span> <span class="toc-nav-text">涉及变量</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.3.</span> <span class="toc-nav-text">条件一</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.4.</span> <span class="toc-nav-text">条件二</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.1.</span> <span class="toc-nav-text">算法升级</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">代码</span></a></li></ol>
         
         </div>
       </aside>

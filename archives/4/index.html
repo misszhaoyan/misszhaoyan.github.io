@@ -239,6 +239,40 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/享元模式/">
+        <h2 class="post-title">
+            享元模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            享元模式：以共享的方式高效的支持大量的细粒度对象
+我们以咖啡为例，一家咖啡店一天卖出几千杯咖啡其实这几千杯也不过是几十种口味。在Java中你觉得是new几千次咖啡好还是new几十次口味好呢？享元模式就是利用的这个原理来共享的变量了。
+来看一下类图：
+
+FlavorFactory：口味工厂，根据客户所需口味生产咖啡
+Client：售货员，负责通知工厂生产咖啡，以及出售咖啡和统计销售情况
+Cof......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/代理模式/">
         <h2 class="post-title">
             代理模式
@@ -537,38 +571,6 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/序/">
-        <h2 class="post-title">
-            堆排序
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            堆排序主要是运用了二叉树的性质来进行的排序。
-在进行堆排序之前我们先了解一下二叉树的几个性质：
-1.在排序使用二叉树的时候我们要排序的数组的第0个位置其实是不可以用的，这个时候如果我们要排序的数组为[3,1,0,2,8,4,2]时，我们首先要把它变为[0,3,1,0,2,8,4,2],我们把他转换为二叉树的时候是这样的
-2.观察此二叉树我们可以发现几个公式：
-父节点个数：（数组长度-1）/2......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#基础算法" title="基础算法">基础算法</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -637,7 +639,7 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
 
         
 
-            <a style="color:#333;" href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
+            <a style="color:#333;" href="/tags/#基础算法" title="基础算法" rel="8">基础算法</a>
 
         
 
@@ -692,6 +694,10 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
     <ul>
       
         <li>
+          <a style="color:red;" href="/2018/09/21/型网站限流算法的实现和改造/">大型网站限流算法的实现和改造</a>
+        </li>
+      
+        <li>
           <a style="color:red;" href="/2018/09/21/何使用Redis执行Lua脚本/">如何使用Redis执行Lua脚本</a>
         </li>
       
@@ -705,10 +711,6 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
       
         <li>
           <a style="color:red;" href="/2018/09/20/SpringBoot条件注解@Conditional/">SpringBoot条件注解@Conditional</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/19/IDEA远程Debug/">IDEA远程Debug</a>
         </li>
       
     </ul>

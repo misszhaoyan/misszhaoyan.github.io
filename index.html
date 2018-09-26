@@ -239,6 +239,40 @@
 
 <div class="post-preview">
 
+    <a href="/2018/09/21/型网站限流算法的实现和改造/">
+        <h2 class="post-title">
+            大型网站限流算法的实现和改造
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+最近写了一个限流的插件，所以避免不了的接触到了一些限流算法。本篇文章就来分析一下这几种常见的限流算法
+
+分析之前
+
+依我个人的理解来说限流的话应该灵活到可以针对每一个接口来做。比如说一个类里面有5个接口，那么我的限流插件就应该能针对每一个接口就行不同的限流方案。所以呢，既然针对的每个接口所以就需要一个可以唯一标示这个接口的key（我取的是类名+方法名+入参）。
+分布式限流强烈推荐使用red......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-09-21 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#基础算法" title="基础算法">基础算法</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/09/21/何使用Redis执行Lua脚本/">
         <h2 class="post-title">
             如何使用Redis执行Lua脚本
@@ -530,44 +564,6 @@ lombok是一个可以通过简单的注解的形式来帮助我们简化消除�
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/08/16/ava定时任务解决方案/">
-        <h2 class="post-title">
-            Java定时任务解决方案
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-很多项目中都会遇到需要定时任务的情况，本篇文章就结合了Spring中以及SpringBoot、SpringCloud中定时任务的解决方案。
-
-在Spring中使用定时器
-
-用SpringBoot比较多的同学可能都会觉得Spring的xml配置确实比较麻烦，如果想在Spring中使用定时器的话其实是必须使用xml配置文件的。
-
-
-引入task约束
-
-12http://www.springfr......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-08-16 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Java工具类" title="Java工具类">Java工具类</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -632,7 +628,7 @@ lombok是一个可以通过简单的注解的形式来帮助我们简化消除�
 
         
 
-            <a style="color:#333;" href="/tags/#基础算法" title="基础算法" rel="7">基础算法</a>
+            <a style="color:#333;" href="/tags/#基础算法" title="基础算法" rel="8">基础算法</a>
 
         
 
@@ -687,6 +683,10 @@ lombok是一个可以通过简单的注解的形式来帮助我们简化消除�
     <ul>
       
         <li>
+          <a style="color:red;" href="/2018/09/21/型网站限流算法的实现和改造/">大型网站限流算法的实现和改造</a>
+        </li>
+      
+        <li>
           <a style="color:red;" href="/2018/09/21/何使用Redis执行Lua脚本/">如何使用Redis执行Lua脚本</a>
         </li>
       
@@ -700,10 +700,6 @@ lombok是一个可以通过简单的注解的形式来帮助我们简化消除�
       
         <li>
           <a style="color:red;" href="/2018/09/20/SpringBoot条件注解@Conditional/">SpringBoot条件注解@Conditional</a>
-        </li>
-      
-        <li>
-          <a style="color:red;" href="/2018/08/19/IDEA远程Debug/">IDEA远程Debug</a>
         </li>
       
     </ul>
