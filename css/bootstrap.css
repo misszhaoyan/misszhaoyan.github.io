@@ -6439,6 +6439,7 @@ button.close {
 @media (min-width: 992px) and (max-width: 1199px) {
   .visible-md {
     display: block !important;
+
   }
   table.visible-md {
     display: table;
