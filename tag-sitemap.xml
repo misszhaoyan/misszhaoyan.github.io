@@ -122,7 +122,14 @@
 
     <url>
         <loc>http://yoursite-url/tags/%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/</loc>
-        <lastmod>2018-09-28T14:33:41.205Z</lastmod>
+        <lastmod>2018-10-14T14:45:44.036Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6/</loc>
+        <lastmod>2018-10-15T13:54:11.363Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

@@ -239,6 +239,38 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/建造者模式/">
+        <h2 class="post-title">
+            建造者模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            引言：建造者模式可以将一个产品的内部表象与产品的生成过程分割开来，从而利用一个建筑过程生成具有不同内部表象的对象。
+初次读来这句话可能晦涩难懂，待我们一点点的来剖析它，解开他的神秘面纱。先看下图：
+
+Builder:抽象建造者，给出了建造接口，这里我们以造房子为例，Builder就规定了所有的建筑工人都得会铺地板、砌墙、吊天花板。
+WorkBuilder1：具体的建筑实现者，我们这里称之为小......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/Java简单操作Elasticsearch/">
         <h2 class="post-title">
             使用Java简单操作Elasticsearch
@@ -500,41 +532,6 @@ npm install vue-quill-editor --save
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/希尔排序/">
-        <h2 class="post-title">
-            单例模式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            了解单例模式之前我们先来了解一下单例模式的三个要点：
-1.一个类只能有一个实例（就是只需要new一次呗）
-2.它必须自行创建这个实例（就是构造方法不对外暴露呗）
-3.它必须向整个系统提供这个实例（就是获取实例的方法是静态的呗）
-其实通过分析上方三个要点我们就已经了解了单例模式了。也就是说我们只要满足上方的要求就算是一个单例了。
-按照上方的要点这里给出几个例子供大家参考一下：
-饿汉式：
-123......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -545,6 +542,10 @@ npm install vue-quill-editor --save
             <a href="/archives/5/">&larr; 上一页</a>
         </li>
     
+    
+        <li class="next">
+            <a href="/archives/7/">下一页 &rarr;</a>
+        </li>
     
 </ul>
 
@@ -642,6 +643,10 @@ npm install vue-quill-editor --save
             <a  href="/tags/#maven" title="maven" rel="1">maven</a>
 
         
+
+            <a  href="/tags/#开源组件" title="开源组件" rel="2">开源组件</a>
+
+        
     </div>
 
 
@@ -655,8 +660,9 @@ npm install vue-quill-editor --save
 
 <ul >
 
-		        <li style="color:red;"><a  target="_blank" href="https://github.com/2388386839/syj-ratelimit">博主新作：分布式应用级网关限流框架</a></li>
-		        <li><a>本博客于2018.8.4启将使用hexo展示</a></li>
+		        <li style="color:red;"><a  target="_blank" href="https://github.com/2388386839/syj-minicode">博主新作：不写代码就能完成一个模块的组件</a></li>
+		        <li style="color:red;"><a  target="_blank" href="https://github.com/2388386839/syj-ratelimit">分布式应用级网关限流组件</a></li>
+
 
 </ul>
 </div>
@@ -672,7 +678,14 @@ npm install vue-quill-editor --save
         <ul class="list-inline">
             <li>
                 <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
-            <li><h6 style="color:red;">--分布式应用级网关限流框架</h6></li>
+
+            <li><h6 style="color:red;">--不写代码就能完成一个模块的组件</h6></li>
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+
+            <li><h6 style="color:red;">--分布式应用级网关限流组件</h6></li>
             <li>
                 <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
                 <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
