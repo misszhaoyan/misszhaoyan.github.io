@@ -13,11 +13,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          使用Java类加载SpringBoot、SpringCloud配置文件 - 石玉军的个人博客
+          JVM内存结构 - 石玉军的个人博客
         
     </title>
 
-    <link rel="canonical" href="http://yoursite-url/2018/08/16/用Java类加载SpringBoot配置文件/">
+    <link rel="canonical" href="http://yoursite-url/2018/10/27/JVM内存结构/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -116,14 +116,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#Java工具类" title="Java工具类">Java工具类</a>
+                              <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
                             
                         </div>
-                        <h1>使用Java类加载SpringBoot、SpringCloud配置文件</h1>
+                        <h1>JVM内存结构</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 石玉军 on
-                            2018-08-16
+                            2018-10-27
                         </span>
                     </div>
                 
@@ -242,28 +242,95 @@
                 post-container">
 
                 <blockquote>
-<p>我们都知道平常在使用SpringBoot和SpringCloud的时候，如果需要加载一两个配置文件的话我们通常使用@Value(&quot;${属性名称}&quot;)注解去加载。但是如果配置文件属性特别多的时候使用这种方式就显得特别的不友好了。</p>
+<p>此篇文章是JVM系列博客的第一篇，主要使用通俗易懂的语言简单描述一下JVM中堆、栈和方法区的一些基本信息</p>
 </blockquote>
-<p>比如说，我们要加载下方这个名为application.yml的配置文件。</p>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attribute">kafka:</span></span><br><span class="line">  brokerAddress: 110.35.113.62:9092,123.27.143.72:9095,180.17.133.52:9096</span><br><span class="line"></span><br><span class="line">  <span class="attribute">smsTopic</span>: testTopic</span><br><span class="line">  <span class="attribute">smsCosumeGroup</span>: testTopicGroup</span><br><span class="line"></span><br><span class="line">  <span class="attribute">timerTaskTopic</span>: timerTopic</span><br><span class="line">  <span class="attribute">timerTaskGroup</span>: timerGroup</span><br><span class="line"></span><br><span class="line">  <span class="attribute">jvmNumbers</span>: 3</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="attribute">security:</span></span><br><span class="line">       authentication:</span><br><span class="line">          <span class="attribute">jwt:</span></span><br><span class="line">              secret: 0550224055e1848081dba46d8ad325f503fa141b</span><br><span class="line">              <span class="attribute">tokenValidityInSeconds</span>: 86400</span><br></pre></td></tr></table></figure>
-<p>此时我们有两种方式来简化这个加载方式</p>
-<h3><span id="1">1</span></h3>
-<p>这种方式呢，是同过层层嵌套的方式一层一层的按照配置文件属性的方式来进行注入的。大家只要把这个类跟上方提供的配置文件进行对比就会明白它的方式了。（注意，下方的所有属性因为篇幅问题没有增加get、set方法，实际使用过程中请自行添加）</p>
-<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">@ConfigurationProperties(prefix = <span class="string">"application"</span>, ignoreUnknownFields = <span class="literal">false</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ApplicationProperties1</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> final Security security = <span class="keyword">new</span> <span class="type">Security</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> final Kafka kafka = <span class="keyword">new</span> <span class="type">Kafka</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Kafka</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">String</span> brokerAddress;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">String</span> smsTopic;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">String</span> smsCosumeGroup;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">String</span> timerTaskTopic;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">String</span> timerTaskGroup;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">String</span> jvmNumbers;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Security</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> final Authentication authentication = <span class="keyword">new</span> <span class="type">Authentication</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Authentication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">private</span> final Jwt jwt = <span class="keyword">new</span> <span class="type">Jwt</span>();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Jwt</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">private</span> <span class="keyword">String</span> secret;</span><br><span class="line"></span><br><span class="line">                <span class="keyword">private</span> long tokenValidityInSeconds;</span><br><span class="line">               </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3><span id="2">2</span></h3>
-<p>这种方式就是以指定的配置前缀为依据去取配置（同上没有写get、set方法）</p>
-<p>例如：kafka的配置可以这样来</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Configuration</span></span><br><span class="line"><span class="variable">@ConfigurationProperties</span>(prefix = <span class="string">"kafka"</span>,ignoreUnknownFields = false)</span><br><span class="line"><span class="variable">@PropertySource</span>(value = &#123; <span class="string">"classpath:application.yml"</span> &#125;,ignoreResourceNotFound=false)</span><br><span class="line">public class ApplicationProperties &#123;</span><br><span class="line">    </span><br><span class="line">        <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">brokerAddress</span>;</span><br><span class="line">        <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">smsTopic</span>;</span><br><span class="line">        <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">smsCosumeGroup</span>;</span><br><span class="line">        <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">timerTaskTopic</span>;</span><br><span class="line">        <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">timerTaskGroup</span>;</span><br><span class="line">        <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">jvmNumbers</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>而Security的配置这样来</p>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Configuration</span></span><br><span class="line"><span class="variable">@ConfigurationProperties</span>(prefix = <span class="string">"security.authentication.jwt"</span>,ignoreUnknownFields = false)</span><br><span class="line"><span class="variable">@PropertySource</span>(value = &#123; <span class="string">"classpath:application.yml"</span> &#125;,ignoreResourceNotFound=false)</span><br><span class="line">public class ApplicationProperties &#123;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">private</span> <span class="selector-tag">String</span> <span class="selector-tag">secret</span>;</span><br><span class="line"></span><br><span class="line">    <span class="selector-tag">private</span> <span class="selector-tag">long</span> <span class="selector-tag">tokenValidityInSeconds</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3><span id="补充">补充</span></h3>
-<p>大家可能会注意到我上方的几个类中都没有写get和set方法，因为那个东西其实所占的篇幅实在是太长了。那么，有什么办法可以补救么，其实是有办法的，一个注解就可以全搞定哟。</p>
-<p>什么？你不信，不信来看看呀：<a href="http://zhixiang.org.cn/2018/08/16/IDEA%E4%B8%AD%E4%BD%BF%E7%94%A8lombok%E6%8F%92%E4%BB%B6/" target="_blank" rel="noopener">IDEA中使用lombok插件</a></p>
-<h3><span id="结语">结语</span></h3>
-<p>怎么样，学会这个以后Leader还会担心你的代码臃肿么。</p>
+<p>谈起JVM的基本结构，相信大家都知道大致上包括程序计数器、方法区、虚拟机栈、本地方法栈、堆这些东西，但是你曾经深入的去研究一下它们又包含了什么么？</p>
+<h1><span id="1程序计数器">1.程序计数器</span></h1>
+<p>程序计数器是随着一条线程的启动而创建的，每一个线程独有一个程序计数器，多个线程之间互不影响。（可以理解为Java中的ThreadLocal）</p>
+<h5><span id="程序计数器为什么要这样设计呢">程序计数器为什么要这样设计呢?</span></h5>
+<ol>
+<li>
+<p>想要知道程序计数器为何如此设计我们先要知道它保存的是什么？<br></p>
+<p>如果当前线程正在执行的是一个java方法，那么这个线程的程序计数器记录的是正在执行的虚拟机字节码指令的地址，如果正在执行的是native方法，这个计数器则为undefined。</p>
+</li>
+<li>
+<p>我们知道多线程其实就是通过线程轮流切换并分配处理器执行时间的方式实现的，在任何一个确定的时刻，一个处理器都只会执行一条线程中的指令。当切换到另外一条线程时，若是当前线程没有程序计数器来记录此刻的执行位置，下次处理机再执行这条线程时就不知道该从哪开始了。</p>
+</li>
+</ol>
+<h1><span id="2-栈">2. 栈</span></h1>
 <blockquote>
-<p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
+<p>栈又分为了本地方法栈和虚拟机栈，这里咱们暂不考虑本地方法栈，因为本地方法栈是jvm调用操作系统native方法所使用的栈，我们来看一下虚拟机栈。</p>
 </blockquote>
+<h4><span id="虚拟机栈">虚拟机栈</span></h4>
+<p>虚拟机栈是jvm执行java代码所使用的栈,它是线程私有的，每一个独立的线程都会拥有一个自己的虚拟机栈，（可以跟上方的程序计数器对应理解，也可以理解为Java中的ThreadLocal）。</p>
+<h4><span id="帧">帧</span></h4>
+<p>而每一个虚拟机栈呢又有由多个帧组成的，当一个方法被调用时就会产生一个帧压入到栈中，直到方法调用结束后才会释放。<br>
+<br><br>
+每一个帧里面又包括了被调用的这个方法的局部变量表、操作数栈、常量池指针等信息。</p>
+<h6><span id="局部变量表">局部变量表</span></h6>
+<blockquote>
+<p>局部变量表包含了方法的参数和当前实例对象</p>
+</blockquote>
+<p>在下方的静态方法中局部变量表就是a和b</p>
+  <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> methed1（<span class="keyword">String</span> a,<span class="keyword">int</span> b）</span><br></pre></td></tr></table></figure>
+<p>而非静态方法中就会多了一个当前对象this</p>
+   <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> methed1（<span class="keyword">String</span> a,<span class="keyword">int</span> b）</span><br></pre></td></tr></table></figure>
+<h6><span id="操作数栈">操作数栈</span></h6>
+<p>Java中所有的参数传递都是依靠操作数栈进行的，例如如下代码：</p>
+  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> methed1（<span class="keyword">int</span> a,<span class="keyword">int</span> b）&#123;</span><br><span class="line">     <span class="keyword">int</span> c=<span class="number">0</span>;</span><br><span class="line">     c=a+b;</span><br><span class="line">     <span class="keyword">return</span> c;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>其实这短短的三行代码执行的过程是这样的：</p>
+  <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>	<span class="number">0</span>压栈</span><br><span class="line"><span class="number">2.</span>	弹出int存放局部变量c</span><br><span class="line"><span class="number">3.</span>	局部变量a压栈</span><br><span class="line"><span class="number">4.</span>	局部变量b压栈</span><br><span class="line"><span class="number">5.</span>	弹出两个变量求和，将结果压栈</span><br><span class="line"><span class="number">6.</span>	弹出结果放到局部变量c</span><br><span class="line"><span class="number">7.</span>	局部变量c压栈</span><br><span class="line"><span class="number">8.</span>	return</span><br></pre></td></tr></table></figure>
+<h6><span id="常量池指针">常量池指针</span></h6>
+<p>顾名思义，指向常量池的指针。</p>
+<h4><span id="栈溢出">栈溢出</span></h4>
+<p>因为栈是属于每个线程的，所以说一个程序中可能存在无数个栈，势必栈的大小就不能很大。如果程序中出现一段下方所示的递归的话，一个栈就会不停的增加帧，每个帧中的各种信息又不到释放，这就是栈溢出的由来。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> methed1（<span class="keyword">String</span> a,<span class="keyword">int</span> b）&#123;</span><br><span class="line">	<span class="built_in">return</span> methed1（a,b）；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1><span id="3-堆">3. 堆</span></h1>
+<p>在我们的程序中，跟我们打交道最多的就是堆里的对象了。基本上所有（不包括常量池中存在的）通过new操作创建的对象都会保存在堆中。所以与栈的线程私有不同，堆是所有线程共享的（毕竟不共享难道每个线程调用时都new一次对象岂不是疯了）。而栈的结构则是根据不同的GC算法而不同的，这里我们暂且不讲，如果有兴趣的同学可以参考下几篇博客。</p>
+<h1><span id="4-方法区">4. 方法区</span></h1>
+<p>方法区主要是保存了类的一些信息</p>
+<h5><span id="1类信息">1.	类信息</span></h5>
+<ol>
+<li>类的全限定名</li>
+<li>父类的全限定名</li>
+<li>直接实现接口的全限定名</li>
+<li>类型标志</li>
+<li>类的访问描述符（public、private、default、abstract、final、static）</li>
+</ol>
+<h5><span id="2-常量池">2、常量池</span></h5>
+<p>存放该类所用到的常量的有序集合</p>
+<h5><span id="3-字段信息">3、字段信息</span></h5>
+<ol>
+<li>字段修饰符（public、protect、private、default）</li>
+<li>字段的类型</li>
+<li>字段名称</li>
+</ol>
+<h5><span id="4-类的所有方法信息">4、类的所有方法信息</span></h5>
+<ol>
+<li>方法修饰符</li>
+<li>方法返回类型</li>
+<li>方法名</li>
+<li>方法参数个数、类型、顺序等</li>
+<li>方法字节码</li>
+<li>操作数栈和该方法在栈帧中的局部变量区大小</li>
+<li>异常表</li>
+</ol>
+<h5><span id="5-类静态变量">5、类静态变量</span></h5>
+<h5><span id="6-指向类加载器的引用">6、指向类加载器的引用</span></h5>
+<h5><span id="7-指向class实例的引用可以通过classforname获取的引用">7、指向Class实例的引用(可以通过Class.forName获取的引用)</span></h5>
+<h5><span id="8-方法表非抽象类-非接口的类才会有">8、方法表（非抽象类、非接口的类才会有）</span></h5>
+<p>一个保存类中所有的方法的数组，数组中每个每个元素是对每个方法的直接引用</p>
+<h5><span id="9-运行时常量池">9、运行时常量池</span></h5>
+<p>Integer,Long等基本类型的包装类 -127到128之间的缓存数据</p>
+<h1><span id="5综合复习">5.	综合复习</span></h1>
+<blockquote>
+<p>看了堆、栈、方法区的介绍以后你理解他们之间的关系么？</p>
+</blockquote>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">String</span> name;</span><br><span class="line">   <span class="keyword">public</span> User(<span class="keyword">String</span> name)&#123; </span><br><span class="line">     <span class="built_in">this</span>.name = name; </span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//省略getset方法</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class Test&#123;</span><br><span class="line">   public static void main(String[] args)&#123; </span><br><span class="line">    <span class="built_in">	User </span><span class="attribute">user1</span>=new User(<span class="string">"张三"</span>);</span><br><span class="line">       <span class="built_in"> User </span><span class="attribute">user2</span>=new User(<span class="string">"李四"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不知道看完上方两端代码，你所理解的关系和我画的图是否一致呢？<br>
+<img src="1.png" alt="1"></p>
+<p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
 
                 
 
@@ -271,18 +338,14 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2018/08/16/IDEA中使用lombok插件/" data-toggle="tooltip" data-placement="top" title="IDEA中使用lombok插件">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2018/08/16/va项目启动时执行指定方法的几种方式/" data-toggle="tooltip" data-placement="top" title="Java项目启动时执行指定方法的几种方式">下一篇 &rarr;</a>
+                            <a href="/2018/10/22/dea常用快捷键/" data-toggle="tooltip" data-placement="top" title="idea常用快捷键">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
 
-<div id="SOHUCS" sid="zhixiang.org.cn/2018/08/16/用Java类加载SpringBoot配置文件/"></div>
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/10/27/JVM内存结构/"></div>
 <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
 window.changyan.api.config({
@@ -476,7 +539,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录1</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">补充</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">结语</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1.程序计数器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.0.0.0.1.</span> <span class="toc-nav-text">程序计数器为什么要这样设计呢?</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. 栈</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.1.</span> <span class="toc-nav-text">虚拟机栈</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.</span> <span class="toc-nav-text">帧</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.0.1.</span> <span class="toc-nav-text">局部变量表</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.0.2.</span> <span class="toc-nav-text">操作数栈</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.0.3.</span> <span class="toc-nav-text">常量池指针</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.3.</span> <span class="toc-nav-text">栈溢出</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. 堆</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4. 方法区</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.1.</span> <span class="toc-nav-text">1.	类信息</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.2.</span> <span class="toc-nav-text">2、常量池</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.3.</span> <span class="toc-nav-text">3、字段信息</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.4.</span> <span class="toc-nav-text">4、类的所有方法信息</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.5.</span> <span class="toc-nav-text">5、类静态变量</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.6.</span> <span class="toc-nav-text">6、指向类加载器的引用</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.7.</span> <span class="toc-nav-text">7、指向Class实例的引用(可以通过Class.forName获取的引用)</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.8.</span> <span class="toc-nav-text">8、方法表（非抽象类、非接口的类才会有）</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.9.</span> <span class="toc-nav-text">9、运行时常量池</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5.	综合复习</span></a></li></ol>
         
         </div>
       </aside>

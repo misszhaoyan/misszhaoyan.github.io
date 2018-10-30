@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite-url/2018/10/27/JVM%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84/</loc>
+        <lastmod>2018-10-30T14:48:27.156Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite-url/2018/10/20/%E6%AF%8F%E5%A4%A9%E5%AD%A6%E7%82%B9SpringCloud%EF%BC%88%E4%B9%9D%EF%BC%89%EF%BC%9ASpringCloud%E6%9C%80%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3/</loc>
         <lastmod>2018-10-23T15:09:33.744Z</lastmod>
         <changefreq>weekly</changefreq>
