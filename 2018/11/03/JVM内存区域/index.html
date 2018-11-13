@@ -13,11 +13,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          JVM内存结构 - 石玉军的个人博客
+          JVM内存区域 - 石玉军的个人博客
         
     </title>
 
-    <link rel="canonical" href="http://yoursite-url/2018/10/27/JVM内存结构/">
+    <link rel="canonical" href="http://yoursite-url/2018/11/03/JVM内存区域/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -119,11 +119,11 @@
                               <a class="tag" href="/tags/#JVM" title="JVM">JVM</a>
                             
                         </div>
-                        <h1>JVM内存结构</h1>
+                        <h1>JVM内存区域</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 石玉军 on
-                            2018-10-27
+                            2018-11-03
                         </span>
                     </div>
                 
@@ -242,38 +242,38 @@
                 post-container">
 
                 <blockquote>
-<p>此篇文章是JVM系列博客的第一篇，主要使用通俗易懂的语言简单描述一下JVM中堆、栈和方法区的一些基本信息</p>
+<p>Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为多个区域，这些区域各有自己的用途以及独特的创建和销毁时间，今天就带着大家来揭开这些不同的数据区域的面纱</p>
 </blockquote>
-<p>谈起JVM的基本结构，相信大家都知道大致上包括程序计数器、方法区、虚拟机栈、本地方法栈、堆这些东西，但是你曾经深入的去研究一下它们又包含了什么么？</p>
+<p>先来一张最经典的图：<br>
+<img src="2.png" alt="1"></p>
+<p>今天我们来学习一下图片上方的程序计数器、方法区、栈、堆几个部分。</p>
 <h1><span id="1程序计数器">1.程序计数器</span></h1>
 <p>程序计数器是随着一条线程的启动而创建的，每一个线程独有一个程序计数器，多个线程之间互不影响。（可以理解为Java中的ThreadLocal）</p>
 <h5><span id="程序计数器为什么要这样设计呢">程序计数器为什么要这样设计呢?</span></h5>
-<ol>
-<li>
+<blockquote>
 <p>想要知道程序计数器为何如此设计我们先要知道它保存的是什么？<br></p>
-<p>如果当前线程正在执行的是一个java方法，那么这个线程的程序计数器记录的是正在执行的虚拟机字节码指令的地址，如果正在执行的是native方法，这个计数器则为undefined。</p>
-</li>
-<li>
-<p>我们知道多线程其实就是通过线程轮流切换并分配处理器执行时间的方式实现的，在任何一个确定的时刻，一个处理器都只会执行一条线程中的指令。当切换到另外一条线程时，若是当前线程没有程序计数器来记录此刻的执行位置，下次处理机再执行这条线程时就不知道该从哪开始了。</p>
-</li>
+</blockquote>
+<ol>
+<li>如果当前线程正在执行的是一个java方法，那么这个线程的程序计数器记录的是正在执行的虚拟机字节码指令的地址，如果正在执行的是native方法，这个计数器则为undefined。</li>
+<li>我们知道多线程其实就是通过线程轮流切换并分配处理器执行时间的方式实现的，在任何一个确定的时刻，一个处理器都只会执行一条线程中的指令。当切换到另外一条线程时，若是当前线程没有程序计数器来记录此刻的执行位置，下次处理机再执行这条线程时就不知道该从哪开始了。</li>
 </ol>
 <h1><span id="2-栈">2. 栈</span></h1>
 <blockquote>
-<p>栈又分为了本地方法栈和虚拟机栈，这里咱们暂不考虑本地方法栈，因为本地方法栈是jvm调用操作系统native方法所使用的栈，我们来看一下虚拟机栈。</p>
+<p>本地方法栈和虚拟机栈可以统称为栈，由于本地方法栈是jvm调用操作系统native方法所使用的栈且它们的作用是非常相似的，所以这里我们重点看一下虚拟机栈。</p>
 </blockquote>
 <h4><span id="虚拟机栈">虚拟机栈</span></h4>
-<p>虚拟机栈是jvm执行java代码所使用的栈,它是线程私有的，每一个独立的线程都会拥有一个自己的虚拟机栈，（可以跟上方的程序计数器对应理解，也可以理解为Java中的ThreadLocal）。</p>
-<h4><span id="帧">帧</span></h4>
-<p>而每一个虚拟机栈呢又有由多个帧组成的，当一个方法被调用时就会产生一个帧压入到栈中，直到方法调用结束后才会释放。<br>
+<p>虚拟机栈与程序计数器一样，也是线程私有的，每个线程都会有一个自己的虚拟机栈。它描述的java方法执行的内存模型</p>
+<h5><span id="帧">帧</span></h5>
+<p>而每一个虚拟机栈呢又是有由多个帧组成的，当一个方法被调用时就会产生一个帧，帧的生命周期跟随着这个方法的执行周期。<br>
 <br><br>
-每一个帧里面又包括了被调用的这个方法的局部变量表、操作数栈、常量池指针等信息。</p>
+每一个帧里面又包括了被调用的这个方法的局部变量表、操作数栈、常量池指针、动态链接、方法出口等信息。</p>
 <h6><span id="局部变量表">局部变量表</span></h6>
 <blockquote>
-<p>局部变量表包含了方法的参数和当前实例对象</p>
+<p>局部变量表包含了编译器可知的基本数据类型和对象引用。</p>
 </blockquote>
-<p>在下方的静态方法中局部变量表就是a和b</p>
+<p>在下方的静态方法中局部变量表就存放了a和b</p>
   <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> methed1（<span class="keyword">String</span> a,<span class="keyword">int</span> b）</span><br></pre></td></tr></table></figure>
-<p>而非静态方法中就会多了一个当前对象this</p>
+<p>而非静态方法中就会多了一个当前对象this，此局部变量表存放的就是this、a、b</p>
    <figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> methed1（<span class="keyword">String</span> a,<span class="keyword">int</span> b）</span><br></pre></td></tr></table></figure>
 <h6><span id="操作数栈">操作数栈</span></h6>
 <p>Java中所有的参数传递都是依靠操作数栈进行的，例如如下代码：</p>
@@ -282,13 +282,42 @@
   <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>	<span class="number">0</span>压栈</span><br><span class="line"><span class="number">2.</span>	弹出int存放局部变量c</span><br><span class="line"><span class="number">3.</span>	局部变量a压栈</span><br><span class="line"><span class="number">4.</span>	局部变量b压栈</span><br><span class="line"><span class="number">5.</span>	弹出两个变量求和，将结果压栈</span><br><span class="line"><span class="number">6.</span>	弹出结果放到局部变量c</span><br><span class="line"><span class="number">7.</span>	局部变量c压栈</span><br><span class="line"><span class="number">8.</span>	return</span><br></pre></td></tr></table></figure>
 <h6><span id="常量池指针">常量池指针</span></h6>
 <p>顾名思义，指向常量池的指针。</p>
-<h4><span id="栈溢出">栈溢出</span></h4>
-<p>因为栈是属于每个线程的，所以说一个程序中可能存在无数个栈，势必栈的大小就不能很大。如果程序中出现一段下方所示的递归的话，一个栈就会不停的增加帧，每个帧中的各种信息又不到释放，这就是栈溢出的由来。</p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> methed1（<span class="keyword">String</span> a,<span class="keyword">int</span> b）&#123;</span><br><span class="line">	<span class="built_in">return</span> methed1（a,b）；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="栈中可能引起的异常">栈中可能引起的异常</span></h4>
+<h5><span id="1-stackoverflowerror">1. StackOverflowError</span></h5>
+<pre><code>这个错误主要是由线程请求的栈深度大于了线程所允许的最大深度而引起的。那么栈的深度又是个什么鬼呢&lt;br&gt;
+我们知道，一次方法调用就会创建一个帧，一个帧中又包含了我们上边刚刚说起的那么多东西，而它们的生命周期是随着方法调用才会销毁的。这些东西的存在都是需要占用内存的，而栈的内存肯定是有一个极限的。看一下下方的这个无限的递归方法：
+
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">	<span class="keyword">int</span> c=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> methed1（<span class="keyword">String</span> a,<span class="keyword">int</span> b）&#123;</span><br><span class="line">      	++c;</span><br><span class="line">	<span class="built_in">return</span> methed1（a,b）；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+方法每执行一次，就会创建一个帧，一个帧里面又包含了局部变量表操作数栈常量池指针等。就这样随着方法的执行虚拟机栈占用的内存越来越多就会引起StackOverflowError。
+</code></pre>
+<br>
+<h6><span id="如何解决">如何解决？</span></h6>
+<pre><code>使用-Xss10m参数调整栈的大小，可以使用不同的参数来验证一下当抛出异常时c的值，c的值越大代表栈的深度越深。
+</code></pre>
+<h5><span id="2-outofmemoryerror-unable-to-create-new-native-thread">2.  OutOfMemoryError: unable to create new native thread</span></h5>
+<p>由上方的学习我们知道，每一个线程都有一个自己独有的虚拟机栈，然后这些虚拟机栈中又包含了辣么多东西。当创建的线程多到栈的内存不足以支撑时就会引起此异常。</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">    <span class="keyword">new</span> Thread<span class="function"><span class="params">(()-&gt;&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">            <span class="keyword">try</span> &#123;</span></span></span><br><span class="line"><span class="function"><span class="params">                Thread.sleep(<span class="number">60</span>*<span class="number">60</span>*<span class="number">1000</span>);</span></span></span><br><span class="line"><span class="function"><span class="params">            &#125; <span class="keyword">catch</span>(InterruptedException e) &#123; &#125;        </span></span></span><br><span class="line"><span class="function"><span class="params">    &#125;)</span>.<span class="title">start</span><span class="params">()</span>;</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+<h6><span id="如何解决">如何解决？</span></h6>
+<pre><code>同1，使用-Xss10m参数调整栈的大小。
+</code></pre>
 <h1><span id="3-堆">3. 堆</span></h1>
-<p>在我们的程序中，跟我们打交道最多的就是堆里的对象了。基本上所有（不包括常量池中存在的）通过new操作创建的对象都会保存在堆中。所以与栈的线程私有不同，堆是所有线程共享的（毕竟不共享难道每个线程调用时都new一次对象岂不是疯了）。而栈的结构则是根据不同的GC算法而不同的，这里我们暂且不讲，如果有兴趣的同学可以参考下几篇博客。</p>
+<p>在我们的程序中，跟我们打交道最多的就是堆里的对象了。基本上所有（不包括常量池中存在的）通过new操作创建的对象都会保存在堆中。所以与栈的线程私有不同，堆是所有线程共享的（毕竟不共享难道每个线程调用时都new一次对象岂不是疯了），所以它也是虚拟里最大的一块。<br>
+<br><br>
+如果根据垃圾收集算法来分的话，堆还可以再细分下去。首先呢，堆可以分为新生代和老年代，而新生代又分为eden区和s0、s1（s0、s1又叫from、to）三个区，如下图所示：。<br>
+<img src="3.png" alt="3"><br>
+<br><br>
+当一个普通的对象刚new出来的时候它是存在于eden区的，然后呢在进行垃圾回收时回进入s0和s1区，如果几轮垃圾回收后都没有被回收的话就会进入变成一个老年对象进入老年代。当然，有的对象也比较特殊，比如说一些大对象或者伴随整个程序生命周期的对象在刚出生的时候就会进入老年代避免一些不必要的垃圾回收,关于详细内容可参考我的另一篇博客：JVM垃圾收集算法</p>
+<h4><span id="堆中可能引起的异常">堆中可能引起的异常</span></h4>
+<h5><span id="1-javalangoutofmemoryerror-java-heap-space">1. java.lang.OutOfMemoryError: Java heap space</span></h5>
+<p>这个异常就是由于堆中存在大量的对象，这些对象无法通过垃圾回收进行收集从而导致的堆内存溢出。</p>
+<h5><span id="如何解决">如何解决？</span></h5>
+<p>可以适当根据机器的性能使用-Xms -Xmx参数调整栈的大小，不过如果想要治本的话还是要选择优化代码和算法。</p>
+<h4><span id="直接内存">直接内存</span></h4>
+<p>直接内存并不属于运行时数据区的一部分，当然也不属于堆。之所以放到这里是因为直接内存虽然不属于运行时数据区，但是它也是需要占用内存的，如果我们在分配内存时把本机的总内存都分配给运行时数据区的各个部分而忽略了直接内存的话同样也是会引起OutOfMemoryError的。</p>
 <h1><span id="4-方法区">4. 方法区</span></h1>
-<p>方法区主要是保存了类的一些信息</p>
+<p>方法区同样是各个线程共享的内存区域，它主要存储已经被虚拟机加载的类信息</p>
 <h5><span id="1类信息">1.	类信息</span></h5>
 <ol>
 <li>类的全限定名</li>
@@ -322,6 +351,12 @@
 <p>一个保存类中所有的方法的数组，数组中每个每个元素是对每个方法的直接引用</p>
 <h5><span id="9-运行时常量池">9、运行时常量池</span></h5>
 <p>Integer,Long等基本类型的包装类 -127到128之间的缓存数据</p>
+<h4><span id="方法区可能引起的异常">方法区可能引起的异常</span></h4>
+<h5><span id="1-javalangoutofmemoryerror-permgen-space">1. java.lang.OutOfMemoryError: PermGen space</span></h5>
+<p>因为方法区主要是负责存放类的相关信息，而且因为gc的次数也不像堆来的频繁，所以当class越来越多的时候就会引起此异常。</p>
+<h5><span id="如何解决">如何解决？</span></h5>
+<pre><code>使用-XX:PermSize参数调整方法区的大小。
+</code></pre>
 <h1><span id="5综合复习">5.	综合复习</span></h1>
 <blockquote>
 <p>看了堆、栈、方法区的介绍以后你理解他们之间的关系么？</p>
@@ -345,7 +380,7 @@
                     
                 </ul>
 
-<div id="SOHUCS" sid="zhixiang.org.cn/2018/10/27/JVM内存结构/"></div>
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/11/03/JVM内存区域/"></div>
 <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
 window.changyan.api.config({
@@ -539,7 +574,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录1</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1.程序计数器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.0.0.0.1.</span> <span class="toc-nav-text">程序计数器为什么要这样设计呢?</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. 栈</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.1.</span> <span class="toc-nav-text">虚拟机栈</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.</span> <span class="toc-nav-text">帧</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.0.1.</span> <span class="toc-nav-text">局部变量表</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.0.2.</span> <span class="toc-nav-text">操作数栈</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.0.3.</span> <span class="toc-nav-text">常量池指针</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.3.</span> <span class="toc-nav-text">栈溢出</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. 堆</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4. 方法区</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.1.</span> <span class="toc-nav-text">1.	类信息</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.2.</span> <span class="toc-nav-text">2、常量池</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.3.</span> <span class="toc-nav-text">3、字段信息</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.4.</span> <span class="toc-nav-text">4、类的所有方法信息</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.5.</span> <span class="toc-nav-text">5、类静态变量</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.6.</span> <span class="toc-nav-text">6、指向类加载器的引用</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.7.</span> <span class="toc-nav-text">7、指向Class实例的引用(可以通过Class.forName获取的引用)</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.8.</span> <span class="toc-nav-text">8、方法表（非抽象类、非接口的类才会有）</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.9.</span> <span class="toc-nav-text">9、运行时常量池</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5.	综合复习</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1.程序计数器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.0.0.0.1.</span> <span class="toc-nav-text">程序计数器为什么要这样设计呢?</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. 栈</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.1.</span> <span class="toc-nav-text">虚拟机栈</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.1.1.</span> <span class="toc-nav-text">帧</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.1.1.1.</span> <span class="toc-nav-text">局部变量表</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.1.1.2.</span> <span class="toc-nav-text">操作数栈</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.1.1.3.</span> <span class="toc-nav-text">常量池指针</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.</span> <span class="toc-nav-text">栈中可能引起的异常</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.1.</span> <span class="toc-nav-text">1. StackOverflowError</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.1.1.</span> <span class="toc-nav-text">如何解决？</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.2.</span> <span class="toc-nav-text">2.  OutOfMemoryError: unable to create new native thread</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.0.2.2.1.</span> <span class="toc-nav-text">如何解决？</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. 堆</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.0.1.</span> <span class="toc-nav-text">堆中可能引起的异常</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.0.1.1.</span> <span class="toc-nav-text">1. java.lang.OutOfMemoryError: Java heap space</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.0.1.2.</span> <span class="toc-nav-text">如何解决？</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.0.0.2.</span> <span class="toc-nav-text">直接内存</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4. 方法区</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.1.</span> <span class="toc-nav-text">1.	类信息</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.2.</span> <span class="toc-nav-text">2、常量池</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.3.</span> <span class="toc-nav-text">3、字段信息</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.4.</span> <span class="toc-nav-text">4、类的所有方法信息</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.5.</span> <span class="toc-nav-text">5、类静态变量</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.6.</span> <span class="toc-nav-text">6、指向类加载器的引用</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.7.</span> <span class="toc-nav-text">7、指向Class实例的引用(可以通过Class.forName获取的引用)</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.8.</span> <span class="toc-nav-text">8、方法表（非抽象类、非接口的类才会有）</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.0.9.</span> <span class="toc-nav-text">9、运行时常量池</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.1.</span> <span class="toc-nav-text">方法区可能引起的异常</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.1.1.</span> <span class="toc-nav-text">1. java.lang.OutOfMemoryError: PermGen space</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.0.0.1.2.</span> <span class="toc-nav-text">如何解决？</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5.	综合复习</span></a></li></ol>
         
         </div>
       </aside>
