@@ -162,6 +162,13 @@
 
                         
                         <li>
+                            <a href="/about/">关于我</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/archive/">归档</a>
                         </li>
                         
@@ -170,13 +177,6 @@
                         
                         <li>
                             <a href="/tags/">标签</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">关于我</a>
                         </li>
                         
                     
@@ -236,6 +236,40 @@
 
                 <!-- Main Content -->
 
+
+<div class="post-preview">
+
+    <a href="/2018/07/26/观察者模式/">
+        <h2 class="post-title">
+            观察者模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            观察者模式：多个观察者对象同时观察一个主题对象，当这个主题对象发生变化时，会通知所有的观察者
+来看一下下方类图
+
+Subject：主题类，所有主题的父类，负责对观察者的管理，有添加观察者，删除观察者，通知所有的方法
+SubjectImpl：主题子类，拥有状态属性，当状态改变时会调用父类的notifyObserver方法通知所有观察者
+Observe：观察者，定义了接受主题变化通知的方法
+Ob......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
 
 <div class="post-preview">
 
@@ -538,40 +572,6 @@ Decorator1......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/工厂模式/">
-        <h2 class="post-title">
-            工厂模式
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            简单工厂：
-入门级的设计模式之一，也是学习工厂模式的的基础。
-需求：假如我们需要去相亲，介绍人跟你说了，我这次给你找了很多个小姑娘，随便挑哦。
-听到这句话你就好奇了，哎呦，你好厉害呀，怎么做到的呢，下面我们就来看看介绍人是怎么做到吧。
-注：不熟悉UML的同学请参考此文章:几分钟几张图教你学会如何使用UML
-
-首先最上方就是所有女孩必须要实现的接口，它定义了一个自我介绍的方法，所有的女孩都要实......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -612,11 +612,15 @@ Decorator1......
     <div class="tags">
         
 
-            <a  href="/tags/#Java小技巧" title="Java小技巧" rel="2">Java小技巧</a>
+            <a  href="/tags/#JVM" title="JVM" rel="1">JVM</a>
 
         
 
-            <a  href="/tags/#开发工具" title="开发工具" rel="1">开发工具</a>
+            <a  href="/tags/#Java工具类" title="Java工具类" rel="8">Java工具类</a>
+
+        
+
+            <a  href="/tags/#Java小技巧" title="Java小技巧" rel="2">Java小技巧</a>
 
         
 
@@ -628,11 +632,11 @@ Decorator1......
 
         
 
-            <a  href="/tags/#Java工具类" title="Java工具类" rel="8">Java工具类</a>
+            <a  href="/tags/#Spring" title="Spring" rel="1">Spring</a>
 
         
 
-            <a  href="/tags/#Spring" title="Spring" rel="1">Spring</a>
+            <a  href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
 
         
 
@@ -640,7 +644,11 @@ Decorator1......
 
         
 
-            <a  href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+            <a  href="/tags/#开发工具" title="开发工具" rel="1">开发工具</a>
+
+        
+
+            <a  href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
 
         
 
@@ -660,10 +668,6 @@ Decorator1......
 
         
 
-            <a  href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
-
-        
-
             <a  href="/tags/#Vue" title="Vue" rel="1">Vue</a>
 
         
@@ -676,11 +680,7 @@ Decorator1......
 
         
 
-            <a  href="/tags/#SpringCloud" title="SpringCloud" rel="9">SpringCloud</a>
-
-        
-
-            <a  href="/tags/#maven" title="maven" rel="1">maven</a>
+            <a  href="/tags/#SpringCloud" title="SpringCloud" rel="10">SpringCloud</a>
 
         
 
@@ -688,11 +688,11 @@ Decorator1......
 
         
 
-            <a  href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+            <a  href="/tags/#maven" title="maven" rel="1">maven</a>
 
         
 
-            <a  href="/tags/#JVM" title="JVM" rel="1">JVM</a>
+            <a  href="/tags/#web安全" title="web安全" rel="1">web安全</a>
 
         
     </div>

@@ -13,11 +13,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          插入排序 - 石玉军的个人博客
+          每天学点SpringCloud（十）：SpringCloud监控 - 石玉军的个人博客
         
     </title>
 
-    <link rel="canonical" href="http://yoursite-url/2018/07/26/插入排序/">
+    <link rel="canonical" href="http://yoursite-url/2018/11/16/每天学点SpringCloud（十）：SpringCloud监控/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -116,14 +116,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#基础算法" title="基础算法">基础算法</a>
+                              <a class="tag" href="/tags/#SpringCloud" title="SpringCloud">SpringCloud</a>
                             
                         </div>
-                        <h1>插入排序</h1>
+                        <h1>每天学点SpringCloud（十）：SpringCloud监控</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 石玉军 on
-                            2018-07-26
+                            2018-11-16
                         </span>
                     </div>
                 
@@ -241,19 +241,112 @@
                 col-sm-12 col-xs-12
                 post-container">
 
-                <p>相信大家都有打扑克的经历，那么我们今天的插入排序就以拿牌为例开始讲（注意只是举例，不是按打牌的规则哦）</p>
-<p>1.我们拿到了一张牌3，我们把它放手里，现在手里有牌[3]</p>
-<p>2.我们拿到了一张牌1，拿它与手里最后一张牌也就是3比较，发现1比3小，所以我们把它插入到3的前面，现在手里有牌[1,3]</p>
-<p>3.我们拿到了一张牌0，拿它与手里最后一张牌也就是3比较，发现0比3小，所以我们把它插入到3的前面，接着与3的上一张比较发现0比1还小，那么就把0在插入到1的前面，现在手里有牌[0,1,3]</p>
-<p>4.我们拿到了一张牌2，拿它与手里最后一张牌也就是3比较，发现2比3小，所以我们把它插入到3的前面，接着与3的上一张比较发现2比1大，那么就不需要动了，现在手里有牌[0,1,2,3]</p>
-<p>5.我们拿到了一张牌8，拿它与手里最后一张牌也就是3比较，8比3大，那么就不需要动了，现在手里有牌[0,1,2,3,8]</p>
-<p>6.。。。</p>
-<p>现在你明白什么叫做插入排序了么？</p>
-<p>如果你不明白的话也没关系，我还专门画了一张图：</p>
-<p><img src="1.png" alt="图片"></p>
-<p>接下来上代码</p>
-<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> []<span class="built_in">num</span>=<span class="keyword">new</span> <span class="built_in">int</span>[]&#123;<span class="number">3</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i=<span class="number">1</span>,n=<span class="built_in">num</span>.length;i&lt;n;i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">num</span>[i]&lt;<span class="built_in">num</span>[i<span class="number">-1</span>])&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> j=i;j&gt;<span class="number">0</span>;j--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">num</span>[j]&lt;<span class="built_in">num</span>[j<span class="number">-1</span>])&#123;</span><br><span class="line">                <span class="built_in">int</span> temp=<span class="built_in">num</span>[j];</span><br><span class="line">                <span class="built_in">num</span>[j]=<span class="built_in">num</span>[j<span class="number">-1</span>];</span><br><span class="line">                <span class="built_in">num</span>[j<span class="number">-1</span>]=temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i:<span class="built_in">num</span>)&#123;</span><br><span class="line">    System.out.<span class="built_in">print</span>(i+<span class="string">","</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>插入排序讲完了。在这里温馨提示大家，学习算法时，我们没必要拘泥于代码的实现，那没有意义。我的建议就是深入理解步骤，当你理解步骤以后代码是随你怎么玩都可以的。</p>
+                <blockquote>
+<p>今天我们来学习一下actuator这个组件，它不是SpringCloud之后才有的，而是SpringBoot的一个starter，Spring Boot Actuator。我们使用SpringCloud的时候需要使用这个组件对应用程序进行监控与管理</p>
+</blockquote>
+<p>在SpringBoot2.0版本中，actuator可以为我们提供以下端点：</p>
+<table>
+<thead>
+<tr>
+<th>访问路径</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/actuator/auditevents</td>
+<td>显示当前应用程序的审计事件信息</td>
+</tr>
+<tr>
+<td>/actuator/beans</td>
+<td>显示一个应用中所有Spring Beans的完整列表</td>
+</tr>
+<tr>
+<td>/actuator/conditions</td>
+<td>显示配置类和自动配置类的状态及它们被应用或未被应用的原因</td>
+</tr>
+<tr>
+<td>/actuator/configprops</td>
+<td>显示一个所有@ConfigurationProperties的集合列表</td>
+</tr>
+<tr>
+<td>/actuator/env</td>
+<td>显示来自Spring的 ConfigurableEnvironment的属性</td>
+</tr>
+<tr>
+<td>/actuator/features</td>
+<td>显示系统启动的一些features</td>
+</tr>
+<tr>
+<td>/actuator/health</td>
+<td>显示应用的健康信息</td>
+</tr>
+<tr>
+<td>/actuator/httptrace</td>
+<td>最后100个HTTP请求</td>
+</tr>
+<tr>
+<td>/actuator/info</td>
+<td>显示任意的应用信息</td>
+</tr>
+<tr>
+<td>/actuator/metrics</td>
+<td>展示当前应用的metrics信息</td>
+</tr>
+<tr>
+<td>/actuator/mappings</td>
+<td>显示一个所有@RequestMapping路径的集合列表</td>
+</tr>
+<tr>
+<td>/actuator/refresh</td>
+<td>更新配置</td>
+</tr>
+<tr>
+<td>/actuator/scheduledtasks</td>
+<td>显示应用程序中的定时任务</td>
+</tr>
+<tr>
+<td>/actuator/service-registry</td>
+<td>当前应用在注册中心的状态</td>
+</tr>
+<tr>
+<td>/actuator/shutdown</td>
+<td>允许应用以优雅的方式关闭</td>
+</tr>
+<tr>
+<td>/actuator/threaddump</td>
+<td>执行一个线程dump</td>
+</tr>
+<tr>
+<td>/actuator/heapdump</td>
+<td>返回一个GZip压缩的hprof堆dump文件</td>
+</tr>
+<tr>
+<td>/actuator/loggers</td>
+<td>返回系统的一些日志</td>
+</tr>
+</tbody>
+</table>
+<p>虽然actuator默认给我们提供了这么多的端点供我们使用，但是为了安全起见，在SpringBoot2.0中它仅仅开放了health和info两个端口，如果想要使用其他的端口就需要我们增加一些配置了，一起来看一下如何使用actuator吧。</p>
+<h4><span id="1-引入依赖">1. 引入依赖</span></h4>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4><span id="2-修改配置文件">2. 修改配置文件</span></h4>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">management:</span></span><br><span class="line"><span class="symbol">  endpoints:</span></span><br><span class="line"><span class="symbol">    web:</span></span><br><span class="line"><span class="symbol">      exposure:</span></span><br><span class="line">        <span class="meta">#exclude: shutdown,threaddump   #此处控制的是不开放哪些端点</span></span><br><span class="line"><span class="symbol">        include:</span> <span class="string">"*"</span> <span class="meta">#此处控制的是开放哪些端点，如果需要开启少数端点可以这样配置：health,info。如果开启多个则使用*号开启除了exclude的端点</span></span><br></pre></td></tr></table></figure>
+<p>这个时候我们使用postman等接口调用工具访问 ip:端口/actuator 这个路径时就会得到下图所示的这么一个json串，这个json串中就是对应的各个端点的地址信息。<br>
+<img src="1.png" alt="1"></p>
+<h4><span id="3-健康检查">3. 健康检查</span></h4>
+<p>默认我们访问/actuator/health得到的只是一个状态值，其实它的详细信息里包含了很多有用的东西，比如说检查磁盘空间、DataSource的连接、Elasticsearch、Mongo、Rabbit、Redis等信息，我们可以通过如下配置来开启详细的健康检查：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">management</span>:</span><br><span class="line">  <span class="attribute">endpoint</span>:</span><br><span class="line">    <span class="attribute">health</span>:</span><br><span class="line">      <span class="attribute">show-details</span>: always</span><br></pre></td></tr></table></figure>
+<p>不仅如此，健康检查的指标我们还可以自定义，创建如下的一个bean提供健康检查的功能。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConnectTimeHealthIndicator</span> <span class="keyword">implements</span> <span class="title">HealthIndicator</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Health <span class="title">health</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">long</span> connectTime=(<span class="keyword">long</span>)Math.random()*<span class="number">10</span>;<span class="comment">//模拟一个连接操作</span></span><br><span class="line">        <span class="keyword">if</span>(connectTime&gt;<span class="number">3</span>)&#123;</span><br><span class="line">            <span class="comment">//如果连接时间大于3则认为连接失败，返回状态为down</span></span><br><span class="line">            <span class="keyword">return</span> Health.down().withDetail(<span class="string">"code"</span>, <span class="string">"504"</span>).withDetail(<span class="string">"msg"</span>,<span class="string">"xx应用连接超时"</span>).build();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Health.up().build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此时我们访问 ip:端口/actuator/health 访问时可能就会根据连接时间呈现下方的两种状态<br>
+<img src="2.png" alt="2"><br>
+<img src="3.png" alt="3"></p>
+<p>GitHub地址：<a href="https://github.com/2388386839/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/2388386839/spring-cloud-demo</a>。代码所在模块：cloud-demo-consumer-feign</p>
+<p>如果对您有所帮助，请记得帮忙点一个star哦</p>
+<blockquote>
+<p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
+</blockquote>
 
                 
 
@@ -261,18 +354,14 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2018/07/26/快速排序/" data-toggle="tooltip" data-placement="top" title="快速排序">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2018/07/26/冒泡排序/" data-toggle="tooltip" data-placement="top" title="冒泡排序">下一篇 &rarr;</a>
+                            <a href="/2018/11/03/JVM内存区域/" data-toggle="tooltip" data-placement="top" title="JVM内存区域">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
 
-<div id="SOHUCS" sid="zhixiang.org.cn/2018/07/26/插入排序/"></div>
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/11/16/每天学点SpringCloud（十）：SpringCloud监控/"></div>
 <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
 window.changyan.api.config({
@@ -466,7 +555,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录1</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. 引入依赖</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. 修改配置文件</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. 健康检查</span></a></li></ol>
         
         </div>
       </aside>
