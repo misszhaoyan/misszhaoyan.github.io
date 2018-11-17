@@ -13,11 +13,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          希尔排序 - 石玉军的个人博客
+          每天学点SpringCloud（十一）：Hystrix仪表盘 - 石玉军的个人博客
         
     </title>
 
-    <link rel="canonical" href="http://yoursite-url/2018/07/26/尔排序-1/">
+    <link rel="canonical" href="http://yoursite-url/2018/11/17/每天学点SpringCloud（十一）：Hystrix仪表盘/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -116,14 +116,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#基础算法" title="基础算法">基础算法</a>
+                              <a class="tag" href="/tags/#SpringCloud" title="SpringCloud">SpringCloud</a>
                             
                         </div>
-                        <h1>希尔排序</h1>
+                        <h1>每天学点SpringCloud（十一）：Hystrix仪表盘</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 石玉军 on
-                            2018-07-26
+                            2018-11-17
                         </span>
                     </div>
                 
@@ -241,19 +241,34 @@
                 col-sm-12 col-xs-12
                 post-container">
 
-                <p>今天讲一下希尔排序，希尔排序呢，其实可以理解为插入算法排序的一个升级版了，不了解插入排序的小伙伴可以先看一下这篇文章：<a href="zhixiang.org.cn/2018/07/26/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F">死磕算法之插入排序</a></p>
-<p>我们知道，插入排序在进行排序时如果当数据量很大的时候，有一个很小的数据出现在了数组的最后，那么我们就要移动了这个数据前面所有的元素给它放置到合适的元素。例如：</p>
-<p>我们要排序的数组为[1,2,3,4,5,6,7，。。。此处省略一百万。。.,0]。详细大家肯定不喜欢这个0往前移动一百万此吧。</p>
-<p>希尔排序的出现其实就是为了解决这个问题的，希尔排序呢，使用了分治算法，先把整个大的数组根据某个增量分为若干个组，先对这若干个组进行一个调整，保证大部分小的数据会被调整到前面来。到最后再次进行插入排序，这样就大大加快了效率了。</p>
-<p>来一个例子，我们要排序的数组为[3, 1, 0, 2, 8, 4, 2,6,9,1,3,-2,8],先来看一张图</p>
-<p><img src="1.png" alt="s"></p>
-<p>上方图片所说的增量就是我们进行分组的依据了。我们在这里初始值取得是数组得2分之一（此值没有标准的定义，只需保证大于1且小于数组长度即可），而红线所指向得就是我们根据这个增量所分的组了，我们分别针对每组进行排序。<br>
-可以在增量为3的结果种看到，第一组3，2，8 变为了2，3，8、第二组第三组没变、第四组变为了1，2、第五组变为了3，8、第六组变为了-2，4.<br>
-接下来增量减半，我们的数组分为3组，分别进行排序。<br>
-现在增量值经过再次减半后已经变为1了，我们可以通过观察数组发现，在数组的后面基本不可能出现最小的数据了，现在对数组进行插入排序的效率已经非常高了。<br>
-不知道现在的你明白希尔排序了么？来看一看代码吧。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shellSort</span><span class="params">(<span class="keyword">int</span> <span class="built_in">list</span>[], <span class="keyword">int</span> length)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> gap,i,j,temp;</span><br><span class="line">   	<span class="keyword">for</span> (gap = length/<span class="number">2</span>; gap &gt; <span class="number">0</span>; gap /= <span class="number">2</span>)&#123;</span><br><span class="line">    		<span class="keyword">for</span>(i = gap; i &lt; length; i++)&#123;</span><br><span class="line">        		<span class="keyword">for</span>(j = i-gap; j&gt;=<span class="number">0</span> &amp;&amp; <span class="built_in">list</span>[j]&gt;<span class="built_in">list</span>[j+gap]; j -= gap)&#123;</span><br><span class="line">        			temp = <span class="built_in">list</span>[j];</span><br><span class="line">          		  <span class="built_in">list</span>[j] = <span class="built_in">list</span>[j+gap];</span><br><span class="line">          		  <span class="built_in">list</span>[j+gap] = temp;</span><br><span class="line">          &#125;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>希尔排序讲完了。在这里温馨提示大家，学习算法时，我们没必要拘泥于代码的实现，那没有意义。我的建议就是深入理解步骤，当你理解步骤以后代码是随你怎么玩都可以的。</p>
+                <p>在SpringCloud学习系列博客第六篇<a href="http://zhixiang.org.cn/2018/07/26/%E5%AD%A6%E7%82%B9SpringCloud%EF%BC%88%E5%85%AD%EF%BC%89%EF%BC%9AHystrix%E4%BD%BF%E7%94%A8/" target="_blank" rel="noopener">文章</a>中,我们已经学习了Hystrix的使用，但是那篇文章中有一点遗漏没有讲，那就是Hystrix Dashboard ，它可以实时的监控Hystrix的运行情况。</p>
+<br>
+我们先来看一下使用Hystrix Dashboard我们可以得到多少有用的信息呢？
+<p><img src="2.png" alt="1"></p>
+<p>这些状态对我们定位问题还是比较有帮助的，那么我们来看一下如何使用它吧</p>
+<h4><span id="1引入依赖">1.引入依赖</span></h4>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-hystrix<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-hystrix-dashboard<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>hystrix依赖主要是hystrix核心功能依赖，dashboard是为我们提供仪表盘面板的页面功能的，actuator是用来暴露dashboard所需要的端口的。</p>
+<h4><span id="2启用hystrix仪表盘">2.启用hystrix仪表盘</span></h4>
+<p>在启动类增加注解@EnableHystrixDashboard。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@SpringBootApplication</span></span><br><span class="line"><span class="variable">@EnableEurekaClient</span></span><br><span class="line"><span class="variable">@EnableHystrixDashboard</span></span><br><span class="line"><span class="variable">@EnableFeignClients</span></span><br><span class="line"><span class="variable">@EnableHystrix</span></span><br></pre></td></tr></table></figure>
+<h4><span id="3修改actuator配置">3.修改actuator配置</span></h4>
+<p>默认的时候actuator是没有开启hystrix的端口的，所以我们需要在配置文件中增加一些配置来开启这个端口。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">management:</span></span><br><span class="line"><span class="attr">  endpoints:</span></span><br><span class="line"><span class="attr">    web:</span></span><br><span class="line"><span class="attr">      exposure:</span></span><br><span class="line"><span class="attr">        include:</span> <span class="string">'*'</span></span><br><span class="line"><span class="attr">feign:</span></span><br><span class="line"><span class="attr">  hystrix:</span></span><br><span class="line"><span class="attr">    enabled:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>上方的配置如果不明白的话可以参考：<a href="http://zhixiang.org.cn/2018/11/16/%E6%AF%8F%E5%A4%A9%E5%AD%A6%E7%82%B9SpringCloud%EF%BC%88%E5%8D%81%EF%BC%89%EF%BC%9ASpringCloud%E7%9B%91%E6%8E%A7/" target="_blank" rel="noopener">SpringCloud监控</a></p>
+<h4><span id="4使用">4.使用</span></h4>
+<p>访问ip:端口/hystrix,我们可以看到如下界面<br>
+<img src="1.png" alt="1"><br>
+这个是Dashboard的欢迎页面，第一个文本框是hystrix监控页面的地址。此地址默认是/hystrix.stream，然后还会被actuator的路径所影响，比如说，我的actuator默认路径/actuator，所以我输入访问地址为：  ip:端口/actuator/hystrix.stream。<br>
+第二个文本框为间隔更新数据时间，第三个是此次监控起的一个名字。<br>
+<br><br>
+上方信息输入完成后点击monitor后我们就可以看到文章开头图片描述的页面了。</p>
+<br>
+<p>GitHub地址：<a href="https://github.com/2388386839/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/2388386839/spring-cloud-demo</a>。代码所在模块：cloud-demo-consumer-feign-hystrix</p>
+<p>如果对您有所帮助，请记得帮忙点一个star哦</p>
+<blockquote>
+<p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
+</blockquote>
 
                 
 
@@ -261,14 +276,14 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2018/07/26/希尔排序/" data-toggle="tooltip" data-placement="top" title="单例模式">&larr; 上一篇</a>
-                        </li>
                     
+                        <li class="next">
+                            <a href="/2018/11/16/每天学点SpringCloud（十）：SpringCloud监控/" data-toggle="tooltip" data-placement="top" title="每天学点SpringCloud（十）：SpringCloud监控">下一篇 &rarr;</a>
+                        </li>
                     
                 </ul>
 
-<div id="SOHUCS" sid="zhixiang.org.cn/2018/07/26/尔排序-1/"></div>
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/11/17/每天学点SpringCloud（十一）：Hystrix仪表盘/"></div>
 <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
 window.changyan.api.config({
@@ -462,7 +477,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录1</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1.引入依赖</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2.启用hystrix仪表盘</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3.修改actuator配置</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4.使用</span></a></li></ol>
         
         </div>
       </aside>
