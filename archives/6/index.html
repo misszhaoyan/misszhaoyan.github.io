@@ -239,6 +239,38 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/原型模式/">
+        <h2 class="post-title">
+            原型模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            引言：通过给出一个原型对象来指明所创建的对象的类型，然后复制这个原型对象来创作同类型的对象
+Java中使用原型模式必须要满足的条件如下：
+1.对于任何对象都有x.clone()!=x 。(也就是说克隆的对象和原先的对象不是一个对象)
+2.x.clone().getClass()==x.getClass().(克隆出来的对象跟被克隆的对象是类型一样)
+3.x.clone().equals(x)......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/快速排序/">
         <h2 class="post-title">
             快速排序
@@ -519,35 +551,6 @@ npm install vue-quill-editor --save
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/batis中Blob类型乱码问题/">
-        <h2 class="post-title">
-            Mybatis中Blob类型乱码问题
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            智享网站的博客在数据库中的存储其实使用的就是longblob类型，这个类型在查询出来的时候如果不进行处理的话就会出现乱码问题。一个简单的处理方式就是在Mybatis查询数据库的时候增加一个拦截器，给这个类型的字段改变一下编码方式。
-123456789101112131415161718192021222324252627282930313233343536373839404142434445......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Mybatis" title="Mybatis">Mybatis</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -656,7 +659,7 @@ npm install vue-quill-editor --save
 
         
 
-            <a  href="/tags/#SpringCloud" title="SpringCloud" rel="11">SpringCloud</a>
+            <a  href="/tags/#SpringCloud" title="SpringCloud" rel="12">SpringCloud</a>
 
         
 
