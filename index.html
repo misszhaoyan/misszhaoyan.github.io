@@ -239,6 +239,73 @@
 
 <div class="post-preview">
 
+    <a href="/2018/11/24/rools规则引擎入门指南（二）/">
+        <h2 class="post-title">
+            Drools规则引擎入门指南（二）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+本篇博客主要讲解Drools常用的属性以及函数
+
+属性
+首先我们在resources\rules文件夹下创建一个Property.drl，还有一个DroolsApplicationPropertyTests
+1. salience优先级
+salience 属性的值默认为0，它的值越大执行的优先级就越高,看如下代码在执行的时候就会先执行salience2
+ 12345678910111213......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-11-24 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Drools" title="Drools">Drools</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/11/24/rools规则引擎入门指南（一）/">
+        <h2 class="post-title">
+            Drools规则引擎入门指南（一）
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+最近项目需要增加风控系统，在经过一番调研以后决定使用Drools规则引擎。因为项目是基于SpringCloud的架构，所以此次学习使用了SpringBoot2.0版本结合Drools7.14.0.Final版本。
+
+引入依赖
+12345678910&lt;dependency&gt;    &lt;groupId&gt;org.drools&lt;/groupId&gt;    &lt;a......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-11-24 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Drools" title="Drools">Drools</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/11/19/每天学点SpringCloud（十二）：Zipkin全链路监控/">
         <h2 class="post-title">
             每天学点SpringCloud（十二）：Zipkin全链路监控
@@ -578,70 +645,6 @@ eureka.instance.prefer-ip-address
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/09/21/何使用Redis执行Lua脚本/">
-        <h2 class="post-title">
-            如何使用Redis执行Lua脚本
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            为什么要使用Lua脚本？
-lua脚本有很多的优点，但是对于我来说我使用它只因为它能保证原子性。为什么它能保证原子性你就使用它呢？一个简单的例子，在我们的Java代码中，一个简单的++i都不能保证原子性更别提复杂的情况了。但是使用lua在执行几百行代码的情况下都不需要考虑高并发所带来的问题。
-lua基础
-
-创建lua脚本
-就像创建其他的文件一样，新建一个以.lua为后缀的文件，比如说test.......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-09-21 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Redis" title="Redis">Redis</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/09/20/是如何把自定义注解应用到生产的/">
-        <h2 class="post-title">
-            我是如何把自定义注解应用到生产的
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            最近自己写了一个关于网关限流的插件，为了实现限流时的灵活性所以选择了使用自定义注解，但是在百度了很多篇文章时发现大部分的答案是使用反射，一部分是使用注解处理器。个人感觉这样实现都不是很合适，感兴趣的兄弟可以看一下我是如何使用的。
-1. 如何自定义注解
-这个其实网络上的文章太多太多了，我这里就简单的说一下
-1234567@Target(ElementType.TYPE)//ElementTyp......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-09-20 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Java工具类" title="Java工具类">Java工具类</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -759,6 +762,10 @@ lua基础
         
 
             <a  href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a  href="/tags/#Drools" title="Drools" rel="2">Drools</a>
 
         
     </div>

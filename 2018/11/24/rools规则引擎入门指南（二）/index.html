@@ -13,11 +13,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          观察者模式 - 石玉军的个人博客
+          Drools规则引擎入门指南（二） - 石玉军的个人博客
         
     </title>
 
-    <link rel="canonical" href="http://yoursite-url/2018/07/26/观察者模式/">
+    <link rel="canonical" href="http://yoursite-url/2018/11/24/rools规则引擎入门指南（二）/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -116,14 +116,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#设计模式" title="设计模式">设计模式</a>
+                              <a class="tag" href="/tags/#Drools" title="Drools">Drools</a>
                             
                         </div>
-                        <h1>观察者模式</h1>
+                        <h1>Drools规则引擎入门指南（二）</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by 石玉军 on
-                            2018-07-26
+                            2018-11-24
                         </span>
                     </div>
                 
@@ -241,33 +241,57 @@
                 col-sm-12 col-xs-12
                 post-container">
 
-                <p>观察者模式：多个观察者对象同时观察一个主题对象，当这个主题对象发生变化时，会通知所有的观察者</p>
-<p>来看一下下方类图</p>
-<p><img src="1.png" alt="1"></p>
-<p>Subject：主题类，所有主题的父类，负责对观察者的管理，有添加观察者，删除观察者，通知所有的方法<br>
-SubjectImpl：主题子类，拥有状态属性，当状态改变时会调用父类的notifyObserver方法通知所有观察者<br>
-Observe：观察者，定义了接受主题变化通知的方法<br>
-ObserveImpl：观察者实现类，实现了update（）方法用于接受通知</p>
-<p>下面给出代码实现</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>  <span class="class"><span class="keyword">class</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> List&lt;Observer&gt; list=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">        list.add(observer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(Observer observer)</span></span>&#123;</span><br><span class="line">        list.remove(observer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">notifyObserver</span><span class="params">()</span></span>&#123;</span><br><span class="line">        list.forEach((observer)-&gt;observer.update());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SubjectImpl</span> <span class="keyword">extends</span> <span class="title">Subject</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String state=<span class="string">"new"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">change</span><span class="params">()</span></span>&#123;</span><br><span class="line">        state=<span class="string">"old"</span>;</span><br><span class="line">        notifyObserver();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ObserverImpl</span> <span class="keyword">implements</span>  <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"对象更新了"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <blockquote>
+<p>本篇博客主要讲解Drools常用的属性以及函数</p>
+</blockquote>
+<h1><span id="属性">属性</span></h1>
+<p>首先我们在resources\rules文件夹下创建一个Property.drl，还有一个DroolsApplicationPropertyTests</p>
+<h4><span id="1-salience优先级">1. salience优先级</span></h4>
+<p>salience 属性的值默认为0，它的值越大执行的优先级就越高,看如下代码在执行的时候就会先执行salience2</p>
+ <figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> rule <span class="string">"salience2"</span></span><br><span class="line">salience <span class="number">2</span></span><br><span class="line">    when</span><br><span class="line">        <span class="built_in">eval</span>(<span class="literal">true</span>)</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        System.<span class="built_in">err</span>.println(<span class="string">"salience2"</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">rule <span class="string">"salience1"</span></span><br><span class="line">salience <span class="number">1</span></span><br><span class="line">    when</span><br><span class="line">        <span class="built_in">eval</span>(<span class="literal">true</span>)</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        System.<span class="built_in">err</span>.println(<span class="string">"salience1"</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">   <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">testSalience</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       kieSession.fireAllRules();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h4><span id="2-date-effective日期比较小于等于">2. date-effective日期比较（小于等于）</span></h4>
+<p>当系统时间小于等于date-effective的值是才会执行。</p>
+ <figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> rule <span class="string">"dateEffective"</span></span><br><span class="line"><span class="built_in">date</span>-effective <span class="string">"2018-11-24"</span></span><br><span class="line">    <span class="keyword">when</span></span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        System.err.println(<span class="string">"2018-11-24被执行"</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">rule <span class="string">"dateEffectiveTomorrow"</span></span><br><span class="line"><span class="built_in">date</span>-effective <span class="string">"2018-11-25"</span></span><br><span class="line">    <span class="keyword">when</span></span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        System.err.println(<span class="string">"2018-11-25被执行"</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">testDateEffective</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    kieSession.fireAllRules(<span class="keyword">new</span> RuleNameEndsWithAgendaFilter(<span class="string">"dateEffective"</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">testDateEffectiveTomorrow</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    kieSession.fireAllRules(<span class="keyword">new</span> RuleNameEndsWithAgendaFilter(<span class="string">"dateEffectiveTomorrow"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>由于今天是11月24，所以上方的dateEffectiveTomorrow将不会执行。</p>
+<p>还有需要注意的是Drools默认的时间格式是dd-MMM-yyyy的，也就是说你必须使用24-十一月-2018它才能识别，我为什么能使用yyyy-MM-dd呢，请参考上篇文章中进行自动配置时的RulesUtil.getKieServices()方法</p>
+<h4><span id="3-date-expires日期比较大于">3. date-expires日期比较（大于）</span></h4>
+<p>刚好于date–effective相反</p>
+<h4><span id="4-enabled">4. enabled</span></h4>
+<p>当一个规则的enabled属性变为false时这条规则将不再可用</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">rule <span class="string">"enabled"</span></span><br><span class="line">enabled <span class="literal">false</span></span><br><span class="line">    <span class="keyword">when</span></span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        System.err.println(<span class="string">"被禁用的规则"</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">testEnabled</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        kieSession.fireAllRules(<span class="keyword">new</span> RuleNameEndsWithAgendaFilter(<span class="string">"enabled"</span>));</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1><span id="函数">函数</span></h1>
+<p>接着我们在resources\rules文件夹下创建一个Function.drl，还有一个DroolsApplicationFunctionTests</p>
+<p>Drools中常用函数分别为insert、update和retract，分别是插入更新和删除，我们来看一下下方的几个规则的执行过程</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">rule <span class="string">"test1"</span></span><br><span class="line">    <span class="keyword">when</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">      insert(new User(<span class="string">"赵六"</span>,<span class="number">12</span>));</span><br><span class="line">      System.err.println(<span class="string">"创造赵六"</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">rule <span class="string">"test2"</span></span><br><span class="line">    <span class="keyword">when</span></span><br><span class="line">       <span class="variable">$u</span><span class="symbol">:User</span>(name==<span class="string">"赵六"</span>)</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="variable">$u</span>.setName(<span class="string">"王五"</span>);</span><br><span class="line">        update(<span class="variable">$u</span>);</span><br><span class="line">        System.err.println(<span class="string">"赵六"</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">rule <span class="string">"test3"</span></span><br><span class="line">    <span class="keyword">when</span></span><br><span class="line">         <span class="variable">$u</span><span class="symbol">:User</span>(name==<span class="string">"王五"</span>)</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        System.err.println(<span class="string">"王五"</span>);</span><br><span class="line">        retract(<span class="variable">$u</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">rule <span class="string">"test4"</span></span><br><span class="line">    <span class="keyword">when</span></span><br><span class="line">         <span class="variable">$u</span><span class="symbol">:User</span>(name==<span class="string">"王五"</span>)</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        System.err.println(<span class="string">"王五删除删除之后"</span>+<span class="variable">$u</span>.getName());</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>可用看的，test1规则没有判断条件，所以直接被执行，执行过程中它生成了一个对象插入到工作内存中，此对象的规则又恰好与test2规则匹配，所以紧接着test2执行，test2执行时更新了user对象，更新后的对象又匹配了test3，所以test3继续执行。执行完毕后user对象被删除，test4就执行不了了。</p>
+<p>另外还有几个方法也是常用的：</p>
+<ol>
+<li>getWorkingMemory,获取当前的WorkingMemory对象</li>
+<li>halt，执行完当前规则后不再执行其他规则</li>
+<li>getRule，获取当前规则对象</li>
+</ol>
+<p>本文所有源码：<a href="https://github.com/2388386839/drools" target="_blank" rel="noopener">https://github.com/2388386839/drools</a></p>
+<blockquote>
+<p>本文出自<a href="http://zhixiang.org.cn/" target="_blank" rel="noopener">http://zhixiang.org.cn/</a>,转载请保留</p>
+</blockquote>
+
                 
 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/2018/07/26/责任链模式/" data-toggle="tooltip" data-placement="top" title="责任链模式">&larr; 上一篇</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/2018/07/26/模板模式/" data-toggle="tooltip" data-placement="top" title="模板模式">下一篇 &rarr;</a>
+                            <a href="/2018/11/24/rools规则引擎入门指南（一）/" data-toggle="tooltip" data-placement="top" title="Drools规则引擎入门指南（一）">下一篇 &rarr;</a>
                         </li>
                     
                 </ul>
 
-<div id="SOHUCS" sid="zhixiang.org.cn/2018/07/26/观察者模式/"></div>
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/11/24/rools规则引擎入门指南（二）/"></div>
 <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
 <script type="text/javascript">
 window.changyan.api.config({
@@ -465,7 +489,7 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
         <div id="toc" class="toc-article">
         <strong class="toc-title">目录1</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">属性</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.0.0.1.</span> <span class="toc-nav-text">1. salience优先级</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.0.0.2.</span> <span class="toc-nav-text">2. date-effective日期比较（小于等于）</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.0.0.3.</span> <span class="toc-nav-text">3. date-expires日期比较（大于）</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.0.0.4.</span> <span class="toc-nav-text">4. enabled</span></a></li></ol></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">函数</span></a></li></ol>
         
         </div>
       </aside>

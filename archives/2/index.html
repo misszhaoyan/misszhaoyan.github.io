@@ -239,6 +239,70 @@
 
 <div class="post-preview">
 
+    <a href="/2018/09/21/何使用Redis执行Lua脚本/">
+        <h2 class="post-title">
+            如何使用Redis执行Lua脚本
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            为什么要使用Lua脚本？
+lua脚本有很多的优点，但是对于我来说我使用它只因为它能保证原子性。为什么它能保证原子性你就使用它呢？一个简单的例子，在我们的Java代码中，一个简单的++i都不能保证原子性更别提复杂的情况了。但是使用lua在执行几百行代码的情况下都不需要考虑高并发所带来的问题。
+lua基础
+
+创建lua脚本
+就像创建其他的文件一样，新建一个以.lua为后缀的文件，比如说test.......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-09-21 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Redis" title="Redis">Redis</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/09/20/是如何把自定义注解应用到生产的/">
+        <h2 class="post-title">
+            我是如何把自定义注解应用到生产的
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            最近自己写了一个关于网关限流的插件，为了实现限流时的灵活性所以选择了使用自定义注解，但是在百度了很多篇文章时发现大部分的答案是使用反射，一部分是使用注解处理器。个人感觉这样实现都不是很合适，感兴趣的兄弟可以看一下我是如何使用的。
+1. 如何自定义注解
+这个其实网络上的文章太多太多了，我这里就简单的说一下
+1234567@Target(ElementType.TYPE)//ElementTyp......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-09-20 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java工具类" title="Java工具类">Java工具类</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/09/20/如何将自己的jar包发布到mavan中央仓库/">
         <h2 class="post-title">
             如何将自己的jar包发布到mavan中央仓库
@@ -504,71 +568,6 @@ lombok是一个可以通过简单的注解的形式来帮助我们简化消除�
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/08/14/一聊如何接入支付宝-1/">
-        <h2 class="post-title">
-            聊一聊如何接入支付宝
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-说起来做一个支付系统最基础的就是支付功能了，对于我们来说除了各大银行以外微信和支付宝也是必选项，毕竟人家这个庞大的用户群在那里摆着呢，你不用那不是想着放弃这些用户么。
-
-今天我们就来看一看对于我们开发者来说如何快速的进行接入。
-首先我们要做的就是先去蚂蚁金服开放平台注册账号https://open.alipay.com。这里需要注意的是如果我们是以个人注册的话，是没有办法投入生产使用的，只......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-08-14 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#支付" title="支付">支付</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/08/12/每天学点SpringCloud（八）：使用Apollo做配置中心/">
-        <h2 class="post-title">
-            每天学点SpringCloud（八）：使用Apollo做配置中心
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            由于Apollo支持的图形化界面相对于我们更加的友好，所以此次我们使用Apollo来做配置中心
-本篇文章实现了使用Apollo配置了dev和fat两个环境下的属性配置。
-Apollo官方文档https://github.com/ctripcorp/apollo/wiki
-1.下载依赖
-
-从https://github.com/ctripcorp/apollo/releases页面下载最新版本......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-08-12 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#SpringCloud" title="SpringCloud">SpringCloud</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -690,6 +689,10 @@ Apollo官方文档https://github.com/ctripcorp/apollo/wiki
         
 
             <a  href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a  href="/tags/#Drools" title="Drools" rel="2">Drools</a>
 
         
     </div>
