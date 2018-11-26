@@ -239,6 +239,40 @@
 
 <div class="post-preview">
 
+    <a href="/2018/07/26/享元模式/">
+        <h2 class="post-title">
+            享元模式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            享元模式：以共享的方式高效的支持大量的细粒度对象
+我们以咖啡为例，一家咖啡店一天卖出几千杯咖啡其实这几千杯也不过是几十种口味。在Java中你觉得是new几千次咖啡好还是new几十次口味好呢？享元模式就是利用的这个原理来共享的变量了。
+来看一下类图：
+
+FlavorFactory：口味工厂，根据客户所需口味生产咖啡
+Client：售货员，负责通知工厂生产咖啡，以及出售咖啡和统计销售情况
+Cof......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-07-26 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#设计模式" title="设计模式">设计模式</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/07/26/代理模式/">
         <h2 class="post-title">
             代理模式
@@ -537,38 +571,6 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/序/">
-        <h2 class="post-title">
-            堆排序
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            堆排序主要是运用了二叉树的性质来进行的排序。
-在进行堆排序之前我们先了解一下二叉树的几个性质：
-1.在排序使用二叉树的时候我们要排序的数组的第0个位置其实是不可以用的，这个时候如果我们要排序的数组为[3,1,0,2,8,4,2]时，我们首先要把它变为[0,3,1,0,2,8,4,2],我们把他转换为二叉树的时候是这样的
-2.观察此二叉树我们可以发现几个公式：
-父节点个数：（数组长度-1）/2......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#基础算法" title="基础算法">基础算法</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -693,29 +695,12 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
 
         
 
-            <a  href="/tags/#Drools" title="Drools" rel="2">Drools</a>
+            <a  href="/tags/#Drools" title="Drools" rel="3">Drools</a>
 
         
     </div>
 
 
-        <hr>
-    
-        <!-- Friends Blog -->
-<section class="visible-md visible-lg">
-
-<h5>重要通知</h5>
-    <div class="widget">
-
-<ul >
-
-		        <li style="color:red;"><a  target="_blank" href="https://github.com/2388386839/syj-minicode">博主新作：不写代码就能完成一个模块的组件</a></li>
-		        <li style="color:red;"><a  target="_blank" href="https://github.com/2388386839/syj-ratelimit">分布式应用级网关限流组件</a></li>
-
-
-</ul>
-</div>
-</section>
         <hr>
     
         <!-- Short About -->
@@ -728,11 +713,7 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
             <li>
                 <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
 
-            <li><h6 style="color:red;">--不写代码就能完成一个模块的组件</h6></li>
-            <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-            </li>
+            
 
             <li><h6 style="color:red;">--分布式应用级网关限流组件</h6></li>
             <li>
@@ -743,6 +724,16 @@ exits、del、type、randomkey、rename、expire、ttl、select db-i......
             <li>
                 <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
                 <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+			<li><h6 style="color:red;">--不写代码就能完成一个模块的组件</h6></li>
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+			 <li><h6 style="color:red;">--SpringBoot2.0+drools7.14.0.Final整合学习代码</h6></li>
+			 <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
         </ul>
 
