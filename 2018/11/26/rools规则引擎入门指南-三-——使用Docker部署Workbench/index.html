@@ -249,7 +249,7 @@
 <p>镜像文件比较大，870多M，可能需要一些时间，不要着急。</p>
 <h4><span id="2-配置">2. 配置</span></h4>
 <p>镜像拉取完毕后首先通过以下命令启动</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -<span class="selector-tag">p</span> <span class="number">8080</span>:<span class="number">8080</span> -<span class="selector-tag">p</span> <span class="number">8001</span>:<span class="number">8001</span> -d --name drools-workbench jboss/drools-workbench-showcase:latest</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  -<span class="selector-tag">p</span> <span class="number">8080</span>:<span class="number">8080</span> -<span class="selector-tag">p</span> <span class="number">8001</span>:<span class="number">8001</span> -d --name drools-workbench jboss/drools-workbench-showcase:latest</span><br></pre></td></tr></table></figure>
 <p>进入容器</p>
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -<span class="keyword">it</span> 容器<span class="built_in">id</span> /bin/bash</span><br></pre></td></tr></table></figure>
 <p>Workbench的日志存在/opt/jboss/wildfly/standalone/log/目录</p>
@@ -304,6 +304,10 @@
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/11/27/cker常用命令总结/" data-toggle="tooltip" data-placement="top" title="Docker常用命令总结">&larr; 上一篇</a>
+                        </li>
                     
                     
                         <li class="next">
@@ -428,6 +432,10 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
         
 
             <a  href="/tags/#Drools" title="Drools" rel="3">Drools</a>
+
+        
+
+            <a  href="/tags/#Docker" title="Docker" rel="1">Docker</a>
 
         
     </div>

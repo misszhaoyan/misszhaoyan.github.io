@@ -150,7 +150,14 @@
 
     <url>
         <loc>http://yoursite-url/tags/Drools/</loc>
-        <lastmod>2018-11-26T15:54:38.117Z</lastmod>
+        <lastmod>2018-11-27T13:16:35.903Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Docker/</loc>
+        <lastmod>2018-11-27T15:12:01.975Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

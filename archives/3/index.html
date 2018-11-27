@@ -239,6 +239,41 @@
 
 <div class="post-preview">
 
+    <a href="/2018/08/16/va项目启动时执行指定方法的几种方式/">
+        <h2 class="post-title">
+            Java项目启动时执行指定方法的几种方式
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+很多时候我们都会碰到需要在程序启动时去执行的方法，比如说去读取某个配置，预加载缓存，定时任务的初始化等。这里给出几种解决方案供大家参考。
+
+1. 使用@PostConstruct注解
+
+这个注解呢，可以在Spring加载这个类的时候执行一次。来看一下下方代码。
+
+123456789101112131415161718192021@Componentpublic class Test &#1......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-08-16 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java工具类" title="Java工具类">Java工具类</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/08/16/ava定时任务解决方案/">
         <h2 class="post-title">
             Java定时任务解决方案
@@ -526,39 +561,6 @@ Feign的使用
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/26/每天学点SpringCloud（一）：使用SpringBoot2-0-3整合SpringCloud/">
-        <h2 class="post-title">
-            每天学点SpringCloud（一）：使用SpringBoot2.0.3整合SpringCloud
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            最近开始学习SpringCloud，在此把我学习的过程记录起来，跟大家分享一下，一起学习。想学习SpringCloud的同学赶快上车吧。
-本次学习使用得SpringBoot版本为2.0.3.RELEASE，SpringCloud版本为Finchley.RELEASE
-创建父Maven工程
-首先我们创建一个Maven项目
-
-我们把此项目当做我们项目的父项目，以后我们所有的子项目都应该继承这个项......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-07-26 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#SpringCloud" title="SpringCloud">SpringCloud</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -684,6 +686,10 @@ Feign的使用
         
 
             <a  href="/tags/#Drools" title="Drools" rel="3">Drools</a>
+
+        
+
+            <a  href="/tags/#Docker" title="Docker" rel="1">Docker</a>
 
         
     </div>

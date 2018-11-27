@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
+    <meta name="keyword"  content="石玉军,个人博客,Java">
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Docker常用命令总结 - 石玉军的个人博客
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2018/11/27/cker常用命令总结/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+    <!--??????????? -->
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+    <!--???? -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26c56b9bc2b8d3a66705d7f712b5e211";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-o.png')
+            /*post*/
+        
+    }
+
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Docker" title="Docker">Docker</a>
+                            
+                        </div>
+                        <h1>Docker常用命令总结</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 石玉军 on
+                            2018-11-27
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">石玉军的个人博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">关于我</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+
+    <div class="container">
+        <div class="row">
+
+
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12 col-xs-12
+                post-container">
+
+                <blockquote>
+<p>本文主要介绍了docker的一些常用命令以及Dockerfile的组成元素</p>
+</blockquote>
+<h2><span id="镜像">镜像</span></h2>
+<h4><span id="拉取镜像">拉取镜像</span></h4>
+<p>docker pull</p>
+<h4><span id="查看镜像">查看镜像</span></h4>
+<p>docker images</p>
+<h4><span id="删除镜像">删除镜像</span></h4>
+<p>docker rmi</p>
+<p>常用参数：<br>
+1. -f：强制删除运行中的容器</p>
+<h4><span id="创建镜像">创建镜像</span></h4>
+<ol>
+<li>docker commit</li>
+</ol>
+<p>常用参数：<br>
+1. -m：本次提交信息<br>
+2. --author=&quot;&quot; ：作者<br>
+2.docker build 使用此从Dockerfile文件来构建镜像</p>
+<p>常用参数：<br>
+1. -t x/y:z：指定镜像的命名空间为x仓库为y，tag为z</p>
+<h2><span id="容器">容器</span></h2>
+<h4><span id="创建启动容器">创建/启动容器</span></h4>
+<ol>
+<li>docker create<br>
+docker create命令创建的容器并不会立即进入运行状态，需要使用docker start命令来启动</li>
+<li>docker retart 重启容器</li>
+<li>docker run</li>
+</ol>
+<p>常用参数：</p>
+<pre><code>1. --name:为容器指定名称
+2. -it:启动一个交互型容器，此参数为我们和容器提供了一个交互shell
+3. -d:创建后台型容器
+4. -restart=always:容器退出后自动重启
+5. -restart=on-failure:x:容器退出时如果返回值是非0，就会尝试重启x次
+6. -p x:y :主机端口：容器端口
+7. -n :指定dns
+8. -h : 指定容器的hostname
+9. -e ：设置环境变量
+10. -m :设置容器使用内存最大值
+11. --net: 指定容器的网络连接类型，支持 bridge/host/none/container
+12. --link=x: 添加链接到另一个容器x
+13. --expose=x: 开放端口x
+</code></pre>
+<p>这里docker create和docker run -it创建的容器都是交互型容器</p>
+<h4><span id="查看容器">查看容器</span></h4>
+<ol>
+<li>docker ps 查看正在运行的容器</li>
+</ol>
+<p>常用参数：</p>
+<pre><code>1. -a：查看所有容器
+2. -l:只列出最近创建的
+3. -n=x:只列出最后创建的x个
+3. -q:只列出容器id
+</code></pre>
+<h4><span id="停止容器">停止容器</span></h4>
+<ol>
+<li>docker stop</li>
+<li>docker kill</li>
+</ol>
+<h4><span id="删除容器">删除容器</span></h4>
+<p>docker rm</p>
+<p>常用参数：</p>
+<pre><code>1. -f：强制删除运行中的容器
+2. docker rm `docker ps -aq`:删除所有容器
+</code></pre>
+<h4><span id="查看容器日志">查看容器日志</span></h4>
+<p>docker logs</p>
+<p>常用参数：</p>
+<pre><code>1. -f：实时查看日志
+2. --tail=x:查看最后x行
+3. -t:查看日志产生的时间
+</code></pre>
+<h4><span id="查看容器进程">查看容器进程</span></h4>
+<p>docker top</p>
+<h4><span id="查看容器配置信息">查看容器配置信息</span></h4>
+<p>docker inspect<br>
+常用参数：</p>
+<pre><code>1. -f='{{x}}'：查看x配置
+</code></pre>
+<h4><span id="进入容器">进入容器</span></h4>
+<ol>
+<li>docker attch 进入交互型容器</li>
+</ol>
+<p>常用参数：</p>
+<pre><code>1. -f：强制删除运行中的容器
+2. docker rm `docker ps -aq`:删除所有容器
+</code></pre>
+<ol start="2">
+<li>docker exec 进入后台型容器</li>
+</ol>
+<p>常用参数：</p>
+<pre><code>1. -it 容器id /bin/bash：进入到后台容器
+</code></pre>
+<h2><span id="dockerfile">Dockerfile</span></h2>
+<p>如下是一个Dockerfile文件，我们就来通过这个文件来学习一下Dockerf的相关指令</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">8</span>-jre-alpine</span><br><span class="line"><span class="keyword">MAINTAINER</span> <span class="string">"syj &lt;syj@zhixiang.org.cn&gt;"</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update</span></span><br><span class="line"><span class="bash">EXPOSE 80  </span></span><br><span class="line"><span class="bash">ADD test.0.0.1.jar app.jar</span></span><br><span class="line"><span class="bash">VOLUME /tmp</span></span><br><span class="line"><span class="bash">WORKDIR /tmp</span></span><br><span class="line"><span class="bash">ENV username syj</span></span><br><span class="line"><span class="bash">CMD java -jar /app.jar</span></span><br><span class="line"><span class="bash">ENTRYPOINT java -jar /app.jar</span></span><br><span class="line"><span class="bash">USER root</span></span><br><span class="line"><span class="bash">ONBUILD：<span class="built_in">echo</span> <span class="string">"hello child"</span></span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>FROM：文件开头的指令，指定父级镜像</li>
+<li>MAINTAINER： 作者信息，syj是用户名，后面是邮箱</li>
+<li>RUN： 用来执行命令，可以有一下三种形式
+<ol>
+<li>RUN apt-get update</li>
+<li>RUN [ “apt-get”,&quot; update&quot; ]</li>
+<li>RUN apt-get update &amp;&amp; apt-get nginx</li>
+</ol>
+</li>
+<li>EXPOSE： 指定容器对外开放的端口</li>
+<li>ADD ：将主机上的文件（Dockerfile的相对路径）或者网络文件添加到镜像中</li>
+<li>VOLUME ：指定挂载点</li>
+<li>WORKDIR：下方指令执行的目录</li>
+<li>ENV：设置环境变量</li>
+<li>CMD：启动容器时默认运行的命令，同RUN的执行方式
+<ol>
+<li>CMD java -jar /app.jar</li>
+<li>CMD [“java”,&quot;-jar&quot;,&quot;/app.jar&quot;]</li>
+</ol>
+</li>
+<li>ENTRYPOINT ：同CMD</li>
+<li>USER ：执行指令的用户</li>
+<li>ONBUILD：触发器指令，此镜像当做父镜像时执行的命令，可以跟ADD、RUN、ENTRYPOINT</li>
+</ol>
+<blockquote>
+<p>本文出自<a href="http://zhixiang.org.cn/" target="_blank" rel="noopener">http://zhixiang.org.cn/</a>,转载请保留</p>
+</blockquote>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/11/26/rools规则引擎入门指南-三-——使用Docker部署Workbench/" data-toggle="tooltip" data-placement="top" title="Drools规则引擎入门指南(三)——使用Docker部署Workbench">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/11/27/cker常用命令总结/"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytJA6t4E',
+conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
+});
+</script>
+
+
+
+            </div>
+             <div>
+                        <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        
+
+
+
+    <h5>标签</h5>
+
+    <div class="tags">
+        
+
+            <a  href="/tags/#JVM" title="JVM" rel="1">JVM</a>
+
+        
+
+            <a  href="/tags/#Java工具类" title="Java工具类" rel="8">Java工具类</a>
+
+        
+
+            <a  href="/tags/#Java小技巧" title="Java小技巧" rel="2">Java小技巧</a>
+
+        
+
+            <a  href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+
+        
+
+            <a  href="/tags/#Redis" title="Redis" rel="2">Redis</a>
+
+        
+
+            <a  href="/tags/#Spring" title="Spring" rel="1">Spring</a>
+
+        
+
+            <a  href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+
+        
+
+            <a  href="/tags/#git" title="git" rel="1">git</a>
+
+        
+
+            <a  href="/tags/#开发工具" title="开发工具" rel="1">开发工具</a>
+
+        
+
+            <a  href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+
+        
+
+            <a  href="/tags/#支付" title="支付" rel="2">支付</a>
+
+        
+
+            <a  href="/tags/#基础算法" title="基础算法" rel="8">基础算法</a>
+
+        
+
+            <a  href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+
+        
+
+            <a  href="/tags/#开源组件" title="开源组件" rel="2">开源组件</a>
+
+        
+
+            <a  href="/tags/#Vue" title="Vue" rel="1">Vue</a>
+
+        
+
+            <a  href="/tags/#JS" title="JS" rel="2">JS</a>
+
+        
+
+            <a  href="/tags/#UML" title="UML" rel="1">UML</a>
+
+        
+
+            <a  href="/tags/#SpringCloud" title="SpringCloud" rel="12">SpringCloud</a>
+
+        
+
+            <a  href="/tags/#Https" title="Https" rel="1">Https</a>
+
+        
+
+            <a  href="/tags/#maven" title="maven" rel="1">maven</a>
+
+        
+
+            <a  href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a  href="/tags/#Drools" title="Drools" rel="3">Drools</a>
+
+        
+
+            <a  href="/tags/#Docker" title="Docker" rel="1">Docker</a>
+
+        
+    </div>
+
+
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5 >
+    github
+    </h5>
+    <div class="short-about">
+        <ul class="list-inline">
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
+
+            
+
+            <li><h6 style="color:red;">--分布式应用级网关限流组件</h6></li>
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+            <li><h6 style="color:red;">--SpringCloud学习demo</h6></li>
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+			<li><h6 style="color:red;">--不写代码就能完成一个模块的组件</h6></li>
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+			 <li><h6 style="color:red;">--SpringBoot2.0+drools7.14.0.Final整合学习代码</h6></li>
+			 <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+        </ul>
+
+    </div>
+<br>
+
+    <h5>联系我</h5>
+    <div class="short-about">
+
+        <ul class="list-inline">
+
+            <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+            <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+      </ul>
+
+    </div>
+
+</section>
+
+        <hr>
+    
+</div>
+                        </div>
+            <!-- Tabe of Content -->
+            <!-- Table of Contents 读博客右边栏
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录1</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">镜像</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">拉取镜像</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.0.2.</span> <span class="toc-nav-text">查看镜像</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.0.3.</span> <span class="toc-nav-text">删除镜像</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.0.4.</span> <span class="toc-nav-text">创建镜像</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">容器</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.1.</span> <span class="toc-nav-text">创建/启动容器</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.2.</span> <span class="toc-nav-text">查看容器</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.3.</span> <span class="toc-nav-text">停止容器</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.4.</span> <span class="toc-nav-text">删除容器</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.5.</span> <span class="toc-nav-text">查看容器日志</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.6.</span> <span class="toc-nav-text">查看容器进程</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.7.</span> <span class="toc-nav-text">查看容器配置信息</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.0.8.</span> <span class="toc-nav-text">进入容器</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Dockerfile</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+-->
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+               
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer style="padding:0px;">
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+   
+    
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 石玉军 2018  
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_pv">本网站已被访问<span id="busuanzi_value_site_pv"></span>次</span>
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_uv">您是第<span id="busuanzi_value_site_uv"></span>位访客</span>
+    
+                    <br>
+                    
+                <a target="_black" href="http://www.miitbeian.gov.cn/">鲁ICP备18002448号-1</a>    
+                </p>
+				
+				
+				
+				
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
