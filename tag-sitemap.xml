@@ -142,13 +142,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/SpringCloud/</loc>
-        <lastmod>2018-11-19T15:29:00.656Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite-url/tags/Drools/</loc>
         <lastmod>2018-11-27T13:16:35.903Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -158,6 +151,13 @@
     <url>
         <loc>http://yoursite-url/tags/Docker/</loc>
         <lastmod>2018-11-28T14:14:47.792Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/SpringCloud/</loc>
+        <lastmod>2018-12-07T15:09:22.321Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
