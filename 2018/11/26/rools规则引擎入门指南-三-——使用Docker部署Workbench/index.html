@@ -305,7 +305,7 @@
 </ol>
 <figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@RunWith(SpringRunner.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DroolsApplicationWorkBenchTests</span> </span>&#123;</span><br><span class="line">    @Test</span><br><span class="line">    <span class="keyword">public</span> void testWorkbench() &#123;</span><br><span class="line">        <span class="keyword">String</span> url = <span class="string">"http://ip:8080/drools-wb/maven2/cn/org/zhixiang/drools-test/0.0.1/drools-test-0.0.1.jar"</span>;</span><br><span class="line">        KieServices kieServices = KieServices.Factory.<span class="keyword">get</span>();</span><br><span class="line">        KieRepository kieRepository = kieServices.getRepository();</span><br><span class="line">        UrlResource resource = (UrlResource) kieServices.getResources().<span class="keyword">new</span><span class="type">UrlResource</span>(url);</span><br><span class="line">        resource.setBasicAuthentication(<span class="string">"enabled"</span>);</span><br><span class="line">        resource.setPassword(<span class="string">"admin"</span>);</span><br><span class="line">        resource.setUsername(<span class="string">"admin"</span>);</span><br><span class="line">        InputStream is = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            is = resource.getInputStream();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        KieModule kieModule = kieRepository.addKieModule(kieServices.getResources().<span class="keyword">new</span><span class="type">InputStreamResource</span>(is));</span><br><span class="line">        KieContainer kieContainer = kieServices.<span class="keyword">new</span><span class="type">KieContainer</span>(kieModule.getReleaseId());</span><br><span class="line">        KieSession kieSession = kieContainer.<span class="keyword">new</span><span class="type">KieSession</span>();</span><br><span class="line">        Dog dog = <span class="keyword">new</span> <span class="type">Dog</span>();</span><br><span class="line">        dog.setName(<span class="string">"大黄"</span>);</span><br><span class="line">        kieSession.insert(dog);</span><br><span class="line">        kieSession.fireAllRules();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>执行完测试方法以后你的控制台打印出了大黄出场四个字么？</p>
-<p>本文所有源码：<a href="https://github.com/2388386839/drools" target="_blank" rel="noopener">https://github.com/2388386839/drools</a></p>
+<p>本文所有源码：<a href="https://github.com/shiyujun/drools" target="_blank" rel="noopener">https://github.com/shiyujun/drools</a></p>
 <blockquote>
 <p>本文出自<a href="http://zhixiang.org.cn/" target="_blank" rel="noopener">http://zhixiang.org.cn/</a>,转载请保留</p>
 </blockquote>
@@ -462,29 +462,29 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
     <div class="short-about">
         <ul class="list-inline">
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
 
             
 
             <li><h6 style="color:red;">--分布式应用级网关限流组件</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
             <li><h6 style="color:red;">--SpringCloud学习demo</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
 			<li><h6 style="color:red;">--不写代码就能完成一个模块的组件</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
 			 <li><h6 style="color:red;">--SpringBoot2.0+drools7.14.0.Final整合学习代码</h6></li>
 			 <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
         </ul>
 

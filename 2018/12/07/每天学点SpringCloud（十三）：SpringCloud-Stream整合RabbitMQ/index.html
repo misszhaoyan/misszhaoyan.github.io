@@ -286,7 +286,7 @@
 <h4><span id="4-接受消息">4. 接受消息</span></h4>
 <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@<span class="keyword">EnableBinding</span>(<span class="keyword">MqMessageSource</span>.<span class="keyword">class</span>)</span><br><span class="line"><span class="keyword">public</span> class MqMessageConsumer &#123;</span><br><span class="line">    @<span class="keyword">StreamListener</span>(<span class="keyword">MqMessageSource</span>.<span class="keyword">TEST_IN_PUT</span>)</span><br><span class="line">    public void messageInPut(Message&lt;String&gt; message) &#123;</span><br><span class="line">        <span class="selector-tag">System</span><span class="selector-class">.err</span><span class="selector-class">.println</span>(" 消息接收成功：" + <span class="selector-tag">message</span><span class="selector-class">.getPayload</span>());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个时候启动Eureka、消息生产者和消费者，然后调用生产者的接口应该就可以接受到来自mq的消息了。</p>
-<p>GitHub地址：<a href="https://github.com/2388386839/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/2388386839/spring-cloud-demo</a>。代码所在模块：cloud-demo-consumer，cloud-demo-provider-2</p>
+<p>GitHub地址：<a href="https://github.com/shiyujun/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/shiyujun/spring-cloud-demo</a>。代码所在模块：cloud-demo-consumer，cloud-demo-provider-2</p>
 <p>如果对您有所帮助，请记得帮忙点一个star哦</p>
 <p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留</p>
 
@@ -442,29 +442,29 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
     <div class="short-about">
         <ul class="list-inline">
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
 
             
 
             <li><h6 style="color:red;">--分布式应用级网关限流组件</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
             <li><h6 style="color:red;">--SpringCloud学习demo</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
 			<li><h6 style="color:red;">--不写代码就能完成一个模块的组件</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
 			 <li><h6 style="color:red;">--SpringBoot2.0+drools7.14.0.Final整合学习代码</h6></li>
 			 <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
         </ul>
 

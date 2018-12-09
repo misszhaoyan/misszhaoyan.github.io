@@ -297,7 +297,7 @@
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@RestController</span></span><br><span class="line"><span class="variable">@RequestMapping</span>(<span class="string">"/user"</span>)</span><br><span class="line">public class UserController &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable">@Autowired</span></span><br><span class="line">    private RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="variable">@GetMapping</span>(<span class="string">"/getUser/&#123;id&#125;"</span>)</span><br><span class="line">    public User getUser(<span class="variable">@PathVariable</span> Long id)&#123;</span><br><span class="line">        <span class="selector-tag">return</span> <span class="selector-tag">restTemplate</span><span class="selector-class">.getForObject</span>(<span class="string">"http://localhost:8078/user/getUser/"</span>+id,User.class);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>它的getUser方法没有自己实现，而是调用的服务提供者的getUser方法。</p>
 <p>接着呢，我们首先启动服务提供者，然后再启动消费者，当我们访问http://localhost:8088/user/getUser/3 时同样也能取得结果，这样一个简单的SpringCloud项目的服务提供者和消费者就已经完成了。</p>
-<p>GitHub：<a href="https://github.com/2388386839/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/2388386839/spring-cloud-demo</a></p>
+<p>GitHub：<a href="https://github.com/shiyujun/spring-cloud-demo" target="_blank" rel="noopener">https://github.com/shiyujun/spring-cloud-demo</a></p>
 <p>码云：<a href="https://gitee.com/zhixiang_blog/spring-cloud-demo" target="_blank" rel="noopener">https://gitee.com/zhixiang_blog/spring-cloud-demo</a></p>
 <p>如果对您有所帮助，请记得帮忙点一个star哦</p>
 
@@ -453,29 +453,29 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
     <div class="short-about">
         <ul class="list-inline">
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
 
             
 
             <li><h6 style="color:red;">--分布式应用级网关限流组件</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
             <li><h6 style="color:red;">--SpringCloud学习demo</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
 			<li><h6 style="color:red;">--不写代码就能完成一个模块的组件</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
 			 <li><h6 style="color:red;">--SpringBoot2.0+drools7.14.0.Final整合学习代码</h6></li>
 			 <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
         </ul>
 

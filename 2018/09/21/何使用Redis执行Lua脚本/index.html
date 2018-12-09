@@ -308,7 +308,7 @@ boolean、number、string、nil（这个就是我们平常见的null）<br>
 你只需要这样的一段代码就可以调用redis执行脚本redis-ratelimiter-tokenBucket.lua了</li>
 </ol>
 <figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">   <span class="keyword">private</span> RedisTemplate redisTemplate;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> counterConsume(<span class="keyword">String</span> <span class="built_in">key</span>, <span class="keyword">String</span> limit, <span class="keyword">String</span> lrefreshInterval) &#123;</span><br><span class="line">   	DefaultRedisScript&lt;Long&gt; consumeRedisScript=<span class="keyword">new</span> DefaultRedisScript();</span><br><span class="line">       consumeRedisScript.setResultType(Long.class);</span><br><span class="line">       consumeRedisScript.setScriptSource(<span class="keyword">new</span> ResourceScriptSource(<span class="keyword">new</span> ClassPathResource(<span class="string">"script/redis-ratelimiter-tokenBucket.lua"</span>)));<span class="comment">//加载lua脚本文件</span></span><br><span class="line">       List&lt;<span class="keyword">Object</span>&gt; keyList = <span class="keyword">new</span> ArrayList();</span><br><span class="line">       keyList.<span class="built_in">add</span>(<span class="built_in">key</span>);<span class="comment">//通过KEYS[1]取值</span></span><br><span class="line">       keyList.<span class="built_in">add</span>(limit);<span class="comment">//通过KEYS[2]取值</span></span><br><span class="line">       List&lt;<span class="keyword">Object</span>&gt; argvList = <span class="keyword">new</span> ArrayList();</span><br><span class="line">       argvList.<span class="built_in">add</span>(lrefreshInterval);<span class="comment">//通过ARGV[1]取值</span></span><br><span class="line">       <span class="keyword">String</span> result=redisTemplate.execute(redisScript,keyList,argvList).toString();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>看到这里你对lua还有什么疑问么，感兴趣的话来看一下我是如何使用的吧：<a href="https://github.com/2388386839/syj-ratelimit" target="_blank" rel="noopener">https://github.com/2388386839/syj-ratelimit</a></p>
+<p>看到这里你对lua还有什么疑问么，感兴趣的话来看一下我是如何使用的吧：<a href="https://github.com/shiyujun/syj-ratelimit" target="_blank" rel="noopener">https://github.com/shiyujun/syj-ratelimit</a></p>
 <p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
 
                 
@@ -463,29 +463,29 @@ conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
     <div class="short-about">
         <ul class="list-inline">
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
 
             
 
             <li><h6 style="color:red;">--分布式应用级网关限流组件</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
             <li><h6 style="color:red;">--SpringCloud学习demo</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
 			<li><h6 style="color:red;">--不写代码就能完成一个模块的组件</h6></li>
             <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
 			 <li><h6 style="color:red;">--SpringBoot2.0+drools7.14.0.Final整合学习代码</h6></li>
 			 <li>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
-                <iframe src="https://ghbtns.com/github-btn.html?user=2388386839&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
             </li>
         </ul>
 
