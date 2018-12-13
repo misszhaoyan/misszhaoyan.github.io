@@ -250,6 +250,46 @@
 
 <div class="post-preview">
 
+    <a href="/2018/12/13/Kubernetes（k8s）1-12-2集群搭建/">
+        <h2 class="post-title">
+            Kubernetes（k8s）1.12.2集群搭建
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+本博客搭建k8s集群1.12.2版本
+
+1. 准备2台以上最低2核4G的服务器
+2. 关闭机器的防火墙
+12systemctl disable firewalldsystemctl stop firewalld
+生产环境下建议不要关闭防火墙，只开放k8s所用的端口
+3. 配置docker和k8s仓库为阿里云镜像仓库
+首先选择一台性能比较好的机器作为主节点
+
+
+
+1wget -O /etc/......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+             石玉军 于
+            2018-12-13 作
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#kubernetes" title="kubernetes">kubernetes</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/12/07/学点SpringCloud（十四）：Zipkin使用SpringCloud-Stream以及Elasticsearch/">
         <h2 class="post-title">
             每天学点SpringCloud（十四）：Zipkin使用SpringCloud Stream以及Elasticsearch
@@ -568,41 +608,6 @@ zipkin首页为我们提供了对于调用链路的搜索查询及展示的功�
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/11/03/JVM内存区域/">
-        <h2 class="post-title">
-            JVM内存区域
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            
-Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为多个区域，这些区域各有自己的用途以及独特的创建和销毁时间，今天就带着大家来揭开这些不同的数据区域的面纱
-
-先来一张最经典的图：
-
-今天我们来学习一下图片上方的程序计数器、方法区、栈、堆几个部分。
-1.程序计数器
-程序计数器是随着一条线程的启动而创建的，每一个线程独有一个程序计数器，多个线程之间互不影响。（可以理解为Java中的......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-             石玉军 于
-            2018-11-03 作
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#JVM" title="JVM">JVM</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -728,6 +733,10 @@ Java虚拟机在执行Java程序的过程中会把它所管理的内存划分为
         
 
             <a  href="/tags/#Docker" title="Docker" rel="1">Docker</a>
+
+        
+
+            <a  href="/tags/#kubernetes" title="kubernetes" rel="1">kubernetes</a>
 
         
     </div>

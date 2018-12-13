@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
+    <meta name="keyword"  content="石玉军,个人博客,Java">
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Kubernetes（k8s）1.12.2集群搭建 - 石玉军的个人博客
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2018/12/13/Kubernetes（k8s）1-12-2集群搭建/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+    <!--??????????? -->
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+    <!--???? -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26c56b9bc2b8d3a66705d7f712b5e211";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-o.png')
+            /*post*/
+        
+    }
+
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#kubernetes" title="kubernetes">kubernetes</a>
+                            
+                        </div>
+                        <h1>Kubernetes（k8s）1.12.2集群搭建</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 石玉军 on
+                            2018-12-13
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">石玉军的个人博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">关于我</a>
+                        </li>
+						
+						
+						
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+						
+						
+						
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+						
+						
+						
+                        
+                    
+                   
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+		 <img style="width:150px;position:fixed;top:50px;right:5px;" src="/img/1543632202663.jpg">
+
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+
+    <div class="container">
+        <div class="row">
+
+
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12 col-xs-12
+                post-container">
+
+                <blockquote>
+<p>本博客搭建k8s集群1.12.2版本</p>
+</blockquote>
+<h4><span id="1-准备2台以上最低2核4g的服务器">1. 准备2台以上最低2核4G的服务器</span></h4>
+<h4><span id="2-关闭机器的防火墙">2. 关闭机器的防火墙</span></h4>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="keyword">disable</span> firewalld</span><br><span class="line">systemctl <span class="keyword">stop</span> firewalld</span><br></pre></td></tr></table></figure>
+<p>生产环境下建议不要关闭防火墙，只开放k8s所用的端口</p>
+<h4><span id="3-配置docker和k8s仓库为阿里云镜像仓库">3. 配置docker和k8s仓库为阿里云镜像仓库</span></h4>
+<p>首先选择一台性能比较好的机器作为主节点</p>
+<ol>
+<li></li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -O /etc/yum<span class="selector-class">.repos</span><span class="selector-class">.d</span>/docker-ce<span class="selector-class">.repo</span> https:<span class="comment">//mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>vim /etc/yum.repos.d/ubernetes.repo</li>
+</ol>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[kubernetes]</span></span><br><span class="line"><span class="attr">name</span>=kubernetes Repo</span><br><span class="line"><span class="attr">baseurl</span>=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x<span class="number">86_64</span>/</span><br><span class="line"><span class="attr">gpgcheck</span>=<span class="number">1</span></span><br><span class="line"><span class="attr">gpgkey</span>=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg</span><br><span class="line"><span class="attr">enabled</span>=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li></li>
+</ol>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="string">https:</span><span class="comment">//mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span></span><br><span class="line">rpm --<span class="keyword">import</span> rpm-<span class="keyword">package</span>-key.gpg</span><br><span class="line">yum repolist</span><br></pre></td></tr></table></figure>
+<h4><span id="4-安装docker和kubelet">4. 安装docker和kubelet</span></h4>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">yum</span> <span class="selector-tag">install</span> <span class="selector-tag">kubeadm-1</span><span class="selector-class">.12</span><span class="selector-class">.2-0</span><span class="selector-class">.x86_64</span> <span class="selector-tag">docker-ce-18</span><span class="selector-class">.06</span><span class="selector-class">.0</span><span class="selector-class">.ce</span> <span class="selector-tag">kubelet-1</span><span class="selector-class">.12</span><span class="selector-class">.2-0</span><span class="selector-class">.x86_64</span></span><br></pre></td></tr></table></figure>
+<p>这里指定了docker和kubelet的版本，如果不指定的话默认下载最新的版本，如果你的服务器可以上Google的话可以选择执行以下命令下载最新版</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum <span class="keyword">install</span> kubeadm docker-ce kubelet</span><br></pre></td></tr></table></figure>
+<h4><span id="5-下载k8s镜像">5. 下载k8s镜像</span></h4>
+<p>这里分为两种场景</p>
+<h5><span id="能上google的同学看这个">能上Google的同学看这个</span></h5>
+<ol>
+<li>vim /usr/lib/systemd/system/docker.service  增加如下配置</li>
+</ol>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Environment</span>=<span class="string">"HTTPS_PROXY=http://www.ik8s.io:10080"</span></span><br><span class="line"><span class="attr">Environment</span>=<span class="string">"NO_PROXY=127.0.0.0/8,172.0.0.0/16"</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>加载配置文件</li>
+</ol>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">systemctl daemon-reload</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>设置docker开机启动并启动docker</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="builtin-name">enable</span> docker</span><br><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+<h5><span id="不能的同学看这个">不能的同学看这个</span></h5>
+<ol>
+<li>设置docker开机启动并启动docker</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="builtin-name">enable</span> docker</span><br><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>下载k8s镜像</li>
+</ol>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker pull mirrorgooglecontainers/kube-apiserver-amd64:v1<span class="meta">.12</span><span class="meta">.2</span></span><br><span class="line">docker pull mirrorgooglecontainers/kube-controller-manager-amd64:v1<span class="meta">.12</span>.2docker pull mirrorgooglecontainers/kube-scheduler-amd64:v1<span class="meta">.12</span><span class="meta">.2</span></span><br><span class="line">docker pull mirrorgooglecontainers/kube-proxy-amd64:v1<span class="meta">.12</span><span class="meta">.2</span></span><br><span class="line">docker pull mirrorgooglecontainers/<span class="keyword">pause</span>:<span class="number">3.1</span></span><br><span class="line">docker pull mirrorgooglecontainers/etcd-amd64:<span class="number">3.2</span><span class="meta">.24</span></span><br><span class="line">docker pull coredns/coredns:<span class="number">1.2</span><span class="meta">.2</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>镜像tag更新</li>
+</ol>
+<p>因为来自mirrorgooglecontainers或者coredns的镜像k8s是不认识的，所以我们需要修改一下上方下载的镜像的tag</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">docker tag mirrorgooglecontainers/kube-apiserver-amd64:v1<span class="meta">.12</span><span class="meta">.2</span> k8s.gcr.io/kube-apiserver-amd64:v1<span class="meta">.12</span><span class="meta">.2</span> </span><br><span class="line"></span><br><span class="line">docker tag mirrorgooglecontainers/kube-controller-manager-amd64:v1<span class="meta">.12</span><span class="meta">.2</span> k8s.gcr.io/kube-controller-manager-amd64:v1<span class="meta">.12</span><span class="meta">.2</span></span><br><span class="line"></span><br><span class="line">docker tag mirrorgooglecontainers/kube-scheduler-amd64:v1<span class="meta">.12</span><span class="meta">.2</span> k8s.gcr.io/kube-scheduler-amd64:v1<span class="meta">.12</span><span class="meta">.2</span></span><br><span class="line"></span><br><span class="line">docker tag mirrorgooglecontainers/kube-proxy-amd64:v1<span class="meta">.12</span><span class="meta">.2</span> k8s.gcr.io/kube-proxy-amd64:v1<span class="meta">.12</span><span class="meta">.2</span> </span><br><span class="line"></span><br><span class="line">docker tag mirrorgooglecontainers/<span class="keyword">pause</span>:<span class="number">3.1</span> k8s.gcr.io/<span class="keyword">pause</span>:<span class="number">3.1</span></span><br><span class="line"></span><br><span class="line">docker tag mirrorgooglecontainers/etcd-amd64:<span class="number">3.2</span><span class="meta">.24</span> k8s.gcr.io/etcd-amd64:<span class="number">3.2</span><span class="meta">.24</span></span><br><span class="line"></span><br><span class="line">docker tag coredns/coredns:<span class="number">1.2</span><span class="meta">.2</span> k8s.gcr.io/coredns:<span class="number">1.2</span><span class="meta">.2</span></span><br></pre></td></tr></table></figure>
+<h4><span id="6-验证网络及k8s依赖">6. 验证网络及k8s依赖</span></h4>
+<ol>
+<li>验证网络</li>
+</ol>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/sys/<span class="built_in">net</span>/bridge/bridge-nf-<span class="keyword">call</span>-ip6tables</span><br><span class="line">cat /proc/sys/<span class="built_in">net</span>/bridge/bridge-nf-<span class="keyword">call</span>-iptables</span><br></pre></td></tr></table></figure>
+<p>查看两条命令是否返回的都是1</p>
+<ol start="2">
+<li>验证k8s依赖</li>
+</ol>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">rpm -ql kubelet</span></span><br></pre></td></tr></table></figure>
+<p>执行以上命令看屏幕结果是否如下</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta-keyword">/etc/</span>kubernetes/manifests   <span class="meta">#清单目录</span></span><br><span class="line"><span class="meta-keyword">/etc/</span>sysconfig/kubelet   <span class="meta">#配置文件</span></span><br><span class="line"><span class="meta-keyword">/etc/</span>systemd<span class="meta-keyword">/system/</span>kubelet.service  </span><br><span class="line"><span class="meta-keyword">/usr/</span>bin/kubelet   <span class="meta">#主程序</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>设置k8s开启启动</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="builtin-name">enable</span> kubelet</span><br></pre></td></tr></table></figure>
+<h4><span id="7-初始化k8s">7. 初始化k8s</span></h4>
+<h6><span id="1-系统检查">1. 系统检查</span></h6>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --kubernetes-version=v1<span class="number">.12</span><span class="number">.2</span> --pod-network-cidr=<span class="number">10.244</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">16</span> --service-cidr=<span class="number">10.96</span><span class="number">.0</span><span class="number">.0</span>/<span class="number">12</span></span><br></pre></td></tr></table></figure>
+<p>注意如果使用最新版本的话不需要使用–kubernetes-version参数</p>
+<p>命令执行后k8s会进行一系列的检查，比如说：</p>
+<ul>
+<li>Linux 内核的版本必须是否是 3.10 以上？</li>
+<li>Linux Cgroups 模块是否可用？</li>
+<li>机器的 hostname 是否标准？在 Kubernetes 项目里，机器的名字以及一切存储在 Etcd 中的 API 对象，都必须使用标准的 DNS 命名（RFC 1123）。</li>
+<li>用户安装的 kubeadm 和 kubelet 的版本是否匹配？</li>
+<li>机器上是不是已经安装了 Kubernetes 的二进制文件？</li>
+<li>Kubernetes 的工作端口 10250/10251/10252 端口是不是已经被占用？</li>
+<li>ip、mount 等 Linux 指令是否存在？</li>
+<li>Docker 是否已经安装？</li>
+<li>……</li>
+</ul>
+检查结束以后如果没问题的话名字执行结束最后会有这样的一条指令出现
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">kubeadm</span> <span class="selector-tag">join</span> 172<span class="selector-class">.26</span><span class="selector-class">.15</span><span class="selector-class">.165</span><span class="selector-pseudo">:6443</span> <span class="selector-tag">--token</span> <span class="selector-tag">ns4kps</span><span class="selector-class">.j8cuqwf78emp5a5b</span> <span class="selector-tag">--discovery-token-ca-cert-hash</span> <span class="selector-tag">sha256</span><span class="selector-pseudo">:b71b7e52c318959bab3f05f02f6fe51d6396d8c54ea6849ec7556927d1c6c88a</span></span><br></pre></td></tr></table></figure>
+<p>这个就是node节点需要加入主节点时所需要的token，很重要，记下来，一会会用到</p>
+<h6><span id="2-系统检查">2. 系统检查</span></h6>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -<span class="selector-tag">p</span> <span class="variable">$HOME</span>/.kube</span><br><span class="line">cp -<span class="selector-tag">i</span> /etc/kubernetes/admin<span class="selector-class">.conf</span> <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="builtin-name">get</span>  nodes</span><br></pre></td></tr></table></figure>
+<p>查看节点status是否为NotReady</p>
+<h6><span id="3-安装flannel">3. 安装flannel</span></h6>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> kubectl apply -f <span class="symbol">https:</span>/<span class="regexp">/raw.githubusercontent.com/coreos</span><span class="regexp">/flannel/master</span><span class="regexp">/Documentation/kube</span>-flannel.yml</span><br><span class="line">curl -sSL <span class="string">"https://github.com/coreos/flannel/blob/master/Documentation/kube-flannel.yml?raw=true"</span> | kubectl create -f -</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="builtin-name">get</span>  nodes</span><br></pre></td></tr></table></figure>
+<p>查看节点status是否为Ready</p>
+<p>至此master节点的配置已经完成了。</p>
+<h4><span id="8-配置节点服务器">8. 配置节点服务器</span></h4>
+<ol>
+<li>拷贝master中的一些配置到节点服务器</li>
+</ol>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp /etc/yum<span class="selector-class">.repos</span><span class="selector-class">.d</span>/CentOS-Base<span class="selector-class">.repo</span> docker-ce<span class="selector-class">.repo</span> kubernetes<span class="selector-class">.repo</span> 服务器ip:/etc/yum<span class="selector-class">.repos</span><span class="selector-class">.d</span>/</span><br><span class="line">scp /etc/sysconfig/kubelet 服务器ip:/etc/sysconfig/</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>配置镜像</li>
+</ol>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget <span class="string">https:</span><span class="comment">//mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span></span><br><span class="line">rpm --<span class="keyword">import</span> rpm-<span class="keyword">package</span>-key.gpg</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>安装docker<br>
+同上方第四步</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">yum</span> <span class="selector-tag">install</span> <span class="selector-tag">kubeadm-1</span><span class="selector-class">.12</span><span class="selector-class">.2-0</span><span class="selector-class">.x86_64</span> <span class="selector-tag">docker-ce-18</span><span class="selector-class">.06</span><span class="selector-class">.0</span><span class="selector-class">.ce</span> <span class="selector-tag">kubelet-1</span><span class="selector-class">.12</span><span class="selector-class">.2-0</span><span class="selector-class">.x86_64</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>启动docker和kubelet并设置开启启动</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br><span class="line">systemctl <span class="builtin-name">enable</span> docker kubelet</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>加入集群管理<br>
+使用上方安装master结束后记住的命令加入到集群中</li>
+</ol>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">kubeadm</span> <span class="selector-tag">join</span> 172<span class="selector-class">.26</span><span class="selector-class">.15</span><span class="selector-class">.165</span><span class="selector-pseudo">:6443</span> <span class="selector-tag">--token</span> <span class="selector-tag">ns4kps</span><span class="selector-class">.j8cuqwf78emp5a5b</span> <span class="selector-tag">--discovery-token-ca-cert-hash</span> <span class="selector-tag">sha256</span><span class="selector-pseudo">:b71b7e52c318959bab3f05f02f6fe51d6396d8c54ea6849ec7556927d1c6c88a</span></span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>验证<br>
+切换到master节点，再次使用以下命令查看节点数量是不是增加了一个呢</li>
+</ol>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="builtin-name">get</span>  nodes</span><br></pre></td></tr></table></figure>
+<p>至此k8s集群就搭建完成了。</p>
+<blockquote>
+<p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
+</blockquote>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/12/07/学点SpringCloud（十四）：Zipkin使用SpringCloud-Stream以及Elasticsearch/" data-toggle="tooltip" data-placement="top" title="每天学点SpringCloud（十四）：Zipkin使用SpringCloud Stream以及Elasticsearch">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/12/13/Kubernetes（k8s）1-12-2集群搭建/"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytJA6t4E',
+conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
+});
+</script>
+
+
+
+            </div>
+             <div>
+                        <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        
+
+
+
+    <h5>标签</h5>
+
+    <div class="tags">
+        
+
+            <a  href="/tags/#JVM" title="JVM" rel="1">JVM</a>
+
+        
+
+            <a  href="/tags/#Java工具类" title="Java工具类" rel="8">Java工具类</a>
+
+        
+
+            <a  href="/tags/#Java小技巧" title="Java小技巧" rel="2">Java小技巧</a>
+
+        
+
+            <a  href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+
+        
+
+            <a  href="/tags/#Redis" title="Redis" rel="2">Redis</a>
+
+        
+
+            <a  href="/tags/#Spring" title="Spring" rel="1">Spring</a>
+
+        
+
+            <a  href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+
+        
+
+            <a  href="/tags/#git" title="git" rel="1">git</a>
+
+        
+
+            <a  href="/tags/#开发工具" title="开发工具" rel="1">开发工具</a>
+
+        
+
+            <a  href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+
+        
+
+            <a  href="/tags/#支付" title="支付" rel="2">支付</a>
+
+        
+
+            <a  href="/tags/#基础算法" title="基础算法" rel="8">基础算法</a>
+
+        
+
+            <a  href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+
+        
+
+            <a  href="/tags/#开源组件" title="开源组件" rel="2">开源组件</a>
+
+        
+
+            <a  href="/tags/#Vue" title="Vue" rel="1">Vue</a>
+
+        
+
+            <a  href="/tags/#JS" title="JS" rel="2">JS</a>
+
+        
+
+            <a  href="/tags/#UML" title="UML" rel="1">UML</a>
+
+        
+
+            <a  href="/tags/#SpringCloud" title="SpringCloud" rel="14">SpringCloud</a>
+
+        
+
+            <a  href="/tags/#Https" title="Https" rel="1">Https</a>
+
+        
+
+            <a  href="/tags/#maven" title="maven" rel="1">maven</a>
+
+        
+
+            <a  href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a  href="/tags/#Drools" title="Drools" rel="3">Drools</a>
+
+        
+
+            <a  href="/tags/#Docker" title="Docker" rel="1">Docker</a>
+
+        
+
+            <a  href="/tags/#kubernetes" title="kubernetes" rel="1">kubernetes</a>
+
+        
+    </div>
+
+
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5 >
+    github
+    </h5>
+    <div class="short-about">
+        <ul class="list-inline">
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
+
+            
+
+            <li><h6 style="color:red;">--分布式应用级网关限流组件</h6></li>
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+            <li><h6 style="color:red;">--SpringCloud学习demo</h6></li>
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+			<li><h6 style="color:red;">--不写代码就能完成一个模块的组件</h6></li>
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+			 <li><h6 style="color:red;">--SpringBoot2.0+drools7.14.0.Final整合学习代码</h6></li>
+			 <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+        </ul>
+
+    </div>
+<br>
+
+    <h5>联系我</h5>
+    <div class="short-about">
+
+        <ul class="list-inline">
+
+            <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+            <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+      </ul>
+    </div>
+
+</section>
+
+        <hr>
+    
+</div>
+                        </div>
+            <!-- Tabe of Content -->
+            <!-- Table of Contents 读博客右边栏
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录1</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. 准备2台以上最低2核4G的服务器</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. 关闭机器的防火墙</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. 配置docker和k8s仓库为阿里云镜像仓库</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4. 安装docker和kubelet</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5. 下载k8s镜像</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">能上Google的同学看这个</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">不能的同学看这个</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">6. 验证网络及k8s依赖</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">7. 初始化k8s</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.0.1.</span> <span class="toc-nav-text">1. 系统检查</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.0.2.</span> <span class="toc-nav-text">2. 系统检查</span></a></li><li class="toc-nav-item toc-nav-level-6"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.0.3.</span> <span class="toc-nav-text">3. 安装flannel</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">8. 配置节点服务器</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+-->
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+               
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer style="padding:0px;">
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+   
+    
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 石玉军 2018  
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_pv">本网站已被访问<span id="busuanzi_value_site_pv"></span>次</span>
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_uv">您是第<span id="busuanzi_value_site_uv"></span>位访客</span>
+    
+                    <br>
+                    
+                <a target="_black" href="http://www.miitbeian.gov.cn/">鲁ICP备18002448号-1</a>    
+                </p>
+				
+				
+				
+				
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+1111111111111
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
