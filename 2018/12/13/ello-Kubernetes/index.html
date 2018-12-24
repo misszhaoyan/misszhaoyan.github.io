@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="石玉军的个人博客是一个97年的Java全栈工程师所创建的，你可以在这里跟随博主的学习脚步，学习Java方向的知识。一步一步的走向大神。">
+    <meta name="keyword"  content="石玉军,个人博客,Java">
+
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Hello Kubernetes - 石玉军的个人博客
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2018/12/13/ello-Kubernetes/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+    <!--??????????? -->
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+    <!--???? -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?26c56b9bc2b8d3a66705d7f712b5e211";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+ <div id="divCenter" align="center"
+             style="position: absolute; display: none;  width: 300px; height: 300px; overflow:auto;  position:fixed;z-index:9999;margin-top: 30%;margin-left: 30%;">
+            <img id="bigImg" class="bigImg" onclick="document.getElementById('divCenter').style.display = 'none'"
+                    src="img/wxjiaoliu.png" style="height:90%;width:90%;"/>
+        </div>
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-o.png')
+            /*post*/
+        
+    }
+
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#kubernetes" title="kubernetes">kubernetes</a>
+                            
+                        </div>
+                        <h1>Hello Kubernetes</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by 石玉军 on
+                            2018-12-13
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">石玉军的个人博客</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">首页</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">关于我</a>
+                        </li>
+						
+						
+						
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">归档</a>
+                        </li>
+						
+						
+						
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">标签</a>
+                        </li>
+						
+						
+						
+                        
+                    
+                   
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+		
+
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+
+    <div class="container">
+        <div class="row">
+
+
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12 col-xs-12
+                post-container">
+
+                <blockquote>
+<p>在<a href="http://zhixiang.org.cn/2018/12/13/Kubernetes%EF%BC%88k8s%EF%BC%891-12-2%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/" target="_blank" rel="noopener">上一篇文章</a>中我们已经搭建起来了一个k8s集群，在本文中我们主要学习一下k8s中的一些基本概念、术语和常用的配置文件的定义。</p>
+</blockquote>
+<p>在k8s中最常见的就是yaml文件了，通过一个简单的yaml文件我们就可以完成80%的功能，现在我们来编写一个简单的yaml文件nginx.yaml来启动一个nginx服务：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">apiVersion</span>: v1</span><br><span class="line"><span class="attribute">kind</span>: Pod</span><br><span class="line"><span class="attribute">metadata</span>:</span><br><span class="line">  <span class="attribute">name</span>: nginx</span><br><span class="line"><span class="attribute">spec</span>:</span><br><span class="line"> <span class="attribute">containers</span>:</span><br><span class="line"> - <span class="attribute">name</span>: nginx</span><br><span class="line">  <span class="attribute">image</span>: <span class="attribute">nginx</span>:<span class="number">1.9</span>.<span class="number">6</span></span><br><span class="line">  <span class="attribute">ports</span>:</span><br><span class="line">  - <span class="attribute">containerPort</span>: <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<p>当我们使用如下命令以后k8s就会帮我们启动一个nginx服务</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">kubectl</span> <span class="selector-tag">create</span> <span class="selector-tag">-f</span> <span class="selector-tag">nginx</span><span class="selector-class">.yaml</span> </span><br><span class="line"><span class="selector-tag">kubectl</span> <span class="selector-tag">apply</span> <span class="selector-tag">-f</span> <span class="selector-tag">nginx</span><span class="selector-class">.yaml</span></span><br></pre></td></tr></table></figure>
+<p>你可以使用如下命令来进行验证微服务是否已经启动成功</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="builtin-name">get</span> pod</span><br></pre></td></tr></table></figure>
+<p>如果你想停止这两个微服务可以使用如下命令：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="keyword">delete</span> -f nginx.yaml</span><br></pre></td></tr></table></figure>
+<p>相信看到这里你对上方的nginx.yaml一定会充满好奇，下面就让我们来逐步解开k8s的面纱吧。</p>
+<h4><span id="1-master">1. Master</span></h4>
+<p>每个k8s集群都最少需要一个Master节点来负责整个集群的管理和控制，它就是我们在上一篇文章中提到的主节点。Master主要包括以下进程：<br>
+	1. kube-apiserver：k8s中所有资源增删改查等操作的唯一入口，也是集群控制的入口进程<br>
+2. kube-controller-manager：k8s中所有资源对象的自动化控制中心<br>
+3. kube-scheduler：负责资源调度的进程<br>
+4. etcd：k8s中所有的资源对象的数据都是保存在etcd中的</p>
+<h4><span id="2-node">2. Node</span></h4>
+<p>除了Master在k8s集群中所有的机器都可以被称为Node节点，也就是上篇文章中的子节点。Node节点是集群中的工作负载节点，我们所有的微服务都是由Master负责调度到Node节点上进行执行的。Node节点主要包括以下进程：<br>
+	1. kubelet：负责pod（下面会讲）对应的容器的创建、启动、停止等任务。<br>
+2. kube-proxy：负责k8s的通信与负载均衡机制的组件<br>
+3. Docker Engine：Daocker引擎，负责本机的容器创建和管理工作<br>
+在k8s中，我们可以使用如下命令来查看集群中的node节点</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get <span class="keyword">node</span><span class="title"></span></span><br></pre></td></tr></table></figure>
+<p>通过如下命令查看某个node的详细信息</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe <span class="keyword">node</span> <span class="title">node1</span></span><br></pre></td></tr></table></figure>
+<h4><span id="3-pod">3. Pod</span></h4>
+<p>Pod是k8s中最基本也是最重要的概念，一个Pod主要包含两个组件：<br>
+	1. 业务容器：一个pod中可以包含一个或多个业务容器<br>
+2.Pause：Pause是属于k8s平台的一部分，在Pod中单独设计一个Pause是为了两个方面的考虑。一是以Pause的状态来代表整个pod的状态，以起到监控应用的状态，二是为了当一个pod中包含多个容器时让这些容器共享Pause的Ip和挂载的Volume。<br>
+我们再来回顾一下文章开头的一个yaml文件中的各个属性的含义，不过相比文章开头的yaml此文件的属性要相对全一些。</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">apiVersion:</span> v1       <span class="meta">#版本号</span></span><br><span class="line"><span class="symbol">kind:</span> Pod       <span class="meta">#类型</span></span><br><span class="line"><span class="symbol">metadata:</span>       <span class="meta">#元数据</span></span><br><span class="line"><span class="symbol">  name:</span> nginx       <span class="meta">#Pod名称</span></span><br><span class="line"><span class="symbol">spec:</span>         <span class="meta">#Pod中容器的详细定义</span></span><br><span class="line"><span class="symbol">  containers:</span>      <span class="meta">#Pod中容器列表</span></span><br><span class="line">  - name: nginx     <span class="meta">#必选，容器名称</span></span><br><span class="line"><span class="symbol">    image:</span> nginx:<span class="number">1.9</span><span class="number">.6</span>    <span class="meta">#容器的镜像地址</span></span><br><span class="line"><span class="symbol">    imagePullPolicy:</span> [Always | Never | IfNotPresent] <span class="meta">#获取镜像的策略 Alawys表示下载镜像 IfnotPresent表示优先使用本地镜像，否则下载镜像，Nerver表示仅使用本地镜像</span></span><br><span class="line"><span class="symbol">    command:</span> [string]    <span class="meta">#容器的启动命令列表，如不指定，使用打包时使用的启动命令</span></span><br><span class="line"><span class="symbol">    args:</span> [string]     <span class="meta">#容器的启动命令参数列表</span></span><br><span class="line"><span class="symbol">    workingDir:</span> string     <span class="meta">#容器的工作目录</span></span><br><span class="line"><span class="symbol">    volumeMounts:</span>    <span class="meta">#挂载到容器内部的存储卷配置</span></span><br><span class="line">    - name: string     <span class="meta">#引用pod定义的共享存储卷的名称，需用volumes[]部分定义的的卷名</span></span><br><span class="line"><span class="symbol">      mountPath:</span> string    <span class="meta">#存储卷在容器内mount的绝对路径，应少于512字符</span></span><br><span class="line"><span class="symbol">      readOnly:</span> boolean    <span class="meta">#是否为只读模式</span></span><br><span class="line"><span class="symbol">    ports:</span>       <span class="meta">#需要暴露的端口库号列表</span></span><br><span class="line">    - name: nginx    <span class="meta">#端口号名称</span></span><br><span class="line"><span class="symbol">      containerPort:</span> <span class="number">80</span>   <span class="meta">#容器需要监听的端口号</span></span><br><span class="line"><span class="symbol">      hostPort:</span> <span class="number">8080</span>    <span class="meta">#容器所在主机需要监听的端口号类似于docker run -p 8080:80</span></span><br><span class="line"><span class="symbol">    env:</span>       <span class="meta">#容器运行前设置的环境变量列表</span></span><br><span class="line">    - name: string     <span class="meta">#环境变量名称</span></span><br><span class="line"><span class="symbol">      value:</span> string    <span class="meta">#环境变量的值</span></span><br><span class="line"><span class="symbol">    resources:</span>       <span class="meta">#资源限制和请求的设置</span></span><br><span class="line"><span class="symbol">      limits:</span>      <span class="meta">#资源限制的设置</span></span><br><span class="line"><span class="symbol">        cpu:</span> string    <span class="meta">#Cpu的限制，单位为core数，将用于docker run --cpu-shares参数</span></span><br><span class="line"><span class="symbol">        memory:</span> string     <span class="meta">#内存限制，单位可以为Mib/Gib，将用于docker run --memory参数</span></span><br><span class="line"><span class="symbol">      requests:</span>      <span class="meta">#资源请求的设置</span></span><br><span class="line"><span class="symbol">        cpu:</span> string    <span class="meta">#Cpu请求，容器启动的初始可用数量</span></span><br><span class="line"><span class="symbol">        memory:</span> string     <span class="meta">#内存清楚，容器启动的初始可用数量</span></span><br><span class="line"><span class="symbol">    restartPolicy:</span> [Always | Never | OnFailure]<span class="meta">#Pod的重启策略，Always表示一旦不管以何种方式终止运行，kubelet都将重启，OnFailure表示只有Pod以非0退出码退出才重启，Nerver表示不再重启该Pod</span></span><br><span class="line"><span class="symbol">    imagePullSecrets:</span>    <span class="meta">#Pull镜像时使用的secret名称，以key：secretkey格式指定</span></span><br><span class="line">    - name: string</span><br><span class="line"><span class="symbol">    hostNetwork:</span>false      <span class="meta">#是否使用主机网络模式，默认为false，如果设置为true，表示使用宿主机网络</span></span><br><span class="line"><span class="symbol">    volumes:</span>       <span class="meta">#在该pod上定义共享存储卷列表</span></span><br><span class="line">    - name: string     <span class="meta">#共享存储卷名称 （volumes类型有很多种）</span></span><br><span class="line"><span class="symbol">      emptyDir:</span> &#123;&#125;     <span class="meta">#类型为emtyDir的存储卷，与Pod同生命周期的一个临时目录。为空值</span></span><br><span class="line"><span class="symbol">      hostPath:</span> string     <span class="meta">#类型为hostPath的存储卷，表示挂载Pod所在宿主机的目录</span></span><br><span class="line"><span class="symbol">        path:</span> string     <span class="meta">#Pod所在宿主机的目录，将被用于同期中mount的目录</span></span><br><span class="line"><span class="symbol">      secret:</span>      <span class="meta">#类型为secret的存储卷，挂载集群与定义的secre对象到容器内部</span></span><br><span class="line"><span class="symbol">        scretname:</span> string  </span><br><span class="line"><span class="symbol">        items:</span>     </span><br><span class="line">        - key: string</span><br><span class="line"><span class="symbol">          path:</span> string</span><br><span class="line"><span class="symbol">      configMap:</span>     <span class="meta">#类型为configMap的存储卷，挂载预定义的configMap对象到容器内部</span></span><br><span class="line"><span class="symbol">        name:</span> string</span><br><span class="line"><span class="symbol">        items:</span></span><br><span class="line">        - key: string</span><br><span class="line"><span class="symbol">          path:</span> string</span><br></pre></td></tr></table></figure>
+<h4><span id="4-label">4. Label</span></h4>
+<p>Label可以附加到k8s中的各种资源对象中，比如我们上方提到的Node、Pod以及接下来要学习的Service、RC、Deployment。我们可以给指定的资源对象绑定一个或多个label来实现多维度的资源分组管理功能。</p>
+<p>Label的中文名称叫做标签，当一个应用被打上标签以后我们就可以通过Label Selector（标签选择器）去查询和筛选某些资源对象。听起来是不是和js的标签选择器差不多呢，其实就是差不多。Label Selector支持一下场景的表达式匹配方式<br>
+	1. name = nginx<br>
+2. name != nginx<br>
+3. name in (nginx,mysql)<br>
+4. name not in (tomcat)<br>
+5. name = nginx ,env != test</p>
+<p>如果我们要给我们的nginx服务加上一个Label的话，就应该这样操作</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span>   <span class="comment">#</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">  labels:</span>      <span class="comment">#标签</span></span><br><span class="line"><span class="attr">    - name:</span> <span class="string">nginx</span>     <span class="comment">#标签名字</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr"> containers:</span></span><br><span class="line"><span class="attr"> - name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">  image:</span> <span class="attr">nginx:1.9.6</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">  - containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<h4><span id="5-replication-controllerrc">5. Replication Controller(RC)</span></h4>
+<p>RC是负责声明某中Pod的副本数量在任意时刻都符合某个预期值，RC的定义主要包括以下几个部分：<br>
+	1. Pod期待的副本数<br>
+2. 用于筛选目标Pod的Label Selector<br>
+3. 到Pod数量小于目标Pod的时候用于创建新Pod的pod模板<br>
+使用RC最大的功能：</p>
+<ol>
+<li>通过改变Pod的数量实现动态扩容</li>
+<li>Pod模板中的镜像版本实现滚动升级<br>
+一个标准的RC应该是这样的：</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span>   </span><br><span class="line"><span class="attr">kind:</span> <span class="string">ReplicationController</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  replicas:</span> <span class="number">2</span>  <span class="comment">#副本数</span></span><br><span class="line"><span class="attr">  selector:</span>   <span class="comment">#标签选择器（LabelSelector）</span></span><br><span class="line"><span class="attr">    matchLabels:</span></span><br><span class="line"><span class="attr">      app:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">  template:</span>  <span class="comment">#模板</span></span><br><span class="line"><span class="attr">    metadata:</span></span><br><span class="line"><span class="attr">      labels:</span></span><br><span class="line"><span class="attr">        app:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">    spec:</span></span><br><span class="line"><span class="attr">      containers:</span></span><br><span class="line"><span class="attr">      - name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">        image:</span> <span class="attr">nginx:1.9.6</span></span><br><span class="line"><span class="attr">        ports:</span></span><br><span class="line"><span class="attr">        - containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<h4><span id="6-deployment">6. Deployment</span></h4>
+<p>Deployment其实是相对于RC的一个升级，它相比于RC增加的功能就是让我们可以随时知道当前Pod的部署进度，配置文件上不同的就是版本号和类型了</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">apiVersion:</span> extensions/v1beta1</span><br><span class="line"><span class="symbol">kind:</span> Deployment</span><br><span class="line"><span class="symbol">metadata:</span></span><br><span class="line"><span class="symbol">  name:</span> nginx</span><br><span class="line">  ·······</span><br></pre></td></tr></table></figure>
+<p>在Pod部署的时候我们可以通过执行以下命令来观察当前Pod的部署进度</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl <span class="builtin-name">get</span> deployments</span><br></pre></td></tr></table></figure>
+<h4><span id="7-hpa">7. HPA</span></h4>
+<p>我们学习了RC以后知道了程序可以按照我们的逾期进行扩容，但是如果某一天突然流量超出我们的逾期了，这个情况k8s也为我们提供了解决方案，那就是HPA。</p>
+<p>HPA可以通过追踪分析RC控制的所有Pod的的负载变化情况来确定是否进行针对性的调整。HPA主要有两种方式作为Pod负载的度量指标：<br>
+	1. CPUUtilizationPercentage：目标Pod所有副本自身的CPU利用率的平均值<br>
+2. 应用程序自定义的度量指标。比如TPS或QPS<br>
+一个典型的HPA文件是这样的：</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">apiVersion:</span> autoscaling/v1</span><br><span class="line"><span class="symbol">kind:</span> HorizontalPodAutoscaler</span><br><span class="line"><span class="symbol">metadata:</span></span><br><span class="line"><span class="symbol">  name:</span> nginx</span><br><span class="line"><span class="symbol">spec:</span></span><br><span class="line"><span class="symbol">  scaleTargetRef:</span></span><br><span class="line"><span class="symbol">    kind:</span> Deployment</span><br><span class="line"><span class="symbol">    name:</span> nginx</span><br><span class="line"><span class="symbol">  minReplicas:</span> <span class="number">1</span>    <span class="meta">#最小容量</span></span><br><span class="line"><span class="symbol">  maxReplicas:</span> <span class="number">10</span>   <span class="meta">#最大扩容</span></span><br><span class="line"><span class="symbol">  targetCPUUtilizationPercentage:</span> <span class="number">30</span>  <span class="meta">#cpu利用率%</span></span><br></pre></td></tr></table></figure>
+<h4><span id="8-service">8. Service</span></h4>
+<p>因为Pod的地址信息会随着Pod的创建或销毁以及Master的调度而改变，当我们的服务想要对外提供服务时那么就势必需要一个固定对外暴露的端口，这个时候就到了Service出场的时候了。</p>
+<p>首先Service会对外暴露一个固定不变的端口来接受请求，接受到请求以后能，它会通过Label Selector选择请求对应的Pod将请求转发过去。</p>
+<p>一个service的定义如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line"><span class="attr">  name:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">NodePort</span></span><br><span class="line"><span class="attr">  sessionAffinity:</span> <span class="string">ClientIP</span> <span class="comment">#使用本机ip</span></span><br><span class="line"><span class="attr">  selector:</span></span><br><span class="line"><span class="attr">    app:</span> <span class="string">nginx</span> <span class="comment">#选择所有lable为nginx的pod</span></span><br><span class="line"><span class="attr">  ports:</span></span><br><span class="line"><span class="attr">    - port:</span> <span class="number">80</span></span><br><span class="line"><span class="attr">      nodePort:</span> <span class="number">31080</span> <span class="comment">#对外暴露端口</span></span><br></pre></td></tr></table></figure>
+<p>本文出自<a href="http://zhixiang.org.cn" target="_blank" rel="noopener">http://zhixiang.org.cn</a>,转载请保留。</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/12/13/Kubernetes（k8s）1-12-2集群搭建/" data-toggle="tooltip" data-placement="top" title="Kubernetes（k8s）1.12.2集群搭建">下一篇 &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+<div id="SOHUCS" sid="zhixiang.org.cn/2018/12/13/ello-Kubernetes/"></div>
+<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+<script type="text/javascript">
+window.changyan.api.config({
+appid: 'cytJA6t4E',
+conf: 'prod_0a2ca470a8a2da2d6a3e76b5a8fd5abb'
+});
+</script>
+
+
+
+            </div>
+             <div>
+                        <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        
+
+
+
+    <h5>标签</h5>
+
+    <div class="tags">
+        
+
+            <a  href="/tags/#JVM" title="JVM" rel="1">JVM</a>
+
+        
+
+            <a  href="/tags/#Java工具类" title="Java工具类" rel="8">Java工具类</a>
+
+        
+
+            <a  href="/tags/#Java小技巧" title="Java小技巧" rel="2">Java小技巧</a>
+
+        
+
+            <a  href="/tags/#Elasticsearch" title="Elasticsearch" rel="1">Elasticsearch</a>
+
+        
+
+            <a  href="/tags/#Redis" title="Redis" rel="2">Redis</a>
+
+        
+
+            <a  href="/tags/#Spring" title="Spring" rel="1">Spring</a>
+
+        
+
+            <a  href="/tags/#Mybatis" title="Mybatis" rel="1">Mybatis</a>
+
+        
+
+            <a  href="/tags/#git" title="git" rel="1">git</a>
+
+        
+
+            <a  href="/tags/#开发工具" title="开发工具" rel="1">开发工具</a>
+
+        
+
+            <a  href="/tags/#第三方登录" title="第三方登录" rel="1">第三方登录</a>
+
+        
+
+            <a  href="/tags/#支付" title="支付" rel="2">支付</a>
+
+        
+
+            <a  href="/tags/#基础算法" title="基础算法" rel="8">基础算法</a>
+
+        
+
+            <a  href="/tags/#设计模式" title="设计模式" rel="18">设计模式</a>
+
+        
+
+            <a  href="/tags/#开源组件" title="开源组件" rel="2">开源组件</a>
+
+        
+
+            <a  href="/tags/#Vue" title="Vue" rel="1">Vue</a>
+
+        
+
+            <a  href="/tags/#JS" title="JS" rel="2">JS</a>
+
+        
+
+            <a  href="/tags/#UML" title="UML" rel="1">UML</a>
+
+        
+
+            <a  href="/tags/#SpringCloud" title="SpringCloud" rel="14">SpringCloud</a>
+
+        
+
+            <a  href="/tags/#Https" title="Https" rel="1">Https</a>
+
+        
+
+            <a  href="/tags/#maven" title="maven" rel="1">maven</a>
+
+        
+
+            <a  href="/tags/#web安全" title="web安全" rel="1">web安全</a>
+
+        
+
+            <a  href="/tags/#Drools" title="Drools" rel="3">Drools</a>
+
+        
+
+            <a  href="/tags/#Docker" title="Docker" rel="1">Docker</a>
+
+        
+
+            <a  href="/tags/#kubernetes" title="kubernetes" rel="2">kubernetes</a>
+
+        
+    </div>
+
+
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5 >
+    github
+    </h5>
+    <div class="short-about">
+        <ul class="list-inline">
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&type=follow&count=true" frameborder="0" scrolling="0" width="200px" height="30px"></iframe></li>
+
+            
+
+            <li><h6 style="color:red;">--分布式应用级网关限流组件</h6></li>
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-ratelimit&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+            <li><h6 style="color:red;">--SpringCloud学习demo</h6></li>
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=spring-cloud-demo&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+			<li><h6 style="color:red;">--不写代码就能完成一个模块的组件</h6></li>
+            <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=syj-minicode&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+			 <li><h6 style="color:red;">--SpringBoot2.0+drools7.14.0.Final整合学习代码</h6></li>
+			 <li>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=star&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+                <iframe src="https://ghbtns.com/github-btn.html?user=shiyujun&repo=drools&type=fork&count=true" frameborder="0" scrolling="0" width="100px" height="20px"></iframe>
+            </li>
+        </ul>
+
+    </div>
+<br>
+
+    <h5>联系我</h5>
+    <div class="short-about">
+
+        <ul class="list-inline">
+
+            <li title="QQ" class="qq tp" onclick="window.open('http://wpa.qq.com/msgrd?v=3&uin=2388386839&site=qq&menu=yes')"></li>
+            <li title="微信" class="wx tp" onclick="document.getElementById('divCenter').style.display = 'block'"></li>
+      </ul>
+    </div>
+
+</section>
+
+        <hr>
+    
+</div>
+                        </div>
+            <!-- Tabe of Content -->
+            <!-- Table of Contents 读博客右边栏
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">目录1</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">1. Master</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">2. Node</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">3. Pod</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">4. Label</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">5. Replication Controller(RC)</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">6. Deployment</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">7. HPA</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">8. Service</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+-->
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+               
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer style="padding:0px;">
+
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+   
+    
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+                <p class="copyright text-muted">
+                    Copyright &copy; 石玉军 2018  
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_pv">本网站已被访问<span id="busuanzi_value_site_pv"></span>次</span>
+					<span class="post-meta-divider">|</span>
+					<span id="busuanzi_container_site_uv">您是第<span id="busuanzi_value_site_uv"></span>位访客</span>
+    
+                    <br>
+                    
+                <a target="_black" href="http://www.miitbeian.gov.cn/">鲁ICP备18002448号-1</a>    
+                </p>
+				
+				
+				
+				
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
